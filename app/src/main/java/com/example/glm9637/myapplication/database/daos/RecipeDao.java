@@ -19,11 +19,14 @@ import java.util.List;
 public interface RecipeDao {
 
 	@Query("SELECT * FROM recipe WHERE cut_id = :cutId")
-	public LiveData<List<RecipeEntry>> loadRecipeForCut(int cutId);
+	public LiveData<List<RecipeEntry>> loadRecipeForCut(long cutId);
 	
-	@Query("SELECT * FROM recipe WHERE category_id = :categoryId")
-	public LiveData<List<RecipeEntry>> loadRecipeForCategory(int categoryId);
-	
+	@Query("SELECT * FROM recipe WHERE category_id = :categoryId and is_seasoning = 0")
+	public LiveData<List<RecipeEntry>> loadRecipeForCategory(long categoryId);
+
+	@Query("SELECT * FROM recipe WHERE category_id = :categoryId and is_seasoning = 1")
+	public LiveData<List<RecipeEntry>> loadRubForCategory(long categoryId);
+
 	@Update
 	public void updateRecipe(RecipeEntry recipe);
 	

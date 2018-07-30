@@ -3,6 +3,7 @@ package com.example.glm9637.myapplication.database.entry;
 import android.arch.persistence.room.ColumnInfo;
 import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.ForeignKey;
+import android.arch.persistence.room.Index;
 import android.arch.persistence.room.PrimaryKey;
 
 /**
@@ -12,11 +13,13 @@ import android.arch.persistence.room.PrimaryKey;
 @Entity(tableName = "recipe", foreignKeys = {
 		@ForeignKey(entity = CategoryEntry.class, parentColumns = "id",childColumns = "category_id"),
 		@ForeignKey(entity = CutEntry.class, parentColumns = "id",childColumns = "cut_id")
+}, indices = {
+		@Index(name = "IX_RECIPE_CATEGORY_ID",value = "category_id"),
+		@Index(name = "IX_RECIPE_CUT_ID",value = "cut_id")
 })
 public class RecipeEntry {
 	
 	@PrimaryKey()
-	@ColumnInfo(name = "recipe_id")
 	private int id;
 	
 	@ColumnInfo(name = "category_id")
@@ -35,6 +38,90 @@ public class RecipeEntry {
 	
 	@ColumnInfo(name = "is_seasoning")
 	private boolean isSeasoning;
-	
-	
+
+
+	public RecipeEntry(int id, int categoryid, int cutId, String name, String shortDescription, String description, String cookingStyle, long duration, boolean isSeasoning) {
+		this.id = id;
+		this.categoryid = categoryid;
+		this.cutId = cutId;
+		this.name = name;
+		this.shortDescription = shortDescription;
+		this.description = description;
+		this.cookingStyle = cookingStyle;
+		this.duration = duration;
+		this.isSeasoning = isSeasoning;
+	}
+
+
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
+
+	public int getCategoryid() {
+		return categoryid;
+	}
+
+	public void setCategoryid(int categoryid) {
+		this.categoryid = categoryid;
+	}
+
+	public int getCutId() {
+		return cutId;
+	}
+
+	public void setCutId(int cutId) {
+		this.cutId = cutId;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public String getShortDescription() {
+		return shortDescription;
+	}
+
+	public void setShortDescription(String shortDescription) {
+		this.shortDescription = shortDescription;
+	}
+
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
+	}
+
+	public String getCookingStyle() {
+		return cookingStyle;
+	}
+
+	public void setCookingStyle(String cookingStyle) {
+		this.cookingStyle = cookingStyle;
+	}
+
+	public long getDuration() {
+		return duration;
+	}
+
+	public void setDuration(long duration) {
+		this.duration = duration;
+	}
+
+	public boolean isSeasoning() {
+		return isSeasoning;
+	}
+
+	public void setSeasoning(boolean seasoning) {
+		isSeasoning = seasoning;
+	}
 }

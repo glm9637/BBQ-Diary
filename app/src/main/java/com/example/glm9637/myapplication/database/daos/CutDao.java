@@ -18,7 +18,7 @@ import java.util.List;
 public interface CutDao {
 	
 	@Query("SELECT * FROM cut WHERE category_id = :categoryId")
-	public LiveData<List<CutEntry>> loadCutListe(int categoryId);
+	public LiveData<List<CutEntry>> loadCutList(long categoryId);
 	
 	@Delete
 	public void deleteCut(CutEntry cut);

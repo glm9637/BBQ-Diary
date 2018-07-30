@@ -7,6 +7,7 @@ import android.arch.persistence.room.Insert;
 import android.arch.persistence.room.Query;
 
 import com.example.glm9637.myapplication.database.entry.CategoryEntry;
+import com.example.glm9637.myapplication.database.entry.CutEntry;
 
 import java.util.List;
 
@@ -24,4 +25,10 @@ public interface CategoryDao {
 	
 	@Insert
 	void insertCategory(CategoryEntry category);
+
+	@Query("SELECT * FROM Category WHERE id = :categoryId")
+    LiveData<CutEntry> loadCategory(long categoryId);
+
+	@Insert
+	void insertAll(CategoryEntry... dataEntities);
 }

@@ -1,3 +1,9 @@
 <resources>
     <string name="app_name">BBQ Diary</string>
+    <string name="cut_beef_title">Beef</string>
+    <string name="cut_pork_title">Pork</string>
+    <string name="cut_poultry_title">Poulty</string>
+    <string name="cut_fish_title">Fish</string>
+    <string name="cut_vegetable_title">Vegetables</string>
+    <string name="cut_other_title">Other</string>
 </resources>

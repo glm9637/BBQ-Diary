@@ -97,14 +97,14 @@
                     android:layout_gravity="bottom"
                     android:layout_margin="16dp"
                     android:fontFamily="@font/ff_copaseti"
-                    android:text="BEEF"
+                    android:text="@string/cut_beef_title"
                     android:textAllCaps="true"
                     android:textSize="36sp"/>
 
             </android.support.v7.widget.CardView>
 
             <android.support.v7.widget.CardView
-                android:id="@+id/cv_pig"
+                android:id="@+id/cv_pork"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="16dp"
@@ -126,7 +126,7 @@
                     android:layout_margin="16dp"
                     android:fontFamily="@font/ff_copaseti"
                     android:textAllCaps="true"
-                    android:text="Pig"
+                    android:text="@string/cut_pork_title"
                     android:textSize="36sp"/>
 
             </android.support.v7.widget.CardView>
@@ -140,7 +140,7 @@
                 android:clickable="true"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toLeftOf="@id/gd_vert"
-                app:layout_constraintTop_toBottomOf="@id/cv_pig">
+                app:layout_constraintTop_toBottomOf="@id/cv_pork">
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -154,7 +154,7 @@
                         android:fontFamily="@font/ff_copaseti"
                         android:gravity="bottom"
                         android:textAllCaps="true"
-                        android:text="Poultry"
+                        android:text="@string/cut_poultry_title"
                         android:textSize="36sp"/>
 
                     <ImageView
@@ -180,7 +180,7 @@
                 app:layout_constraintBottom_toBottomOf="@id/cv_poultry"
                 app:layout_constraintLeft_toRightOf="@id/gd_vert"
                 app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/cv_pig"
+                app:layout_constraintTop_toBottomOf="@id/cv_pork"
                 app:layout_constraintTop_toTopOf="@id/cv_poultry">
 
                 <LinearLayout
@@ -195,7 +195,7 @@
                         android:fontFamily="@font/ff_copaseti"
                         android:gravity="center|bottom"
                         android:textAllCaps="true"
-                        android:text="fish"
+                        android:text="@string/cut_fish_title"
                         android:textSize="36sp"/>
 
                     <ImageView
@@ -235,7 +235,7 @@
                         android:fontFamily="@font/ff_copaseti"
                         android:gravity="bottom"
                         android:textAllCaps="true"
-                        android:text="Vegetables"
+                        android:text="@string/cut_vegetable_title"
                         android:textSize="36sp"/>
 
                     <ImageView
@@ -275,7 +275,7 @@
                         android:fontFamily="@font/ff_copaseti"
                         android:gravity="center|bottom"
                         android:textAllCaps="true"
-                        android:text="other"
+                        android:text="@string/cut_other_title"
                         android:textSize="36sp"/>
 
                     <ImageView
@@ -285,7 +285,8 @@
                         android:layout_marginRight="8dp"
                         android:contentDescription="Category other Image"
                         android:scaleType="fitXY"
-                        android:src="@drawable/ic_fish"/>
+                        android:src="@drawable/ic_fish"
+                        android:layout_marginEnd="8dp" />
 
                 </LinearLayout>
 
