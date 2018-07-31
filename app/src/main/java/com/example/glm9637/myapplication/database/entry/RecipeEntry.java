@@ -3,6 +3,7 @@ package com.example.glm9637.myapplication.database.entry;
 import android.arch.persistence.room.ColumnInfo;
 import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.ForeignKey;
+import android.arch.persistence.room.Ignore;
 import android.arch.persistence.room.Index;
 import android.arch.persistence.room.PrimaryKey;
 
@@ -19,7 +20,7 @@ import android.arch.persistence.room.PrimaryKey;
 })
 public class RecipeEntry {
 	
-	@PrimaryKey()
+	@PrimaryKey(autoGenerate = true)
 	private int id;
 	
 	@ColumnInfo(name = "category_id")
@@ -42,6 +43,18 @@ public class RecipeEntry {
 
 	public RecipeEntry(int id, int categoryid, int cutId, String name, String shortDescription, String description, String cookingStyle, long duration, boolean isSeasoning) {
 		this.id = id;
+		this.categoryid = categoryid;
+		this.cutId = cutId;
+		this.name = name;
+		this.shortDescription = shortDescription;
+		this.description = description;
+		this.cookingStyle = cookingStyle;
+		this.duration = duration;
+		this.isSeasoning = isSeasoning;
+	}
+	
+	@Ignore
+	public RecipeEntry(int categoryid, int cutId, String name, String shortDescription, String description, String cookingStyle, long duration, boolean isSeasoning) {
 		this.categoryid = categoryid;
 		this.cutId = cutId;
 		this.name = name;
@@ -123,5 +136,11 @@ public class RecipeEntry {
 
 	public void setSeasoning(boolean seasoning) {
 		isSeasoning = seasoning;
+	}
+	
+	public static RecipeEntry[] populateData() {
+		return  new RecipeEntry[]{
+				new RecipeEntry(1,1,"Tasty Stuff","Some Seriously Tasty Stuff","How often have i to repeat myself?","smoking",5000,false)
+		};
 	}
 }

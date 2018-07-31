@@ -24,7 +24,7 @@ import java.util.List;
 /**
  * Erzeugt von M. Fengels am 23.07.2018.
  */
-public class CutsFragment extends Fragment {
+public class RubFragment extends Fragment {
 
 
     private CutFragmentViewModel viewModel;
@@ -53,10 +53,10 @@ public class CutsFragment extends Fragment {
         return rootView;
     }
 
-    public static CutsFragment createFragment(long categoryId) {
-        CutsFragment fragment = new CutsFragment();
+    public static RubFragment createFragment(long cutId) {
+        RubFragment fragment = new RubFragment();
         Bundle bundle = new Bundle();
-        bundle.putLong(Constants.Arguments.CATEGORY_ID, categoryId);
+        bundle.putLong(Constants.Arguments.CUT_ID, cutId);
         fragment.setArguments(bundle);
         return fragment;
     }

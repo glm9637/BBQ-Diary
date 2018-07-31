@@ -1,14 +1,22 @@
 package com.example.glm9637.myapplication;
 
+import android.arch.lifecycle.LiveData;
+import android.arch.lifecycle.Observer;
 import android.content.Intent;
 import android.graphics.Typeface;
+import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
+import com.example.glm9637.myapplication.database.RecipeDatabase;
+import com.example.glm9637.myapplication.database.entry.CategoryEntry;
 import com.example.glm9637.myapplication.utils.Constants;
+
+import java.util.concurrent.Executors;
 
 public class LandingActivity extends AppCompatActivity {
 
@@ -59,6 +67,18 @@ public class LandingActivity extends AppCompatActivity {
                 startCategoryActivity(Constants.Ids.CATEGORY_OTHER);
             }
         });
+	
+        //Prefill the Database ToDo: seperate this into a first time Onscreener?
+	    final RecipeDatabase database = RecipeDatabase.getInstance(this);
+	    final LiveData<CategoryEntry> data= database.getCategoryDao().loadCategory(Constants.Ids.CATEGORY_BEEF);
+	    data.observe(this, new Observer<CategoryEntry>() {
+		    @Override
+		    public void onChanged(@Nullable CategoryEntry categoryEntry) {
+				data.removeObserver(this);
+				Log.d("Test","test");
+		    }
+	    });
+	    
     }
 
     private void startCategoryActivity(long id){

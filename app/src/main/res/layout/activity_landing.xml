@@ -96,7 +96,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="bottom"
                     android:layout_margin="16dp"
-                    android:fontFamily="@font/ff_copaseti"
+                    android:fontFamily="@font/copaseti"
                     android:text="@string/cut_beef_title"
                     android:textAllCaps="true"
                     android:textSize="36sp"/>

@@ -11,22 +11,22 @@ import com.example.glm9637.myapplication.fragments.category.RubFragment;
 /**
  * Erzeugt von M. Fengels am 23.07.2018.
  */
-public class CategoryFragmentPagerAdapter extends FragmentPagerAdapter {
+public class CutFragmentPagerAdapter extends FragmentPagerAdapter {
 	
-	private long categoryId;
+	private long cutId;
 	
-	public CategoryFragmentPagerAdapter(FragmentManager fm, long cutId) {
+	public CutFragmentPagerAdapter(FragmentManager fm, long cutId) {
 		super(fm);
-		this.categoryId = cutId;
+		this.cutId = cutId;
 	}
 	
 	@Override
 	public Fragment getItem(int position) {
 		switch (position) {
 			case 0:
-				return CutsFragment.createFragment(categoryId);
+				return CutsFragment.createFragment(cutId);
 			default:
-				return RubFragment.createFragment(categoryId);
+				return RubFragment.createFragment(cutId);
 		}
 		
 	}

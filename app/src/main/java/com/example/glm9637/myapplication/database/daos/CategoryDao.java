@@ -27,7 +27,7 @@ public interface CategoryDao {
 	void insertCategory(CategoryEntry category);
 
 	@Query("SELECT * FROM Category WHERE id = :categoryId")
-    LiveData<CutEntry> loadCategory(long categoryId);
+    LiveData<CategoryEntry> loadCategory(long categoryId);
 
 	@Insert
 	void insertAll(CategoryEntry... dataEntities);

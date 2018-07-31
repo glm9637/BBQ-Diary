@@ -8,6 +8,7 @@ import android.arch.persistence.room.Query;
 import android.arch.persistence.room.Update;
 
 import com.example.glm9637.myapplication.database.entry.CutEntry;
+import com.example.glm9637.myapplication.database.entry.CutEntryForList;
 
 import java.util.List;
 
@@ -17,8 +18,8 @@ import java.util.List;
 @Dao
 public interface CutDao {
 	
-	@Query("SELECT * FROM cut WHERE category_id = :categoryId")
-	public LiveData<List<CutEntry>> loadCutList(long categoryId);
+	@Query("SELECT id,category_id,name,img,description,origin, (SELECT COUNT(*) FROM recipe WHERE cut_id = cut.id) AS recipe_count FROM cut WHERE category_id = :categoryId order by origin, name")
+	public LiveData<List<CutEntryForList>> loadCutList(long categoryId);
 	
 	@Delete
 	public void deleteCut(CutEntry cut);
@@ -28,4 +29,7 @@ public interface CutDao {
 	
 	@Insert
 	public void insertCut(CutEntry cut);
+	
+	@Insert
+	public void insertAll(CutEntry[] cutEntries);
 }

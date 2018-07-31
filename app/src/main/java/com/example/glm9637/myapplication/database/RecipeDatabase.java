@@ -42,7 +42,7 @@ public abstract class RecipeDatabase extends RoomDatabase {
     }
 
     private static RecipeDatabase buildDatabase(final Context context) {
-        return Room.databaseBuilder(context.getApplicationContext(),
+        RecipeDatabase db = Room.databaseBuilder(context.getApplicationContext(),
                 RecipeDatabase.class, RecipeDatabase.DATABASE_NAME)
                 .addCallback(new Callback() {
                     @Override
@@ -52,11 +52,15 @@ public abstract class RecipeDatabase extends RoomDatabase {
                             @Override
                             public void run() {
                                 getInstance(context).getCategoryDao().insertAll(CategoryEntry.populateData(context));
+                                getInstance(context).getCutDao().insertAll(CutEntry.populateData());
+                                getInstance(context).getRecipeDao().insertAll(RecipeEntry.populateData());
                             }
                         });
                     }
                 })
                 .build();
+	    
+	    return db;
     }
 
     public abstract CategoryDao getCategoryDao();

@@ -17,9 +17,9 @@ public class CategoryEntry {
 	@PrimaryKey()
 	private long  id;
 	private String  name;
-	private long iconId;
+	private int iconId;
 
-	public CategoryEntry(long id, String name, long iconId) {
+	public CategoryEntry(long id, String name, int iconId) {
 		this.id = id;
 		this.name = name;
 		this.iconId = iconId;
@@ -41,7 +41,7 @@ public class CategoryEntry {
 		this.name = name;
 	}
 
-	public long getIconId() {
+	public int getIconId() {
 		return iconId;
 	}
 

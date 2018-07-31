@@ -35,4 +35,7 @@ public interface RecipeDao {
 	
 	@Insert
 	public void insertRecipe(RecipeEntry recipe);
+	
+	@Insert
+	public void insertAll(RecipeEntry[] recipeEntries);
 }

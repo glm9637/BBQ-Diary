@@ -12,6 +12,7 @@ import android.widget.TextView;
 
 import com.example.glm9637.myapplication.adapter.CategoryFragmentPagerAdapter;
 import com.example.glm9637.myapplication.database.RecipeDatabase;
+import com.example.glm9637.myapplication.database.entry.CategoryEntry;
 import com.example.glm9637.myapplication.database.entry.CutEntry;
 import com.example.glm9637.myapplication.utils.Constants;
 import com.example.glm9637.myapplication.view_model.CategoryViewModel;
@@ -34,14 +35,14 @@ public class CategoryActivity extends AppCompatActivity {
 
 		toolbarText = findViewById(R.id.category_title);
 		toolbarIcon = findViewById(R.id.toolbar_icon);
-		long cutId = getIntent().getLongExtra(Constants.Arguments.CUT_ID,0);
+		long cutId = getIntent().getLongExtra(Constants.Arguments.CATEGORY_ID,0);
 		viewModel = new CategoryViewModel(RecipeDatabase.getInstance(this),cutId);
-		viewModel.getCut().observe(this, new Observer<CutEntry>() {
+		viewModel.getCategory().observe(this, new Observer<CategoryEntry>() {
 			@Override
-			public void onChanged(@Nullable CutEntry cutEntry) {
-				viewModel.getCut().removeObserver(this);
-				toolbarText.setText(cutEntry.getName());
-				toolbarIcon.setImageResource(cutEntry.getImg());
+			public void onChanged(@Nullable CategoryEntry categoryEntry) {
+				viewModel.getCategory().removeObserver(this);
+				toolbarText.setText(categoryEntry.getName());
+				toolbarIcon.setImageResource(categoryEntry.getIconId());
 			}
 		});
 
