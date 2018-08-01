@@ -11,7 +11,7 @@ import android.util.Log;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.example.glm9637.myapplication.adapter.CategoryFragmentPagerAdapter;
+import com.example.glm9637.myapplication.adapter.Fragments.CategoryFragmentPagerAdapter;
 import com.example.glm9637.myapplication.database.RecipeDatabase;
 import com.example.glm9637.myapplication.database.entry.CategoryEntry;
 import com.example.glm9637.myapplication.fragments.category.CutsFragment;

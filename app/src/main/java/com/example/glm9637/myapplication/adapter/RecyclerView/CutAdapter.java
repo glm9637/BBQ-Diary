@@ -1,4 +1,4 @@
-package com.example.glm9637.myapplication.adapter;
+package com.example.glm9637.myapplication.adapter.RecyclerView;
 
 import android.content.Context;
 import android.content.Intent;
@@ -12,23 +12,22 @@ import android.widget.TextView;
 import com.example.glm9637.myapplication.CutActivity;
 import com.example.glm9637.myapplication.R;
 import com.example.glm9637.myapplication.database.entry.CutEntryForList;
-import com.example.glm9637.myapplication.database.entry.RecipeEntry;
 import com.example.glm9637.myapplication.utils.Constants;
 
 import java.util.List;
 
-public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.CutViewHolder>{
+public class CutAdapter extends RecyclerView.Adapter<CutAdapter.CutViewHolder>{
 
     private LayoutInflater inflater;
     private Context context;
-    private List<RecipeEntry> data;
+    private List<CutEntryForList> data;
 
-    public RecipeAdapter(Context context){
+    public CutAdapter(Context context){
         this.context = context;
         inflater = LayoutInflater.from(context);
     }
 
-    public void setData(List<RecipeEntry> data){
+    public void setData(List<CutEntryForList> data){
         this.data = data;
         notifyDataSetChanged();
     }
@@ -43,9 +42,11 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.CutViewHol
 
     @Override
     public void onBindViewHolder(@NonNull CutViewHolder holder, int position) {
-	    RecipeEntry recipe = data.get(position);
-        holder.Name.setText(recipe.getName());
-        holder.Description.setText(recipe.getDescription());
+	    CutEntryForList cut = data.get(position);
+        holder.Name.setText(cut.getName());
+        holder.Description.setText(cut.getDescription());
+        holder.Origin.setText(cut.getOrigin());
+        holder.RecipeCount.setText(String.valueOf(cut.getRecipeCount()));
     }
 
     @Override
@@ -60,18 +61,22 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.CutViewHol
 
         TextView Name;
         TextView Description;
+        TextView Origin;
+        TextView RecipeCount;
 
         public CutViewHolder(View itemView) {
             super(itemView);
             Name = itemView.findViewById(R.id.txt_name);
             Description = itemView.findViewById(R.id.txt_description);
+            Origin = itemView.findViewById(R.id.txt_origin);
+            RecipeCount = itemView.findViewById(R.id.txt_recipe_count);
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-	             /*   RecipeEntry item = data.get(getAdapterPosition());
+	                CutEntryForList item = data.get(getAdapterPosition());
                     Intent intent = new Intent(context, CutActivity.class);
-                    intent.putExtra(Constants.Arguments.CUT_ID,item.getId());
-                    context.startActivity(intent);*/
+                    intent.putExtra(Constants.Arguments.CUT_ID,item.getId()) ;
+                    context.startActivity(intent);
                 }
             });
         }

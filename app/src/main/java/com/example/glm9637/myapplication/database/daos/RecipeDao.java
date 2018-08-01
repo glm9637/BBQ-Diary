@@ -38,4 +38,7 @@ public interface RecipeDao {
 	
 	@Insert
 	public void insertAll(RecipeEntry[] recipeEntries);
+
+	@Query("SELECT * FROM recipe WHERE id = :recipeId")
+    LiveData<RecipeEntry> loadRecipe(long recipeId);
 }

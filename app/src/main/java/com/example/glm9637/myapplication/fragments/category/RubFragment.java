@@ -12,9 +12,8 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.glm9637.myapplication.R;
-import com.example.glm9637.myapplication.adapter.CutAdapter;
+import com.example.glm9637.myapplication.adapter.RecyclerView.CutAdapter;
 import com.example.glm9637.myapplication.database.RecipeDatabase;
-import com.example.glm9637.myapplication.database.entry.CutEntry;
 import com.example.glm9637.myapplication.database.entry.CutEntryForList;
 import com.example.glm9637.myapplication.utils.Constants;
 import com.example.glm9637.myapplication.view_model.CutFragmentViewModel;

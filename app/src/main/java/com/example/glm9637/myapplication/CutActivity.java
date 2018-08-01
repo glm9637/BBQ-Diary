@@ -2,7 +2,6 @@ package com.example.glm9637.myapplication;
 
 import android.arch.lifecycle.Observer;
 import android.support.annotation.Nullable;
-import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
@@ -11,8 +10,7 @@ import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.widget.ImageView;
 
-import com.example.glm9637.myapplication.adapter.CategoryFragmentPagerAdapter;
-import com.example.glm9637.myapplication.adapter.CutFragmentPagerAdapter;
+import com.example.glm9637.myapplication.adapter.Fragments.CutFragmentPagerAdapter;
 import com.example.glm9637.myapplication.database.RecipeDatabase;
 import com.example.glm9637.myapplication.database.entry.CutEntry;
 import com.example.glm9637.myapplication.utils.Constants;

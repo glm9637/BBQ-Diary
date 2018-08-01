@@ -1,4 +1,4 @@
-package com.example.glm9637.myapplication.adapter;
+package com.example.glm9637.myapplication.adapter.Fragments;
 
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -7,27 +7,26 @@ import android.support.v4.app.FragmentPagerAdapter;
 
 import com.example.glm9637.myapplication.fragments.category.CutsFragment;
 import com.example.glm9637.myapplication.fragments.category.RubFragment;
-import com.example.glm9637.myapplication.fragments.cut.RecipeFragment;
 
 /**
  * Erzeugt von M. Fengels am 23.07.2018.
  */
-public class CutFragmentPagerAdapter extends FragmentPagerAdapter {
+public class CategoryFragmentPagerAdapter extends FragmentPagerAdapter {
 	
-	private long cutId;
+	private long categoryId;
 	
-	public CutFragmentPagerAdapter(FragmentManager fm, long cutId) {
+	public CategoryFragmentPagerAdapter(FragmentManager fm, long cutId) {
 		super(fm);
-		this.cutId = cutId;
+		this.categoryId = cutId;
 	}
 	
 	@Override
 	public Fragment getItem(int position) {
 		switch (position) {
 			case 0:
-				return RecipeFragment.createFragment(cutId);
+				return CutsFragment.createFragment(categoryId);
 			default:
-				return RecipeFragment.createFragment(cutId);
+				return RubFragment.createFragment(categoryId);
 		}
 		
 	}
@@ -42,9 +41,9 @@ public class CutFragmentPagerAdapter extends FragmentPagerAdapter {
 	public CharSequence getPageTitle(int position) {
 		switch (position) {
 			case 0:
-				return "Recipes";
+				return "Cuts";
 			case 1:
-				return "Discover";
+				return "Rubs";
 		}
 		return "";
 	}
