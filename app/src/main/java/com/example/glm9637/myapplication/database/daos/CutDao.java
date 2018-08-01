@@ -18,7 +18,7 @@ import java.util.List;
 @Dao
 public interface CutDao {
 	
-	@Query("SELECT id,category_id,name,img,description,origin, (SELECT COUNT(*) FROM recipe WHERE cut_id = cut.id) AS recipe_count FROM cut WHERE category_id = :categoryId order by origin, name")
+	@Query("SELECT id,category_id,name,img,description,origin, (SELECT COUNT(*) FROM recipe WHERE cut_id = cut.id) AS recipe_count FROM cut WHERE category_id = :categoryId order by  name")
 	public LiveData<List<CutEntryForList>> loadCutList(long categoryId);
 	
 	@Delete
@@ -32,4 +32,7 @@ public interface CutDao {
 	
 	@Insert
 	public void insertAll(CutEntry[] cutEntries);
+	
+	@Query("SELECT * FROM cut WHERE id = :cutId")
+	LiveData<CutEntry> loadCut(long cutId);
 }

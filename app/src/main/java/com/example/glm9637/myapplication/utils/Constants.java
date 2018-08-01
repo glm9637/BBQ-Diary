@@ -4,7 +4,8 @@ public class Constants {
 
     public static class Arguments{
         public static final String CUT_ID = "cut id";
-        public static String CATEGORY_ID = "category id";
+	    public static final String SAVE_INSTANCE_RECYCLERVIEW = "recyclerview instance";
+	    public static String CATEGORY_ID = "category id";
     }
 
     public static class Ids{

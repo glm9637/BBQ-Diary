@@ -2,6 +2,7 @@ package com.example.glm9637.myapplication.fragments.category;
 
 import android.arch.lifecycle.Observer;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -30,7 +31,9 @@ public class CutsFragment extends Fragment {
     private CutFragmentViewModel viewModel;
     private RecyclerView recyclerView;
     private CutAdapter adapter;
-
+	
+	private Parcelable mLayoutManagerState;
+	private static Bundle mBundleRecyclerViewState;
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -47,7 +50,10 @@ public class CutsFragment extends Fragment {
             public void onChanged(@Nullable List<CutEntryForList> cutEntries) {
                 viewModel.getCutList().removeObserver(this);
                 adapter.setData(cutEntries);
-
+				if(mBundleRecyclerViewState!=null){
+					Parcelable listState = mBundleRecyclerViewState.getParcelable(Constants.Arguments.SAVE_INSTANCE_RECYCLERVIEW);
+					recyclerView.getLayoutManager().onRestoreInstanceState(listState);
+				}
             }
         });
         return rootView;
@@ -60,5 +66,26 @@ public class CutsFragment extends Fragment {
         fragment.setArguments(bundle);
         return fragment;
     }
-
+	
+	@Override
+	public void onPause() {
+		super.onPause();
+			super.onPause();
+			mBundleRecyclerViewState = new Bundle();
+			mLayoutManagerState = recyclerView.getLayoutManager().onSaveInstanceState();
+			mBundleRecyclerViewState.putParcelable(Constants.Arguments.SAVE_INSTANCE_RECYCLERVIEW, mLayoutManagerState);
+	}
+	
+	@Override
+	public void onResume() {
+		super.onResume();
+		if (mBundleRecyclerViewState != null) {
+			Parcelable listState = mBundleRecyclerViewState.getParcelable(Constants.Arguments.SAVE_INSTANCE_RECYCLERVIEW);
+			recyclerView.getLayoutManager().onRestoreInstanceState(listState);
+		}
+	}
+	
+	public static void reset() {
+		mBundleRecyclerViewState = null;
+	}
 }

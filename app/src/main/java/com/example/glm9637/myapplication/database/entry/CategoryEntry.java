@@ -48,7 +48,7 @@ public class CategoryEntry {
 	public static CategoryEntry[] populateData(Context context) {
 		return new CategoryEntry[]{
 				new CategoryEntry(Constants.Ids.CATEGORY_BEEF, context.getString(R.string.cut_beef_title), R.drawable.ic_beef),
-				new CategoryEntry(Constants.Ids.CATEGORY_PORK, context.getString(R.string.cut_pork_title), R.drawable.ic_pig),
+				new CategoryEntry(Constants.Ids.CATEGORY_PORK, context.getString(R.string.cut_pork_title), R.drawable.ic_pork),
 				new CategoryEntry(Constants.Ids.CATEGORY_POULTY, context.getString(R.string.cut_poultry_title), R.drawable.ic_poultry),
 				new CategoryEntry(Constants.Ids.CATEGORY_FISH, context.getString(R.string.cut_fish_title), R.drawable.ic_fish),
 				new CategoryEntry(Constants.Ids.CATEGORY_VEGETABLE, context.getString(R.string.cut_vegetable_title), R.drawable.ic_beef),

@@ -21,14 +21,14 @@ public class CutEntry {
 	private long id;
 	
 	@ColumnInfo(name = "category_id")
-	private int categoryid;
+	private long categoryid;
 	
 	private String name;
 	private int img;
 	private String description;
 	private String origin;
 	
-	public CutEntry(long id, int categoryid, String name, int img, String description, String origin) {
+	public CutEntry(long id, long categoryid, String name, int img, String description, String origin) {
 		this.id = id;
 		this.categoryid = categoryid;
 		this.name = name;
@@ -205,11 +205,11 @@ public class CutEntry {
 		this.id = id;
 	}
 	
-	public int getCategoryid() {
+	public long getCategoryid() {
 		return categoryid;
 	}
 	
-	public void setCategoryid(int categoryid) {
+	public void setCategoryid(long categoryid) {
 		this.categoryid = categoryid;
 	}
 	

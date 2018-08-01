@@ -117,7 +117,7 @@
                     android:layout_height="wrap_content"
                     android:contentDescription="Category Pig Image"
                     android:scaleType="centerInside"
-                    android:src="@drawable/ic_pig"/>
+                    android:src="@drawable/ic_pork"/>
 
                 <TextView
                     android:layout_width="wrap_content"

@@ -7,6 +7,7 @@ import android.support.v4.app.FragmentPagerAdapter;
 
 import com.example.glm9637.myapplication.fragments.category.CutsFragment;
 import com.example.glm9637.myapplication.fragments.category.RubFragment;
+import com.example.glm9637.myapplication.fragments.cut.RecipeFragment;
 
 /**
  * Erzeugt von M. Fengels am 23.07.2018.
@@ -24,9 +25,9 @@ public class CutFragmentPagerAdapter extends FragmentPagerAdapter {
 	public Fragment getItem(int position) {
 		switch (position) {
 			case 0:
-				return CutsFragment.createFragment(cutId);
+				return RecipeFragment.createFragment(cutId);
 			default:
-				return RubFragment.createFragment(cutId);
+				return RecipeFragment.createFragment(cutId);
 		}
 		
 	}
@@ -41,9 +42,9 @@ public class CutFragmentPagerAdapter extends FragmentPagerAdapter {
 	public CharSequence getPageTitle(int position) {
 		switch (position) {
 			case 0:
-				return "Cuts";
+				return "Recipes";
 			case 1:
-				return "Rubs";
+				return "Discover";
 		}
 		return "";
 	}
