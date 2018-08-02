@@ -4,8 +4,7 @@ import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.ViewModel;
 
 import com.example.glm9637.myapplication.database.RecipeDatabase;
-import com.example.glm9637.myapplication.database.entry.CutEntry;
-import com.example.glm9637.myapplication.database.entry.CutEntryForList;
+import com.example.glm9637.myapplication.database.model.CutEntryForList;
 
 import java.util.List;
 

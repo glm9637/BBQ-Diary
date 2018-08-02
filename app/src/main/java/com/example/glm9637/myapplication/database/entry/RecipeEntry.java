@@ -140,7 +140,7 @@ public class RecipeEntry {
 	
 	public static RecipeEntry[] populateData() {
 		return  new RecipeEntry[]{
-				new RecipeEntry(1,1,"Tasty Stuff","Some Seriously Tasty Stuff","How often have i to repeat myself?","smoking",5000,false)
+				new RecipeEntry(1,39,"Standard","Quick and easy way to get some tasty meat","This method allows the meat to keep its juices and prevents the spices from burning?","Grill",20,false)
 		};
 	}
 }

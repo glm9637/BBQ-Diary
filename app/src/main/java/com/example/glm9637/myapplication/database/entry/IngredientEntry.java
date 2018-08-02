@@ -24,15 +24,15 @@ public class IngredientEntry {
 	private int recipeId;
 	
 	private String name;
-	private float amount;
-	private String measure;
+	private long amount;
+	private String unit;
 
-	public IngredientEntry(long id, int recipeId, String name, float amount, String measure) {
+	public IngredientEntry(long id, int recipeId, String name, long amount, String unit) {
 		this.id = id;
 		this.recipeId = recipeId;
 		this.name = name;
 		this.amount = amount;
-		this.measure = measure;
+		this.unit = unit;
 	}
 
 
@@ -60,19 +60,27 @@ public class IngredientEntry {
 		this.name = name;
 	}
 
-	public float getAmount() {
+	public long getAmount() {
 		return amount;
 	}
 
-	public void setAmount(float amount) {
+	public void setAmount(long amount) {
 		this.amount = amount;
 	}
 
-	public String getMeasure() {
-		return measure;
+	public String getUnit() {
+		return unit;
 	}
 
-	public void setMeasure(String measure) {
-		this.measure = measure;
+	public void setUnit(String unit) {
+		this.unit = unit;
+	}
+	
+	public static IngredientEntry[] populateData(){
+		return new IngredientEntry[]{
+				new IngredientEntry(1,1,"Flat Iron Steak",500,"g"),
+				new IngredientEntry(2,1,"Salt",20,"g"),
+				new IngredientEntry(3,1,"Pepper",20,"g")
+		};
 	}
 }

@@ -9,8 +9,10 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme">
-        <activity android:name=".LandingActivity">
+        android:theme="@style/CutTheme">
+        <activity
+            android:name=".ui.activity.LandingActivity"
+            android:theme="@style/AppTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
 
@@ -18,14 +20,26 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".CategoryActivity"
-            android:parentActivityName=".LandingActivity"
-            android:theme="@style/CutTheme"/>
+            android:name=".ui.activity.CategoryActivity"
+            android:parentActivityName=".ui.activity.LandingActivity"/>
         <activity
-            android:name=".CutActivity"
-            android:parentActivityName=".CategoryActivity"
-            android:theme="@style/CutTheme"/>
-        <activity android:name=".RecipeActivity">
+            android:name=".ui.activity.CutActivity"
+            android:parentActivityName=".ui.activity.CategoryActivity"/>
+        <activity
+            android:name=".ui.activity.RecipeActivity"
+            android:parentActivityName=".ui.activity.CutActivity">
+        </activity>
+        <activity android:name=".ui.activity.NoteListActivity"
+            android:parentActivityName=".ui.activity.RecipeActivity">
+        </activity>
+        <activity android:name=".ui.activity.NoteActivity"
+            android:parentActivityName=".ui.activity.NoteListActivity">
+        </activity>
+        <activity android:name=".ui.activity.EditRecipeActivity"
+            android:parentActivityName=".ui.activity.CutActivity">
+        </activity>
+        <activity android:name=".ui.activity.RecipeStepActivity"
+            android:parentActivityName=".ui.activity.RecipeActivity">
         </activity>
     </application>
 
