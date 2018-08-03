@@ -5,6 +5,10 @@ import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.ForeignKey;
 import android.arch.persistence.room.Index;
 import android.arch.persistence.room.PrimaryKey;
+import android.os.Parcel;
+import android.os.Parcelable;
+
+import java.io.Serializable;
 
 /**
  * Erzeugt von M. Fengels am 27.07.2018.
@@ -15,7 +19,7 @@ import android.arch.persistence.room.PrimaryKey;
 }, indices = {
 		@Index(name = "IX_STEP_RECIPE_ID", value = "recipe_id"),
 })
-public class StepEntry {
+public class StepEntry implements Serializable, Parcelable {
 	
 	@PrimaryKey()
 	private long id;
@@ -93,4 +97,41 @@ public class StepEntry {
 				new StepEntry(4, 1, 1, "Finishing", "Put the steak in indirekt heat of your grill, till ich reaches 57°C", 10)
 		};
 	}
+	
+	
+	@Override
+	public int describeContents() {
+		return 0;
+	}
+	
+	@Override
+	public void writeToParcel(Parcel dest, int flags) {
+		dest.writeLong(this.id);
+		dest.writeLong(this.recipeId);
+		dest.writeInt(this.order);
+		dest.writeString(this.name);
+		dest.writeString(this.description);
+		dest.writeLong(this.duration);
+	}
+	
+	protected StepEntry(Parcel in) {
+		this.id = in.readLong();
+		this.recipeId = in.readLong();
+		this.order = in.readInt();
+		this.name = in.readString();
+		this.description = in.readString();
+		this.duration = in.readLong();
+	}
+	
+	public static final Parcelable.Creator<StepEntry> CREATOR = new Parcelable.Creator<StepEntry>() {
+		@Override
+		public StepEntry createFromParcel(Parcel source) {
+			return new StepEntry(source);
+		}
+		
+		@Override
+		public StepEntry[] newArray(int size) {
+			return new StepEntry[size];
+		}
+	};
 }

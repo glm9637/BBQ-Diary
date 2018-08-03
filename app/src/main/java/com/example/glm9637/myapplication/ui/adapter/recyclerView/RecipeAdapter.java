@@ -44,7 +44,7 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.RecipeView
     public void onBindViewHolder(@NonNull RecipeViewHolder holder, int position) {
 	    RecipeEntry recipe = data.get(position);
         holder.Name.setText(recipe.getName());
-        holder.Description.setText(recipe.getDescription());
+        holder.Description.setText(recipe.getShortDescription());
     }
 
     @Override

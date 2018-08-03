@@ -25,18 +25,21 @@ public class StepListAdapter extends RecyclerView.Adapter<StepListAdapter.StepLi
     	void onListEntryClicked(int position);
     }
 
-    public StepListAdapter(Context context, ListEntryClickedListener onClickListener){
+    public StepListAdapter(Context context){
         this.context = context;
         inflater = LayoutInflater.from(context);
-        this.onClickListener = onClickListener;
     }
 
     public void setData(List<StepEntry> data){
         this.data = data;
         notifyDataSetChanged();
     }
-
-    @NonNull
+	
+	public void setOnClickListener(ListEntryClickedListener onClickListener) {
+		this.onClickListener = onClickListener;
+	}
+	
+	@NonNull
     @Override
     public StepListViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View rootView = inflater.inflate(R.layout.item_step_list,parent,false);
@@ -46,11 +49,22 @@ public class StepListAdapter extends RecyclerView.Adapter<StepListAdapter.StepLi
 
     @Override
     public void onBindViewHolder(@NonNull StepListViewHolder holder, int position) {
-	    StepEntry recipe = data.get(position);
-        holder.Name.setText(recipe.getName());
-        holder.Description.setText(recipe.getDescription());
-        holder.Time.setText(String.valueOf(recipe.getDuration()));
-        holder.Number.setText(String.valueOf(position)+".");
+    	if(position==0){
+    	    holder.Name.setText("Ingredients");
+    	    holder.Time.setText("");
+    	    holder.Description.setText("All the needed Ingredients");
+	    }else {
+		    StepEntry recipe = data.get(position - 1);
+		    holder.Name.setText(recipe.getName());
+		    holder.Description.setText(recipe.getDescription());
+		    holder.Time.setText(String.valueOf(recipe.getDuration()));
+	    }
+		if(holder.Time.getText().toString().isEmpty()){
+    		holder.Time.setVisibility(View.INVISIBLE);
+		}else {
+    		holder.Time.setVisibility(View.VISIBLE);
+		}
+	    holder.Number.setText(String.valueOf(position + 1) + ".");
     }
 
     @Override
@@ -58,7 +72,7 @@ public class StepListAdapter extends RecyclerView.Adapter<StepListAdapter.StepLi
     	if(data==null){
     		return 0;
 	    }
-        return data.size();
+        return data.size()+1;
     }
 
     class StepListViewHolder extends RecyclerView.ViewHolder{
@@ -77,7 +91,7 @@ public class StepListAdapter extends RecyclerView.Adapter<StepListAdapter.StepLi
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-	                onClickListener.onListEntryClicked(getAdapterPosition());
+	                onClickListener.onListEntryClicked(getAdapterPosition()+1);
                  
                 }
             });

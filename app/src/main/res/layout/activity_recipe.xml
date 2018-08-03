@@ -95,6 +95,7 @@
         android:id="@+id/btn_cook"
         style="@style/FloatingActionButton"
         android:layout_gravity="bottom|end"
+        android:src="@drawable/ic_cook_service_white_24dp"
         />
 
 </android.support.design.widget.CoordinatorLayout>

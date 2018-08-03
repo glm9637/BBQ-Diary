@@ -140,7 +140,11 @@ public class RecipeEntry {
 	
 	public static RecipeEntry[] populateData() {
 		return  new RecipeEntry[]{
-				new RecipeEntry(1,39,"Standard","Quick and easy way to get some tasty meat","This method allows the meat to keep its juices and prevents the spices from burning?","Grill",20,false)
+				new RecipeEntry(1,39,"Standard","Quick and easy way to get some tasty meat","This method allows the meat to keep its juices and prevents the spices from burning?","Grill",20,false),
+				new RecipeEntry(1,137,"Magic Dust","One of the most famous rubs","Magic Dust is probably the best known of all BBQ rubs. It is suitable for almost anything that fits on the smoker, but especially to pork.\n" +
+						"\n" +
+						"Making Magic Dust yourself is, like almost all rubs, quite easy if you have a reasonably well filled herbal cupboard.\n" +
+						"(This fills relatively fast anyway if you don't always want to buy all the finished rubs)","",0,true)
 		};
 	}
 }

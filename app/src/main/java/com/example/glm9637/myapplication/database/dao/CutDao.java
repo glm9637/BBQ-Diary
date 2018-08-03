@@ -9,6 +9,7 @@ import android.arch.persistence.room.Update;
 
 import com.example.glm9637.myapplication.database.entry.CutEntry;
 import com.example.glm9637.myapplication.database.model.CutEntryForList;
+import com.example.glm9637.myapplication.utils.Constants;
 
 import java.util.List;
 
@@ -18,7 +19,7 @@ import java.util.List;
 @Dao
 public interface CutDao {
 	
-	@Query("SELECT id,name,description,origin, (SELECT COUNT(*) FROM recipe WHERE cut_id = cut.id) AS recipe_count FROM cut WHERE category_id = :categoryId order by  name")
+	@Query("SELECT id,name,description,origin, (SELECT COUNT(*) FROM recipe WHERE cut_id = cut.id) AS recipe_count FROM cut WHERE category_id = :categoryId AND name <> '" + Constants.CUT_NAME_RUB + "' order by name")
 	LiveData<List<CutEntryForList>> loadCutList(long categoryId);
 	
 	@Delete

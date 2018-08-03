@@ -1,6 +1,7 @@
 package com.example.glm9637.myapplication.ui.fragment.category;
 
 import android.arch.lifecycle.Observer;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -12,11 +13,15 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.glm9637.myapplication.R;
+import com.example.glm9637.myapplication.database.entry.RecipeEntry;
+import com.example.glm9637.myapplication.ui.activity.EditRecipeActivity;
 import com.example.glm9637.myapplication.ui.adapter.recyclerView.CutAdapter;
 import com.example.glm9637.myapplication.database.RecipeDatabase;
 import com.example.glm9637.myapplication.database.model.CutEntryForList;
+import com.example.glm9637.myapplication.ui.adapter.recyclerView.RecipeAdapter;
 import com.example.glm9637.myapplication.utils.Constants;
 import com.example.glm9637.myapplication.view_model.CutFragmentViewModel;
+import com.example.glm9637.myapplication.view_model.RubFragmentViewModel;
 
 import java.util.List;
 
@@ -25,37 +30,49 @@ import java.util.List;
  */
 public class RubFragment extends Fragment {
 
+	private long categoryId;
 
-    private CutFragmentViewModel viewModel;
+    private RubFragmentViewModel viewModel;
     private RecyclerView recyclerView;
-    private CutAdapter adapter;
+    private RecipeAdapter adapter;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        Long categoryId = getArguments().getLong(Constants.Arguments.CATEGORY_ID);
-        View rootView = inflater.inflate(R.layout.fragment_list, container, false);
+        categoryId = getArguments().getLong(Constants.Arguments.CATEGORY_ID);
+        View rootView = inflater.inflate(R.layout.fragment_list_addable, container, false);
         recyclerView = rootView.findViewById(R.id.recyclerview);
-        adapter = new CutAdapter(getContext());
+        adapter = new RecipeAdapter(getContext());
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
-        viewModel = new CutFragmentViewModel(RecipeDatabase.getInstance(getContext()), categoryId);
-        viewModel.getCutList().observe(this, new Observer<List<CutEntryForList>>() {
+        viewModel = new RubFragmentViewModel(RecipeDatabase.getInstance(getContext()), categoryId);
+        viewModel.getCutList().observe(this, new Observer<List<RecipeEntry>>() {
             @Override
-            public void onChanged(@Nullable List<CutEntryForList> cutEntries) {
+            public void onChanged(@Nullable List<RecipeEntry> cutEntries) {
                 viewModel.getCutList().removeObserver(this);
                 adapter.setData(cutEntries);
 
             }
         });
+        
+        rootView.findViewById(R.id.btn_add).setOnClickListener(new View.OnClickListener() {
+	        @Override
+	        public void onClick(View v) {
+				Intent intent = new Intent(getContext(), EditRecipeActivity.class);
+				intent.putExtra(Constants.Arguments.CATEGORY_ID,categoryId);
+				intent.putExtra(Constants.Arguments.IS_RUB,true);
+				startActivity(intent);
+	        }
+        });
+        
         return rootView;
     }
 
-    public static RubFragment createFragment(long cutId) {
+    public static RubFragment createFragment(long categoryId) {
         RubFragment fragment = new RubFragment();
         Bundle bundle = new Bundle();
-        bundle.putLong(Constants.Arguments.CUT_ID, cutId);
+        bundle.putLong(Constants.Arguments.CATEGORY_ID, categoryId);
         fragment.setArguments(bundle);
         return fragment;
     }

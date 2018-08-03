@@ -1,6 +1,7 @@
 package com.example.glm9637.myapplication.ui.fragment.cut;
 
 import android.arch.lifecycle.Observer;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Parcelable;
 import android.support.annotation.NonNull;
@@ -13,6 +14,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.glm9637.myapplication.R;
+import com.example.glm9637.myapplication.ui.activity.EditRecipeActivity;
 import com.example.glm9637.myapplication.ui.adapter.recyclerView.RecipeAdapter;
 import com.example.glm9637.myapplication.database.entry.RecipeEntry;
 import com.example.glm9637.myapplication.utils.Constants;
@@ -31,6 +33,8 @@ public class RecipeFragment extends Fragment {
 	private RecipeFragmentViewModel viewModel;
 	private RecyclerView recyclerView;
 	private RecipeAdapter adapter;
+	private long categoryId;
+	
 	
 	public static RecipeFragment createFragment(long categoryId) {
 		RecipeFragment fragment = new RecipeFragment();
@@ -43,8 +47,8 @@ public class RecipeFragment extends Fragment {
 	@Nullable
 	@Override
 	public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-		Long categoryId = getArguments().getLong(Constants.Arguments.CATEGORY_ID);
-		View rootView = inflater.inflate(R.layout.fragment_list, container, false);
+		categoryId = getArguments().getLong(Constants.Arguments.CATEGORY_ID);
+		View rootView = inflater.inflate(R.layout.fragment_list_addable, container, false);
 		recyclerView = rootView.findViewById(R.id.recyclerview);
 		adapter = new RecipeAdapter(getContext());
 		recyclerView.setAdapter(adapter);
@@ -57,6 +61,15 @@ public class RecipeFragment extends Fragment {
 				viewModel.getRecipeList().removeObserver(this);
 				adapter.setData(cutEntries);
 				
+			}
+		});
+		
+		rootView.findViewById(R.id.btn_add).setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				Intent intent = new Intent(getContext(), EditRecipeActivity.class);
+				intent.putExtra(Constants.Arguments.CATEGORY_ID,categoryId);
+				startActivity(intent);
 			}
 		});
 		return rootView;

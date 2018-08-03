@@ -19,6 +19,10 @@ public interface StepDao {
 
     @Query("SELECT id FROM step WHERE recipe_id= :recipeId")
     public LiveData<List<Integer>> loadStepIdList(long recipeId);
+	
+	@Query("SELECT * FROM step WHERE id = :stepId")
+	LiveData<StepEntry> loadStep(long stepId);
+    
     @Insert()
     void insertStep(StepEntry step);
 
@@ -30,5 +34,4 @@ public interface StepDao {
 	
 	@Insert
 	void insertAll(StepEntry[] cutEntries);
-
 }

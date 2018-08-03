@@ -29,8 +29,9 @@ public class StepListFragment extends Fragment {
 	StepListAdapter adapter;
 	
 	RecipeStepsViewModel viewModel;
+	StepListAdapter.ListEntryClickedListener entryClickedListener;
 	
-	public static Fragment createFragment(long recipeId) {
+	public static StepListFragment createFragment(long recipeId) {
 		StepListFragment fragment = new StepListFragment();
 		Bundle bundle = new Bundle();
 		bundle.putLong(Constants.Arguments.RECIPE_ID, recipeId);
@@ -45,12 +46,10 @@ public class StepListFragment extends Fragment {
 		View rootView = inflater.inflate(R.layout.fragment_list, container, false);
 		recyclerView = rootView.findViewById(R.id.recyclerview);
 		recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-		adapter = new StepListAdapter(getContext(), new StepListAdapter.ListEntryClickedListener() {
-			@Override
-			public void onListEntryClicked(int position) {
-			
-			}
-		});
+		adapter = new StepListAdapter(getContext());
+		if(entryClickedListener!=null){
+			adapter.setOnClickListener(entryClickedListener);
+		}
 		recyclerView.setAdapter(adapter);
 		viewModel = new RecipeStepsViewModel(getContext(), recipeId);
 		viewModel.getSteps().observe(this, new Observer<List<StepEntry>>() {
@@ -60,5 +59,12 @@ public class StepListFragment extends Fragment {
 			}
 		});
 		return rootView;
+	}
+	
+	public void setOnStepClickListener(StepListAdapter.ListEntryClickedListener listener){
+		entryClickedListener=listener;
+		if(adapter!=null){
+			adapter.setOnClickListener(entryClickedListener);
+		}
 	}
 }

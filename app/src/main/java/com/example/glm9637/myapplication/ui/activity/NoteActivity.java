@@ -3,11 +3,13 @@ package com.example.glm9637.myapplication.ui.activity;
 import android.arch.lifecycle.Observer;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.example.glm9637.myapplication.R;
 import com.example.glm9637.myapplication.database.entry.NoteEntry;
@@ -80,8 +82,13 @@ public class NoteActivity extends AppCompatActivity {
 			@Override
 			public void run() {
 				if (noteEntry == null) {
-					noteEntry = new NoteEntry(recipeId, txtName.getText().toString(), txtDescription.getText().toString());
-					viewModel.saveNote(noteEntry);
+					if(txtName.getText().toString().isEmpty()){
+						Toast.makeText(getApplicationContext(),"Note has note been saved.",Toast.LENGTH_LONG).show();
+					}else {
+						noteEntry = new NoteEntry(recipeId, txtName.getText().toString(), txtDescription.getText().toString());
+						viewModel.saveNote(noteEntry);
+					}
+					
 				} else {
 					noteEntry.setDate(new Date());
 					noteEntry.setName(txtName.getText().toString());
