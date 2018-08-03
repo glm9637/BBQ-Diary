@@ -14,8 +14,10 @@ import com.example.glm9637.myapplication.R;
  * Erzeugt von M. Fengels am 03.08.2018.
  */
 public class EditRecipeFinishFragment extends Fragment {
-	
-	public static EditRecipeFinishFragment createFragment(boolean b) {
+
+	private RecipeFinishedListener recipeFinishedListener;
+
+	public static EditRecipeFinishFragment createFragment() {
 		return new EditRecipeFinishFragment();
 	}
 	
@@ -27,9 +29,18 @@ public class EditRecipeFinishFragment extends Fragment {
 	@Override
 	public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 		View rootView = inflater.inflate(R.layout.fragment_edit_finish, container, false);
-		//rootView.findViewById(R.id.btn)
+		rootView.findViewById(R.id.btn_save).setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View view) {
+				recipeFinishedListener.onRecipeFinished();
+			}
+		});
 		
 		return rootView;
+	}
+
+	public void setRecipeFinishedListener(RecipeFinishedListener recipeFinishedListener){
+		this.recipeFinishedListener = recipeFinishedListener;
 	}
 	
 }

@@ -15,8 +15,8 @@ import java.util.List;
 
 public class IngredientAdapter extends RecyclerView.Adapter<IngredientAdapter.IngredientViewHolder>{
 
-    private LayoutInflater inflater;
-    private Context context;
+    private final LayoutInflater inflater;
+    private final Context context;
     private List<IngredientEntry> data;
 
     public IngredientAdapter(Context context){
@@ -53,9 +53,9 @@ public class IngredientAdapter extends RecyclerView.Adapter<IngredientAdapter.In
 
     class IngredientViewHolder extends RecyclerView.ViewHolder{
 
-        TextView Ingredient;
+        final TextView Ingredient;
 
-        public IngredientViewHolder(View itemView) {
+        IngredientViewHolder(View itemView) {
             super(itemView);
 	        Ingredient = itemView.findViewById(R.id.txt_ingredient);
         }

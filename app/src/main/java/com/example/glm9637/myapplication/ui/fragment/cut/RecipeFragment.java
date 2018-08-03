@@ -1,7 +1,6 @@
 package com.example.glm9637.myapplication.ui.fragment.cut;
 
 import android.arch.lifecycle.Observer;
-import android.content.Intent;
 import android.os.Bundle;
 import android.os.Parcelable;
 import android.support.annotation.NonNull;
@@ -14,7 +13,6 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.glm9637.myapplication.R;
-import com.example.glm9637.myapplication.ui.activity.EditRecipeActivity;
 import com.example.glm9637.myapplication.ui.adapter.recyclerView.RecipeAdapter;
 import com.example.glm9637.myapplication.database.entry.RecipeEntry;
 import com.example.glm9637.myapplication.utils.Constants;
@@ -29,17 +27,15 @@ public class RecipeFragment extends Fragment {
 	
 	
 	private static Bundle mBundleRecyclerViewState;
-	Parcelable mLayoutManagerState;
 	private RecipeFragmentViewModel viewModel;
 	private RecyclerView recyclerView;
 	private RecipeAdapter adapter;
-	private long categoryId;
-	
-	
-	public static RecipeFragment createFragment(long categoryId) {
+
+
+	public static RecipeFragment createFragment(long cutId) {
 		RecipeFragment fragment = new RecipeFragment();
 		Bundle bundle = new Bundle();
-		bundle.putLong(Constants.Arguments.CATEGORY_ID, categoryId);
+		bundle.putLong(Constants.Arguments.CUT_ID, cutId);
 		fragment.setArguments(bundle);
 		return fragment;
 	}
@@ -47,14 +43,14 @@ public class RecipeFragment extends Fragment {
 	@Nullable
 	@Override
 	public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-		categoryId = getArguments().getLong(Constants.Arguments.CATEGORY_ID);
+		long cutId = getArguments().getLong(Constants.Arguments.CUT_ID);
 		View rootView = inflater.inflate(R.layout.fragment_list_addable, container, false);
 		recyclerView = rootView.findViewById(R.id.recyclerview);
-		adapter = new RecipeAdapter(getContext());
+		adapter = new RecipeAdapter(getActivity());
 		recyclerView.setAdapter(adapter);
 		recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 		
-		viewModel = new RecipeFragmentViewModel(getContext(), categoryId);
+		viewModel = new RecipeFragmentViewModel(getContext(), cutId);
 		viewModel.getRecipeList().observe(this, new Observer<List<RecipeEntry>>() {
 			@Override
 			public void onChanged(@Nullable List<RecipeEntry> cutEntries) {
@@ -63,15 +59,7 @@ public class RecipeFragment extends Fragment {
 				
 			}
 		});
-		
-		rootView.findViewById(R.id.btn_add).setOnClickListener(new View.OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				Intent intent = new Intent(getContext(), EditRecipeActivity.class);
-				intent.putExtra(Constants.Arguments.CATEGORY_ID,categoryId);
-				startActivity(intent);
-			}
-		});
+
 		return rootView;
 	}
 	
@@ -80,7 +68,7 @@ public class RecipeFragment extends Fragment {
 		super.onPause();
 		super.onPause();
 		mBundleRecyclerViewState = new Bundle();
-		mLayoutManagerState = recyclerView.getLayoutManager().onSaveInstanceState();
+		Parcelable mLayoutManagerState = recyclerView.getLayoutManager().onSaveInstanceState();
 		mBundleRecyclerViewState.putParcelable(Constants.Arguments.SAVE_INSTANCE_RECYCLERVIEW, mLayoutManagerState);
 	}
 	

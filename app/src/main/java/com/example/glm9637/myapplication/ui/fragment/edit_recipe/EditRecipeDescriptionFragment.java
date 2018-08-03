@@ -3,11 +3,11 @@ package com.example.glm9637.myapplication.ui.fragment.edit_recipe;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.design.widget.TextInputEditText;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.EditText;
 
 import com.example.glm9637.myapplication.R;
 import com.example.glm9637.myapplication.utils.Constants;
@@ -18,12 +18,11 @@ import com.example.glm9637.myapplication.utils.Constants;
 public class EditRecipeDescriptionFragment extends Fragment {
 	
 	
-	private EditText descriptionText;
+	private TextInputEditText descriptionText;
 	
 	public static EditRecipeDescriptionFragment createFragment() {
-		EditRecipeDescriptionFragment fragment = new EditRecipeDescriptionFragment();
-		
-		return fragment;
+
+		return new EditRecipeDescriptionFragment();
 	}
 	
 	public static EditRecipeDescriptionFragment createFragment( String description) {
@@ -45,9 +44,8 @@ public class EditRecipeDescriptionFragment extends Fragment {
 		}
 		return rootView;
 	}
-	
-	public String getName() {
+
+	public String getDescription() {
 		return descriptionText.getText().toString();
 	}
-	
 }

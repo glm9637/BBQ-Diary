@@ -24,18 +24,16 @@ import com.example.glm9637.myapplication.view_model.RecipeActivityViewModel;
 import java.util.List;
 
 public class RecipeActivity extends AppCompatActivity {
-	
-	RecipeActivityViewModel viewModel;
-	TextView descriptionText;
-	TextView durationText;
-	TextView cookingStyleText;
-	RecyclerView recyclerView;
-	IngredientAdapter adapter;
-	
+
+	private TextView descriptionText;
+	private TextView durationText;
+	private TextView cookingStyleText;
+	private IngredientAdapter adapter;
+	private RecipeEntry recipeEntry;
 	
 	private static Bundle mState;
 	
-	long recipeId;
+	private long recipeId;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -45,7 +43,7 @@ public class RecipeActivity extends AppCompatActivity {
 		descriptionText = findViewById(R.id.txt_description);
 		durationText = findViewById(R.id.txt_duration);
 		cookingStyleText = findViewById(R.id.txt_cooking_style);
-		recyclerView = findViewById(R.id.recyclerview);
+		RecyclerView recyclerView = findViewById(R.id.recyclerview);
 		setSupportActionBar(toolbar);
 		getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 		
@@ -79,15 +77,25 @@ public class RecipeActivity extends AppCompatActivity {
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		switch (item.getItemId()) {
+			case android.R.id.home:
+				finishAfterTransition();
+				return true;
 			case R.id.mnu_notes:
 				Intent intent = new Intent(this, NoteListActivity.class);
 				intent.putExtra(Constants.Arguments.RECIPE_ID, recipeId);
 				startActivity(intent);
 				return true;
+			case R.id.mnu_edit:
+				intent = new Intent(this, EditRecipeActivity.class);
+				intent.putExtra(Constants.Arguments.RECIPE_ID, recipeId);
+				intent.putExtra(Constants.Arguments.CUT_ID,recipeEntry.getCutId());
+				intent.putExtra(Constants.Arguments.CATEGORY_ID,recipeEntry.getCategoryId());
+				startActivity(intent);
 			default:
 				return super.onOptionsItemSelected(item);
 		}
 	}
+
 	
 	@Override
 	protected void onPause() {
@@ -104,8 +112,8 @@ public class RecipeActivity extends AppCompatActivity {
 		}else {
 			mState = null;
 		}
-		
-		viewModel = new RecipeActivityViewModel(this, recipeId);
+
+		RecipeActivityViewModel viewModel = new RecipeActivityViewModel(this, recipeId);
 		
 		viewModel.getRecipe().observe(this, new Observer<RecipeEntry>() {
 			@Override
@@ -113,6 +121,7 @@ public class RecipeActivity extends AppCompatActivity {
 				if (recipeEntry == null) {
 					return;
 				}
+				RecipeActivity.this.recipeEntry = recipeEntry;
 				getSupportActionBar().setTitle(recipeEntry.getName());
 				getSupportActionBar().setSubtitle(recipeEntry.getShortDescription());
 				descriptionText.setText(recipeEntry.getDescription());

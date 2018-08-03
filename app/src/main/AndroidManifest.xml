@@ -33,22 +33,23 @@
         </activity>
         <activity
             android:name=".ui.activity.NoteListActivity"
-            android:label="notes"
+            android:label="@string/notes_title"
             android:parentActivityName=".ui.activity.RecipeActivity">
         </activity>
         <activity
             android:name=".ui.activity.NoteActivity"
-            android:label="Note"
+            android:label="@string/note_title"
             android:parentActivityName=".ui.activity.NoteListActivity">
         </activity>
         <activity
             android:name=".ui.activity.EditRecipeActivity"
-            android:label="Edit Recipe"
+            android:label="@string/edit_recipe_title"
+            android:windowSoftInputMode="adjustPan|adjustResize"
             android:parentActivityName=".ui.activity.CutActivity">
         </activity>
         <activity
             android:name=".ui.activity.RecipeStepActivity"
-            android:label="Cooking"
+            android:label="@string/cooking_title"
             android:parentActivityName=".ui.activity.RecipeActivity">
         </activity>
 

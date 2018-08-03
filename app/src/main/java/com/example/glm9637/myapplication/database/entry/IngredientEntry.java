@@ -3,6 +3,7 @@ package com.example.glm9637.myapplication.database.entry;
 import android.arch.persistence.room.ColumnInfo;
 import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.ForeignKey;
+import android.arch.persistence.room.Ignore;
 import android.arch.persistence.room.Index;
 import android.arch.persistence.room.PrimaryKey;
 
@@ -17,17 +18,20 @@ import android.arch.persistence.room.PrimaryKey;
 })
 public class IngredientEntry {
 	
-	@PrimaryKey()
+	@PrimaryKey(autoGenerate = true)
 	private long id;
 	
 	@ColumnInfo(name = "recipe_id")
-	private int recipeId;
+	private long recipeId;
 	
 	private String name;
 	private long amount;
 	private String unit;
 
-	public IngredientEntry(long id, int recipeId, String name, long amount, String unit) {
+	@Ignore
+	private boolean deleted;
+
+	public IngredientEntry(long id, long recipeId, String name, long amount, String unit) {
 		this.id = id;
 		this.recipeId = recipeId;
 		this.name = name;
@@ -35,20 +39,23 @@ public class IngredientEntry {
 		this.unit = unit;
 	}
 
+	@Ignore
+	public IngredientEntry(String name, long amount, String unit) {
+		this.name = name;
+		this.amount = amount;
+		this.unit = unit;
+	}
 
-	public long getId() {
+
+    public long getId() {
 		return id;
 	}
 
-	public void setId(long id) {
-		this.id = id;
-	}
-
-	public int getRecipeId() {
+	public long getRecipeId() {
 		return recipeId;
 	}
 
-	public void setRecipeId(int recipeId) {
+	public void setRecipeId(long recipeId) {
 		this.recipeId = recipeId;
 	}
 
@@ -82,5 +89,13 @@ public class IngredientEntry {
 				new IngredientEntry(2,1,"Salt",20,"g"),
 				new IngredientEntry(3,1,"Pepper",20,"g")
 		};
+	}
+
+	public boolean isDeleted() {
+		return deleted;
+	}
+
+	public void setDeleted(boolean deleted) {
+		this.deleted = deleted;
 	}
 }

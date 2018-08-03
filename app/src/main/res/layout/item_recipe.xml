@@ -19,7 +19,8 @@
         android:gravity="center"
         android:textColor="#000"
         android:textSize="18sp"
-        tools:text="Name"/>
+        tools:text="Name"
+        android:transitionName="recipe name"/>
 
     <TextView
         android:id="@+id/txt_description"

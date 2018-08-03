@@ -27,7 +27,6 @@ public class CategoryActivity extends AppCompatActivity {
 	private CategoryViewModel viewModel;
 	private static Bundle mState;
 	private long categoryId;
-	private CategoryFragmentAdapter adapter;
 	private ViewPager pager;
 	private TabLayout tabLayout;
 	
@@ -80,11 +79,22 @@ public class CategoryActivity extends AppCompatActivity {
 				toolbarIcon.setImageResource(categoryEntry.getIconId());
 			}
 		});
-		
-		adapter = new CategoryFragmentAdapter(getSupportFragmentManager(),categoryId);
+
+		CategoryFragmentAdapter adapter = new CategoryFragmentAdapter(getSupportFragmentManager(), categoryId);
 		pager.setAdapter(adapter);
 		tabLayout.setupWithViewPager(pager);
 		
+	}
+
+	@Override
+	public boolean onOptionsItemSelected(android.view.MenuItem item) {
+		switch (item.getItemId()) {
+			case android.R.id.home:
+				finishAfterTransition();
+				return true;
+			default:
+				return super.onOptionsItemSelected(item);
+		}
 	}
 	
 	

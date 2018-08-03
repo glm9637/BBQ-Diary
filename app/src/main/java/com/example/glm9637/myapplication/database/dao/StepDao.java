@@ -15,10 +15,10 @@ import java.util.List;
 public interface StepDao {
 
     @Query("SELECT * FROM step WHERE recipe_id = :recipeId ORDER BY step_order")
-    public LiveData<List<StepEntry>> loadStepList(long recipeId);
+	LiveData<List<StepEntry>> loadStepList(long recipeId);
 
     @Query("SELECT id FROM step WHERE recipe_id= :recipeId")
-    public LiveData<List<Integer>> loadStepIdList(long recipeId);
+	LiveData<List<Integer>> loadStepIdList(long recipeId);
 	
 	@Query("SELECT * FROM step WHERE id = :stepId")
 	LiveData<StepEntry> loadStep(long stepId);

@@ -5,7 +5,6 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
 import com.example.glm9637.myapplication.ui.adapter.recyclerView.StepListAdapter;
-import com.example.glm9637.myapplication.ui.fragment.cut.RecipeFragment;
 import com.example.glm9637.myapplication.ui.fragment.step.StepDetailFragment;
 import com.example.glm9637.myapplication.ui.fragment.step.StepIngredientFragment;
 import com.example.glm9637.myapplication.ui.fragment.step.StepListFragment;
@@ -17,11 +16,10 @@ import java.util.List;
  */
 public class RecipeStepsFragmentAdapter extends FragmentPagerAdapter {
 	
-	private long recipeId;
+	private final long recipeId;
 	
 	private List<Integer> stepList;
-	private StepListFragment stepListFragment;
-	private StepListAdapter.ListEntryClickedListener onStepListener;
+	private final StepListAdapter.ListEntryClickedListener onStepListener;
 	
 	public RecipeStepsFragmentAdapter(FragmentManager fm, long recipeId, StepListAdapter.ListEntryClickedListener onStepListener) {
 		super(fm);
@@ -33,7 +31,7 @@ public class RecipeStepsFragmentAdapter extends FragmentPagerAdapter {
 	public Fragment getItem(int position) {
 		switch (position) {
 			case 0:
-				stepListFragment = StepListFragment.createFragment(recipeId);
+				StepListFragment stepListFragment = StepListFragment.createFragment(recipeId);
 				stepListFragment.setOnStepClickListener(onStepListener);
 				return stepListFragment;
 			case 1:

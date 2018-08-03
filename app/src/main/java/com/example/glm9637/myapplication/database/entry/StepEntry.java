@@ -3,6 +3,7 @@ package com.example.glm9637.myapplication.database.entry;
 import android.arch.persistence.room.ColumnInfo;
 import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.ForeignKey;
+import android.arch.persistence.room.Ignore;
 import android.arch.persistence.room.Index;
 import android.arch.persistence.room.PrimaryKey;
 import android.os.Parcel;
@@ -21,7 +22,7 @@ import java.io.Serializable;
 })
 public class StepEntry implements Serializable, Parcelable {
 	
-	@PrimaryKey()
+	@PrimaryKey(autoGenerate = true)
 	private long id;
 	
 	@ColumnInfo(name = "recipe_id")
@@ -31,6 +32,8 @@ public class StepEntry implements Serializable, Parcelable {
 	private String name;
 	private String description;
 	private long duration;
+	@Ignore
+	private boolean deleted;
 	
 	public StepEntry(long id, long recipeId, int order, String name, String description, long duration) {
 		this.id = id;
@@ -40,13 +43,17 @@ public class StepEntry implements Serializable, Parcelable {
 		this.description = description;
 		this.duration = duration;
 	}
-	
+
+	@Ignore
+	public StepEntry(int order, String name, String description, long duration) {
+		this.order = order;
+		this.name = name;
+		this.description = description;
+		this.duration = duration;
+	}
+
 	public long getId() {
 		return id;
-	}
-	
-	public void setId(long id) {
-		this.id = id;
 	}
 	
 	public long getRecipeId() {
@@ -92,9 +99,9 @@ public class StepEntry implements Serializable, Parcelable {
 	public static StepEntry[] populateData() {
 		return new StepEntry[]{
 				new StepEntry(1, 1, 1, "Trimming", "Trim down the fat on the outside", 5),
-				new StepEntry(2, 1, 1, "Searing", "Sear the Steak from both sides", 4),
-				new StepEntry(3, 1, 1, "Seasoning", "Get the meat off the grill and season it from both sides", 1),
-				new StepEntry(4, 1, 1, "Finishing", "Put the steak in indirekt heat of your grill, till ich reaches 57°C", 10)
+				new StepEntry(2, 1, 2, "Searing", "Sear the Steak from both sides", 4),
+				new StepEntry(3, 1, 3, "Seasoning", "Get the meat off the grill and season it from both sides", 1),
+				new StepEntry(4, 1, 4, "Finishing", "Put the steak in indirect heat of your grill, till ich reaches 57°C", 10)
 		};
 	}
 	
@@ -134,4 +141,12 @@ public class StepEntry implements Serializable, Parcelable {
 			return new StepEntry[size];
 		}
 	};
+
+	public boolean isDeleted() {
+		return deleted;
+	}
+
+	public void setDeleted(boolean deleted) {
+		this.deleted = deleted;
+	}
 }

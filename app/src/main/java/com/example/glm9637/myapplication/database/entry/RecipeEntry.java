@@ -21,13 +21,13 @@ import android.arch.persistence.room.PrimaryKey;
 public class RecipeEntry {
 	
 	@PrimaryKey(autoGenerate = true)
-	private int id;
+	private long id;
 	
 	@ColumnInfo(name = "category_id")
-	private int categoryid;
+	private final long categoryId;
 	
 	@ColumnInfo(name = "cut_id")
-	private int cutId;
+	private final long cutId;
 	
 	private String name;
 	@ColumnInfo(name = "short_description")
@@ -38,12 +38,12 @@ public class RecipeEntry {
 	private long duration;
 	
 	@ColumnInfo(name = "is_seasoning")
-	private boolean isSeasoning;
+	private final boolean isSeasoning;
 
 
-	public RecipeEntry(int id, int categoryid, int cutId, String name, String shortDescription, String description, String cookingStyle, long duration, boolean isSeasoning) {
+	public RecipeEntry(long id, long categoryId, long cutId, String name, String shortDescription, String description, String cookingStyle, long duration, boolean isSeasoning) {
 		this.id = id;
-		this.categoryid = categoryid;
+		this.categoryId = categoryId;
 		this.cutId = cutId;
 		this.name = name;
 		this.shortDescription = shortDescription;
@@ -54,8 +54,8 @@ public class RecipeEntry {
 	}
 	
 	@Ignore
-	public RecipeEntry(int categoryid, int cutId, String name, String shortDescription, String description, String cookingStyle, long duration, boolean isSeasoning) {
-		this.categoryid = categoryid;
+	public RecipeEntry(long categoryId, long cutId, String name, String shortDescription, String description, String cookingStyle, long duration, boolean isSeasoning) {
+		this.categoryId = categoryId;
 		this.cutId = cutId;
 		this.name = name;
 		this.shortDescription = shortDescription;
@@ -66,28 +66,17 @@ public class RecipeEntry {
 	}
 
 
-	public int getId() {
+	public long getId() {
 		return id;
 	}
 
-	public void setId(int id) {
-		this.id = id;
+
+	public long getCategoryId() {
+		return categoryId;
 	}
 
-	public int getCategoryid() {
-		return categoryid;
-	}
-
-	public void setCategoryid(int categoryid) {
-		this.categoryid = categoryid;
-	}
-
-	public int getCutId() {
+	public long getCutId() {
 		return cutId;
-	}
-
-	public void setCutId(int cutId) {
-		this.cutId = cutId;
 	}
 
 	public String getName() {
@@ -132,10 +121,6 @@ public class RecipeEntry {
 
 	public boolean isSeasoning() {
 		return isSeasoning;
-	}
-
-	public void setSeasoning(boolean seasoning) {
-		isSeasoning = seasoning;
 	}
 	
 	public static RecipeEntry[] populateData() {

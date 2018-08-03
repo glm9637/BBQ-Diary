@@ -5,26 +5,20 @@ import android.arch.lifecycle.ViewModel;
 import android.content.Context;
 
 import com.example.glm9637.myapplication.database.RecipeDatabase;
-import com.example.glm9637.myapplication.database.entry.CutEntry;
 import com.example.glm9637.myapplication.database.entry.IngredientEntry;
 import com.example.glm9637.myapplication.database.entry.RecipeEntry;
-import com.example.glm9637.myapplication.database.entry.StepEntry;
 
 import java.util.List;
 
 public class RecipeActivityViewModel extends ViewModel{
 
-    private RecipeDatabase database;
-
-    private LiveData<RecipeEntry> recipe;
-    private LiveData<List<IngredientEntry>> ingredients;
-    private LiveData<List<StepEntry>> steps;
+    private final LiveData<RecipeEntry> recipe;
+    private final LiveData<List<IngredientEntry>> ingredients;
 
     public RecipeActivityViewModel(Context context, long recipeId){
-        this.database = RecipeDatabase.getInstance(context);
-        recipe = this.database.getRecipeDao().loadRecipe(recipeId);
-        ingredients = this.database.getIngredientDao().loadIngredients(recipeId);
-        steps = this.database.getStepDao().loadStepList(recipeId);
+        RecipeDatabase database = RecipeDatabase.getInstance(context);
+        recipe = database.getRecipeDao().loadRecipe(recipeId);
+        ingredients = database.getIngredientDao().loadIngredients(recipeId);
     }
 
     public LiveData<RecipeEntry> getRecipe() {
@@ -33,9 +27,5 @@ public class RecipeActivityViewModel extends ViewModel{
 
     public LiveData<List<IngredientEntry>> getIngredients() {
         return ingredients;
-    }
-
-    public LiveData<List<StepEntry>> getSteps() {
-        return steps;
     }
 }

@@ -23,7 +23,6 @@ public class NoteListActivity extends AppCompatActivity {
 	private long recipeId;
 	
 	private NoteAdapter adapter;
-	private RecyclerView recyclerView;
 	private NoteListViewModel viewModel;
 	
 	private static Bundle mState;
@@ -36,7 +35,7 @@ public class NoteListActivity extends AppCompatActivity {
 		Toolbar toolbar = findViewById(R.id.toolbar);
 		setSupportActionBar(toolbar);
 		getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-		recyclerView = findViewById(R.id.recyclerview);
+		RecyclerView recyclerView = findViewById(R.id.recyclerview);
 		adapter = new NoteAdapter(this);
 		recyclerView.setAdapter(adapter);
 		recyclerView.setLayoutManager(new LinearLayoutManager(this));

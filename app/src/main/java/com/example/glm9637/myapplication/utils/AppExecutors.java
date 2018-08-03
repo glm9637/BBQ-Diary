@@ -12,7 +12,7 @@ public class AppExecutors {
 	private static AppExecutors sInstance;
 	private final Executor diskIO;
 	
-	public AppExecutors(Executor diskIO) {
+	private AppExecutors(Executor diskIO) {
 		this.diskIO = diskIO;
 	}
 	

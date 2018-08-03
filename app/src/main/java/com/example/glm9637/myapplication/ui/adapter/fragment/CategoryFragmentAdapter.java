@@ -13,7 +13,7 @@ import com.example.glm9637.myapplication.ui.fragment.category.RubFragment;
  */
 public class CategoryFragmentAdapter extends FragmentPagerAdapter {
 	
-	private long categoryId;
+	private final long categoryId;
 	
 	public CategoryFragmentAdapter(FragmentManager fm, long cutId) {
 		super(fm);

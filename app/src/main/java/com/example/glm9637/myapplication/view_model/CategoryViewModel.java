@@ -8,13 +8,10 @@ import com.example.glm9637.myapplication.database.entry.CategoryEntry;
 
 public class CategoryViewModel extends ViewModel {
 
-    private RecipeDatabase database;
-
-    private LiveData<CategoryEntry> category;
+	private final LiveData<CategoryEntry> category;
 
     public CategoryViewModel(RecipeDatabase database, long categoryId){
-        this.database = database;
-        category = this.database.getCategoryDao().loadCategory(categoryId);
+		category = database.getCategoryDao().loadCategory(categoryId);
     }
 
     public LiveData<CategoryEntry> getCategory() {

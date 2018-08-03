@@ -19,8 +19,7 @@ import com.example.glm9637.myapplication.utils.Constants;
 import java.util.List;
 
 public class RecipeStepActivity extends AppCompatActivity {
-	
-	private long recipeId;
+
 	private RecipeStepsFragmentAdapter adapter;
 	private ViewPager pager;
 	private TabLayout tabLayout;
@@ -29,8 +28,8 @@ public class RecipeStepActivity extends AppCompatActivity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_recipe_step);
-		
-		recipeId = getIntent().getLongExtra(Constants.Arguments.RECIPE_ID, 0);
+
+		long recipeId = getIntent().getLongExtra(Constants.Arguments.RECIPE_ID, 0);
 		
 		Toolbar toolbar = findViewById(R.id.toolbar);
 		setSupportActionBar(toolbar);

@@ -6,7 +6,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="#ffffff"
     android:layout_margin="8dp">
 
     <TextView
@@ -22,7 +21,8 @@
         android:id="@+id/txt_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_toRightOf="@id/txt_step_number"
+        android:layout_toEndOf="@id/txt_step_number"
+        android:layout_toStartOf="@id/txt_duration"
         tools:text="Ingredients"/>
 
     <TextView
@@ -40,8 +40,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/txt_duration"
-        android:layout_toRightOf="@id/txt_step_number"
+        android:layout_toEndOf="@id/txt_step_number"
         android:layout_alignParentEnd="true"
-        tools:text="Test \n test is thisajkfsdnvklbqöiorebvjbvdqoöreibvödb  qreöiobvjfdbv   ouqbevfd\ntest"/>
+        tools:text="This is a ignored test description, why is the text aligned right? But only until a linebreak? Keep an eye one this"/>
 
 </RelativeLayout>

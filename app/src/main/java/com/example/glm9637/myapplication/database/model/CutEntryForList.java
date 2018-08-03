@@ -1,11 +1,6 @@
 package com.example.glm9637.myapplication.database.model;
 
 import android.arch.persistence.room.ColumnInfo;
-import android.arch.persistence.room.Entity;
-import android.arch.persistence.room.ForeignKey;
-import android.arch.persistence.room.Ignore;
-import android.arch.persistence.room.Index;
-import android.arch.persistence.room.PrimaryKey;
 
 /**
  * Erzeugt von M. Fengels am 27.07.2018.
@@ -13,21 +8,24 @@ import android.arch.persistence.room.PrimaryKey;
 
 public class CutEntryForList {
 	
-	private long id;
+	private final long id;
 	
-	private String name;
-	private String description;
-	private String origin;
+	private final String name;
+	private final String description;
+	private final String origin;
 	@ColumnInfo(name = "recipe_count")
-	private int recipeCount;
-	
-	
-	public CutEntryForList(long id, String name, String description, String origin, int recipeCount) {
+	private final int recipeCount;
+	@ColumnInfo(name = "category_id")
+	private final long categoryId;
+
+
+	public CutEntryForList(long id, long categoryId, String name, String description, String origin, int recipeCount) {
 		this.id = id;
 		this.name = name;
 		this.description = description;
 		this.origin = origin;
 		this.recipeCount = recipeCount;
+		this.categoryId = categoryId;
 	}
 	
 	public long getId() {
@@ -48,5 +46,9 @@ public class CutEntryForList {
 	
 	public int getRecipeCount() {
 		return recipeCount;
+	}
+
+	public long getCategoryId() {
+		return categoryId;
 	}
 }

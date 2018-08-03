@@ -6,10 +6,6 @@ import android.content.Context;
 
 import com.example.glm9637.myapplication.database.RecipeDatabase;
 import com.example.glm9637.myapplication.database.entry.NoteEntry;
-import com.example.glm9637.myapplication.database.model.NoteEntryForList;
-import com.example.glm9637.myapplication.ui.adapter.recyclerView.StepListAdapter;
-
-import java.util.List;
 
 /**
  * Erzeugt von M. Fengels am 02.08.2018.
@@ -17,7 +13,7 @@ import java.util.List;
 public class NoteViewModel extends ViewModel {
 	
 	private LiveData<NoteEntry> note;
-	private RecipeDatabase database;
+	private final RecipeDatabase database;
 	
 	public NoteViewModel(Context context, long noteId){
 		database = RecipeDatabase.getInstance(context);
@@ -29,11 +25,6 @@ public class NoteViewModel extends ViewModel {
 	}
 	
 	public LiveData<NoteEntry> getNote() {
-		return note;
-	}
-	
-	public LiveData<NoteEntry> getNote(long noteId) {
-		note = database.getNoteDao().loadNote(noteId);
 		return note;
 	}
 	

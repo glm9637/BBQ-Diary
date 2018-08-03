@@ -9,13 +9,13 @@ import android.arch.persistence.room.PrimaryKey;
 public class NoteEntryForList {
 	
 	@PrimaryKey(autoGenerate = true)
-	private long id;
+	private final long id;
 	
 	@ColumnInfo(name = "recipe_id")
-	private long recipeId;
+	private final long recipeId;
 	
-	private String name;
-	private long date;
+	private final String name;
+	private final long date;
 	
 	public NoteEntryForList(long id, long recipeId, String name, long date) {
 		this.id = id;

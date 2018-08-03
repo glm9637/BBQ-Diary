@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<android.support.v7.widget.CardView
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -25,39 +24,41 @@
             android:textSize="36sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            tools:text="1."/>
+            tools:text="1." />
 
         <TextView
             android:id="@+id/txt_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="5dp"
+            android:layout_marginStart="8dp"
             app:layout_constraintLeft_toRightOf="@id/txt_step_number"
-            tools:text="Ingredients"/>
+            tools:text="Ingredients" />
 
         <TextView
             android:id="@+id/txt_duration"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
             android:drawableStart="@drawable/ic_access_time_black_24dp"
-
             android:gravity="center"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            tools:text="5min"/>
+            tools:text="5min" />
 
 
         <TextView
             android:id="@+id/txt_description"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:layout_marginStart="8dp"
             android:ellipsize="end"
             android:inputType="none"
             android:maxLines="2"
             app:layout_constraintLeft_toRightOf="@id/txt_step_number"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/txt_duration"
-            tools:text="Test \n test is thisajkfsdnvklbqöiorebvjbvdqoöreibvödb  qreöiobvjfdbv   ouqbevfd\ntest"/>
+            tools:text="Test \n This is just a test to see how it looks in the Designer" />
 
     </android.support.constraint.ConstraintLayout>
 </android.support.v7.widget.CardView>

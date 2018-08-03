@@ -5,7 +5,6 @@ import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.ForeignKey;
 import android.arch.persistence.room.Index;
 import android.arch.persistence.room.PrimaryKey;
-import android.text.Editable;
 
 import java.util.Date;
 
@@ -23,7 +22,7 @@ public class NoteEntry {
 	private long id;
 	
 	@ColumnInfo(name = "recipe_id")
-	private long recipeId;
+	private final long recipeId;
 	
 	private String name;
 	private String text;
@@ -47,17 +46,9 @@ public class NoteEntry {
 	public long getId() {
 		return id;
 	}
-	
-	public void setId(long id) {
-		this.id = id;
-	}
-	
+
 	public long getRecipeId() {
 		return recipeId;
-	}
-	
-	public void setRecipeId(long recipeId) {
-		this.recipeId = recipeId;
 	}
 	
 	public String getName() {

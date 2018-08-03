@@ -23,13 +23,10 @@ import java.util.List;
  * Erzeugt von M. Fengels am 02.08.2018.
  */
 public class StepListFragment extends Fragment {
-	
-	long recipeId;
-	RecyclerView recyclerView;
-	StepListAdapter adapter;
-	
-	RecipeStepsViewModel viewModel;
-	StepListAdapter.ListEntryClickedListener entryClickedListener;
+
+	private StepListAdapter adapter;
+
+	private StepListAdapter.ListEntryClickedListener entryClickedListener;
 	
 	public static StepListFragment createFragment(long recipeId) {
 		StepListFragment fragment = new StepListFragment();
@@ -42,16 +39,16 @@ public class StepListFragment extends Fragment {
 	@Nullable
 	@Override
 	public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-		recipeId = getArguments().getLong(Constants.Arguments.RECIPE_ID);
+		long recipeId = getArguments().getLong(Constants.Arguments.RECIPE_ID);
 		View rootView = inflater.inflate(R.layout.fragment_list, container, false);
-		recyclerView = rootView.findViewById(R.id.recyclerview);
+		RecyclerView recyclerView = rootView.findViewById(R.id.recyclerview);
 		recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 		adapter = new StepListAdapter(getContext());
 		if(entryClickedListener!=null){
 			adapter.setOnClickListener(entryClickedListener);
 		}
 		recyclerView.setAdapter(adapter);
-		viewModel = new RecipeStepsViewModel(getContext(), recipeId);
+		RecipeStepsViewModel viewModel = new RecipeStepsViewModel(getContext(), recipeId);
 		viewModel.getSteps().observe(this, new Observer<List<StepEntry>>() {
 			@Override
 			public void onChanged(@Nullable List<StepEntry> stepEntries) {

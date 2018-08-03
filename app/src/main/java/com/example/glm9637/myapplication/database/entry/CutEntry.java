@@ -3,10 +3,8 @@ package com.example.glm9637.myapplication.database.entry;
 import android.arch.persistence.room.ColumnInfo;
 import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.ForeignKey;
-import android.arch.persistence.room.Ignore;
 import android.arch.persistence.room.Index;
 import android.arch.persistence.room.PrimaryKey;
-import android.content.Context;
 
 import com.example.glm9637.myapplication.utils.Constants;
 
@@ -21,19 +19,19 @@ import com.example.glm9637.myapplication.utils.Constants;
 public class CutEntry {
 	
 	@PrimaryKey()
-	private long id;
+	private final long id;
 	
 	@ColumnInfo(name = "category_id")
-	private long categoryid;
+	private final long categoryId;
 	
-	private String name;
-	private String img;
-	private String description;
-	private String origin;
+	private final String name;
+	private final String img;
+	private final String description;
+	private final String origin;
 	
-	public CutEntry(long id, long categoryid, String name, String img, String description, String origin) {
+	public CutEntry(long id, long categoryId, String name, String img, String description, String origin) {
 		this.id = id;
-		this.categoryid = categoryid;
+		this.categoryId = categoryId;
 		this.name = name;
 		this.img = img;
 		this.description = description;
@@ -59,7 +57,7 @@ public class CutEntry {
 				new CutEntry(14, Constants.Ids.CATEGORY_BEEF, "Tender Roast", "", "One of the most tender cuts, it's lean yet juicy and versatile. Economical and robust in flavor, it may be cut into medallions before or after cooking", "chuck"),
 				new CutEntry(15, Constants.Ids.CATEGORY_BEEF, "Shoulder Tender Medallions", "", "One of the most tender beef cuts. Lean, juicy and versatile, with excellent flavor", "chuck"),
 				new CutEntry(16, Constants.Ids.CATEGORY_BEEF, "Country-style Chuck Ribs", "", "Juicy and flavorful; becomes extremely tender when cooked slowly at a low temperature", "chuck"),
-				new CutEntry(17, Constants.Ids.CATEGORY_BEEF, "Chuck Shourt Ribs", "", "Very flavorful, moist and tender when braised; available bone-in and boneless", "chuck"),
+				new CutEntry(17, Constants.Ids.CATEGORY_BEEF, "Chuck Short Ribs", "", "Very flavorful, moist and tender when braised; available bone-in and boneless", "chuck"),
 				
 				new CutEntry(18, Constants.Ids.CATEGORY_BEEF, "Rump Roast", "", "Lean and economical, this cut is best enjoyed braised. When roasted in the oven, slice thin against the grain to maximize tenderness", "Round"),
 				new CutEntry(19, Constants.Ids.CATEGORY_BEEF, "Top Round London Broil", "", "An economical and full-flavored cut. Best when marinated and sliced thinly against the grain", "Round"),
@@ -73,8 +71,8 @@ public class CutEntry {
 				new CutEntry(27, Constants.Ids.CATEGORY_BEEF, "Sirloin Tip Center Roast", "", "Lean, tender and economical, this roast's small size is perfect for an easy family dinner. Best when cooked to medium rare and sliced thin against the grain. May also be marinated", "Round"),
 				new CutEntry(28, Constants.Ids.CATEGORY_BEEF, "Sirloin Tip Center Steak", "", "Sirloin Tip Center Steak", "Round"),
 				new CutEntry(29, Constants.Ids.CATEGORY_BEEF, "Sirloin Tip Side Steak", "", "Sirloin Tip Side Steak", "Round"),
-				new CutEntry(30, Constants.Ids.CATEGORY_BEEF, "Sirloind Tip Roast", "", "A lean cut from the bottom sirloin, this economical choice is best when carved into thin slices", "Round"),
-				new CutEntry(31, Constants.Ids.CATEGORY_BEEF, "Butterfly Top Round Steak", "", "An econmical and full-flavored cut. Best when marinated and sliced thinly against the grain", "Round"),
+				new CutEntry(30, Constants.Ids.CATEGORY_BEEF, "Sirloin Tip Roast", "", "A lean cut from the bottom sirloin, this economical choice is best when carved into thin slices", "Round"),
+				new CutEntry(31, Constants.Ids.CATEGORY_BEEF, "Butterfly Top Round Steak", "", "An economical and full-flavored cut. Best when marinated and sliced thinly against the grain", "Round"),
 				
 				new CutEntry(32, Constants.Ids.CATEGORY_BEEF, "Ribeye Steak", "", "This boneless steak is rich, tender, juicy and full-flavored, with generous marbling throughout", "Rib"),
 				new CutEntry(33, Constants.Ids.CATEGORY_BEEF, "Prime Rib", "", "Rich flavor, juicy tenderness and majestic appearance. The grand champion of beef roasts. One of the most tender beef cuts. Fine-grained with generous marbling throughout", "Rib"),
@@ -133,8 +131,8 @@ public class CutEntry {
 				new CutEntry(77, Constants.Ids.CATEGORY_PORK, "Crown Roast", "", "These cuts make a showstopping centerpiece for an elegant dinner", "Loin"),
 				new CutEntry(78, Constants.Ids.CATEGORY_PORK, "Baby Back Ribs", "", "Ribs are commonly prepared with either a “wet” or “dry” rub. Dry rubs consist of a mixture of herbs and spices, and can be applied just before barbecuing or grilling", "Loin"),
 				new CutEntry(79, Constants.Ids.CATEGORY_PORK, "St. Louis Spare Ribs", "", "These often are the best type of ribs for recipes that require browning in a frying pan because the ribs are straight and flat", "Loin"),
-				new CutEntry(80, Constants.Ids.CATEGORY_PORK, "Bone-in Boston Butt Roast ", "", "The blade roast is a wellmarbled cut. This versatile cut can be pot-roasted whole, cut up for stews or cooked over moist smoke in a smoker to transform it into classic pulled pork barbecue", "Shoulder"),
-				new CutEntry(81, Constants.Ids.CATEGORY_PORK, "Boneless Boston Butt Roast", "", "The blade roast is a wellmarbled cut. This versatile cut can be pot-roasted whole, cut up for stews or cooked over moist smoke in a smoker to transform it into classic pulled pork barbecue", "Shoulder"),
+				new CutEntry(80, Constants.Ids.CATEGORY_PORK, "Bone-in Boston Butt Roast ", "", "The blade roast is a well marbled cut. This versatile cut can be pot-roasted whole, cut up for stews or cooked over moist smoke in a smoker to transform it into classic pulled pork barbecue", "Shoulder"),
+				new CutEntry(81, Constants.Ids.CATEGORY_PORK, "Boneless Boston Butt Roast", "", "The blade roast is a well marbled cut. This versatile cut can be pot-roasted whole, cut up for stews or cooked over moist smoke in a smoker to transform it into classic pulled pork barbecue", "Shoulder"),
 				new CutEntry(82, Constants.Ids.CATEGORY_PORK, "Sausage", "", "Sausage has the capacity to blend well with a variety of herbs, spices, fruits and vegetables", "Shoulder"),
 				new CutEntry(83, Constants.Ids.CATEGORY_PORK, "Grinds", "", "Fresh ground pork is unseasoned and makes a great substitute for other ground meats in your favorite recipes", "Shoulder"),
 				new CutEntry(84, Constants.Ids.CATEGORY_PORK, "Skinless Pork Belly", "", "Fresh belly is succulent and richly flavorful and is often served in small portions. Pork belly is at its best and is most tender when prepared using a slow cooking method, such as braising", "Belly"),
@@ -144,29 +142,29 @@ public class CutEntry {
 				new CutEntry(88, Constants.Ids.CATEGORY_PORK, "Shank", "", "Shanks can be fresh or cured and are normally braised, roasted or slow-cooked", "Leg"),
 				new CutEntry(89, Constants.Ids.CATEGORY_PORK, "Other", "", "Pieces that fit to no other Cut", "Other"),
 				
-				new CutEntry(90, Constants.Ids.CATEGORY_POULTY, "Chicken breast", "", "Chicken breasts, arguably one of the most difficult of the standard meats to grill. It's all too common of an occurrence to get dry, chewy breasts", "Chicken"),
-				new CutEntry(91, Constants.Ids.CATEGORY_POULTY, "Tenders", "", "Chicken tenders are awesome because they cook so quickly, especially on a gril.Serve Them up with some sort of veggies and call it good.", "Chicken"),
-				new CutEntry(92, Constants.Ids.CATEGORY_POULTY, "Chicken leg", "", "Chicken legs are some of the tastiest hunks of meat you can eat. They’re affordable and succulent if you treat them right", "Chicken"),
-				new CutEntry(93, Constants.Ids.CATEGORY_POULTY, "Chicken drumstick", "", "When it comes to affordability, chicken drumsticks tend to be the go-to cut of poultry for family dinners", "Chicken"),
-				new CutEntry(94, Constants.Ids.CATEGORY_POULTY, "Chicken thigh", "", "Chicken thighs are the juiciest, most-flavorful part of the chicken and when the bone is left in, well, they taste even better", "Chicken"),
-				new CutEntry(95, Constants.Ids.CATEGORY_POULTY, "Chicken wing", "", "Chicken Wings are great for any occasion. They are even better when grilled up with all that extra smoky flavor", "Chicken"),
-				new CutEntry(96, Constants.Ids.CATEGORY_POULTY, "Chicken wing tip", "", "The tip, the very end point of the wing, made up mostly of skin and cartilage, is a crunchy, chewy, tasty, underappreciated delight", "Chicken"),
-				new CutEntry(97, Constants.Ids.CATEGORY_POULTY, "Backs and Necks", "", "Chicken Backs are very popular in the American south: even though there is little meat on them, they offer lots of area to be coated with batter and deep-fried", "Chicken"),
-				new CutEntry(98, Constants.Ids.CATEGORY_POULTY, "Other Chicken Cuts", "", "Pieces that fit to no other Cut", "Chicken"),
+				new CutEntry(90, Constants.Ids.CATEGORY_POULTRY, "Chicken breast", "", "Chicken breasts, arguably one of the most difficult of the standard meats to grill. It's all too common of an occurrence to get dry, chewy breasts", "Chicken"),
+				new CutEntry(91, Constants.Ids.CATEGORY_POULTRY, "Tenders", "", "Chicken tenders are awesome because they cook so quickly, especially on a grill.Serve Them up with some sort of veggies and call it good.", "Chicken"),
+				new CutEntry(92, Constants.Ids.CATEGORY_POULTRY, "Chicken leg", "", "Chicken legs are some of the tastiest hunks of meat you can eat. They’re affordable and succulent if you treat them right", "Chicken"),
+				new CutEntry(93, Constants.Ids.CATEGORY_POULTRY, "Chicken drumstick", "", "When it comes to affordability, chicken drumsticks tend to be the go-to cut of poultry for family dinners", "Chicken"),
+				new CutEntry(94, Constants.Ids.CATEGORY_POULTRY, "Chicken thigh", "", "Chicken thighs are the juiciest, most-flavorful part of the chicken and when the bone is left in, well, they taste even better", "Chicken"),
+				new CutEntry(95, Constants.Ids.CATEGORY_POULTRY, "Chicken wing", "", "Chicken Wings are great for any occasion. They are even better when grilled up with all that extra smoky flavor", "Chicken"),
+				new CutEntry(96, Constants.Ids.CATEGORY_POULTRY, "Chicken wing tip", "", "The tip, the very end point of the wing, made up mostly of skin and cartilage, is a crunchy, chewy, tasty, underappreciated delight", "Chicken"),
+				new CutEntry(97, Constants.Ids.CATEGORY_POULTRY, "Backs and Necks", "", "Chicken Backs are very popular in the American south: even though there is little meat on them, they offer lots of area to be coated with batter and deep-fried", "Chicken"),
+				new CutEntry(98, Constants.Ids.CATEGORY_POULTRY, "Other Chicken Cuts", "", "Pieces that fit to no other Cut", "Chicken"),
 				
-				new CutEntry(99, Constants.Ids.CATEGORY_POULTY, "Duck Roast", "", "Rich and full of flavour, duck meat is extremely nutritious, with high levels of protein, B vitamins and minerals such as zinc, potassium, magnesium and iron", "Duck"),
-				new CutEntry(100, Constants.Ids.CATEGORY_POULTY, "Duck Breast Filet", "", " If you're cooking duck breast its comparatively high fat content can be reduced by removing the skin, and the layer of fat that sits beneath it, before cooking", "Duck"),
-				new CutEntry(101, Constants.Ids.CATEGORY_POULTY, "Duck Wings", "", "Duck wings are pretty similar to chicken wings. Also sometimes they aren't as meaty, so the are often used for Stocks", "Duck"),
-				new CutEntry(102, Constants.Ids.CATEGORY_POULTY, "Other Duck Cuts", "", "Pieces that fit to no other Cut", "Duck"),
+				new CutEntry(99, Constants.Ids.CATEGORY_POULTRY, "Duck Roast", "", "Rich and full of flavour, duck meat is extremely nutritious, with high levels of protein, B vitamins and minerals such as zinc, potassium, magnesium and iron", "Duck"),
+				new CutEntry(100, Constants.Ids.CATEGORY_POULTRY, "Duck Breast Filet", "", " If you're cooking duck breast its comparatively high fat content can be reduced by removing the skin, and the layer of fat that sits beneath it, before cooking", "Duck"),
+				new CutEntry(101, Constants.Ids.CATEGORY_POULTRY, "Duck Wings", "", "Duck wings are pretty similar to chicken wings. Also sometimes they aren't as meaty, so the are often used for Stocks", "Duck"),
+				new CutEntry(102, Constants.Ids.CATEGORY_POULTRY, "Other Duck Cuts", "", "Pieces that fit to no other Cut", "Duck"),
 				
-				new CutEntry(103, Constants.Ids.CATEGORY_POULTY, "Turkey Breast Filet", "", "A tender cut, you can slice into any size you require for your recipe – diced, strips etc. ", "Turkey"),
-				new CutEntry(104, Constants.Ids.CATEGORY_POULTY, "Turkey Roast", "", "Roast for special occasions such as Christmas, Easter, Thanksgiving or for when you have a crowd to feed", "Turkey"),
-				new CutEntry(105, Constants.Ids.CATEGORY_POULTY, "Turkey Crown", "", " A great choice for smaller family roasts and for those who prefer the white breast meat", "Turkey"),
-				new CutEntry(106, Constants.Ids.CATEGORY_POULTY, "Thigh Joint", "", "Sometimes these are ready-stuffed or supplied in net with the skin attached. This keeps the meat juicy as it roasts", "Turkey"),
-				new CutEntry(107, Constants.Ids.CATEGORY_POULTY, "Drumstick", "", " Needs long, slow cooking - barbecuing, slow roasting or braising", "Turkey"),
-				new CutEntry(108, Constants.Ids.CATEGORY_POULTY, "Breast Joint", "", "Ideal for when you fancy cooking a roast dinner for fewer people", "Turkey"),
-				new CutEntry(109, Constants.Ids.CATEGORY_POULTY, "Minced Breast", "", "Highly versatile and can be used in any recipe in place of red meat mince", "Turkey"),
-				new CutEntry(110, Constants.Ids.CATEGORY_POULTY, "Other Turkey Cuts", "", "", "Turkey"),
+				new CutEntry(103, Constants.Ids.CATEGORY_POULTRY, "Turkey Breast Filet", "", "A tender cut, you can slice into any size you require for your recipe – diced, strips etc. ", "Turkey"),
+				new CutEntry(104, Constants.Ids.CATEGORY_POULTRY, "Turkey Roast", "", "Roast for special occasions such as Christmas, Easter, Thanksgiving or for when you have a crowd to feed", "Turkey"),
+				new CutEntry(105, Constants.Ids.CATEGORY_POULTRY, "Turkey Crown", "", " A great choice for smaller family roasts and for those who prefer the white breast meat", "Turkey"),
+				new CutEntry(106, Constants.Ids.CATEGORY_POULTRY, "Thigh Joint", "", "Sometimes these are ready-stuffed or supplied in net with the skin attached. This keeps the meat juicy as it roasts", "Turkey"),
+				new CutEntry(107, Constants.Ids.CATEGORY_POULTRY, "Drumstick", "", " Needs long, slow cooking - barbecuing, slow roasting or braising", "Turkey"),
+				new CutEntry(108, Constants.Ids.CATEGORY_POULTRY, "Breast Joint", "", "Ideal for when you fancy cooking a roast dinner for fewer people", "Turkey"),
+				new CutEntry(109, Constants.Ids.CATEGORY_POULTRY, "Minced Breast", "", "Highly versatile and can be used in any recipe in place of red meat mince", "Turkey"),
+				new CutEntry(110, Constants.Ids.CATEGORY_POULTRY, "Other Turkey Cuts", "", "", "Turkey"),
 				
 				new CutEntry(111, Constants.Ids.CATEGORY_FISH, "Salmon", "", "Grilled salmon is a delightfully simple way to serve up a superfood dinner full of protein and healthy fats", "Fish"),
 				new CutEntry(112, Constants.Ids.CATEGORY_FISH, "Tuna", "", "Tuna is a dense fish that is not too fatty and has a light flavor.   It tastes amazing with basic seasonings or works well with almost any seasoning", "Fish"),
@@ -181,15 +179,15 @@ public class CutEntry {
 				new CutEntry(121, Constants.Ids.CATEGORY_FISH, "Walleye", "", " Walleye has a very light and non-fishy flavor. It is also known for having large fillets that will allow a single fish to fill up a large family-style portion that are popular in American cuisine", "Fish"),
 				new CutEntry(122, Constants.Ids.CATEGORY_FISH, "Catfish", "", "Catfish is a Southern favorite that tastes delicious when seasoned and grilled", "Fish"),
 				new CutEntry(123, Constants.Ids.CATEGORY_FISH, "Shrimp", "", "A staple at any party or function, you are guaranteed to be the hit of the party when you show up with these and some of our homemade cocktail sauce", "Fish"),
-				new CutEntry(124, Constants.Ids.CATEGORY_FISH, "Shellfish", "", "Shellfish is a broad term for crustacean and mollusc seafood. Each group has its own varieties and its own peculiarities of preparation, but most shellfish is easy to cook, rich in minerals and bursting with flavour", "Fish"),
+				new CutEntry(124, Constants.Ids.CATEGORY_FISH, "Shellfish", "", "Shellfish is a broad term for crustacean and mollusk seafood. Each group has its own varieties and its own peculiarities of preparation, but most shellfish is easy to cook, rich in minerals and bursting with flavour", "Fish"),
 				new CutEntry(125, Constants.Ids.CATEGORY_FISH, "Other fish", "", "Pieces that fit to no other Cut", "Fish"),
 				
 				new CutEntry(126, Constants.Ids.CATEGORY_VEGETABLE, "Corn", "", "Nearly everyone ", "Veggies"),
-				new CutEntry(127, Constants.Ids.CATEGORY_VEGETABLE, "Aspargus", "", "", "Veggies"),
+				new CutEntry(127, Constants.Ids.CATEGORY_VEGETABLE, "Asparagus", "", "", "Veggies"),
 				new CutEntry(128, Constants.Ids.CATEGORY_VEGETABLE, "Cauliflower", "", "", "Veggies"),
 				new CutEntry(129, Constants.Ids.CATEGORY_VEGETABLE, "Brussels Sprouts", "", "", "Veggies"),
 				new CutEntry(130, Constants.Ids.CATEGORY_VEGETABLE, "Zucchini", "", "", "Veggies"),
-				new CutEntry(131, Constants.Ids.CATEGORY_VEGETABLE, "Potatos", "", "", "Veggies"),
+				new CutEntry(131, Constants.Ids.CATEGORY_VEGETABLE, "Potatoes", "", "", "Veggies"),
 				new CutEntry(132, Constants.Ids.CATEGORY_VEGETABLE, "Pepper", "", "", "Veggies"),
 				new CutEntry(133, Constants.Ids.CATEGORY_VEGETABLE, "Eggplant", "", "", "Veggies"),
 				new CutEntry(134, Constants.Ids.CATEGORY_VEGETABLE, "Mushroom", "", "", "Veggies"),
@@ -199,7 +197,7 @@ public class CutEntry {
 				
 				new CutEntry(Constants.Ids.CATEGORY_BEEF_RUB, Constants.Ids.CATEGORY_BEEF, Constants.CUT_NAME_RUB, "", "", ""),
 				new CutEntry(Constants.Ids.CATEGORY_PORK_RUB, Constants.Ids.CATEGORY_PORK, Constants.CUT_NAME_RUB, "", "", ""),
-				new CutEntry(Constants.Ids.CATEGORY_POULTY_RUB, Constants.Ids.CATEGORY_POULTY, Constants.CUT_NAME_RUB, "", "", ""),
+				new CutEntry(Constants.Ids.CATEGORY_POULTRY_RUB, Constants.Ids.CATEGORY_POULTRY, Constants.CUT_NAME_RUB, "", "", ""),
 				new CutEntry(Constants.Ids.CATEGORY_FISH_RUB, Constants.Ids.CATEGORY_FISH, Constants.CUT_NAME_RUB, "", "", ""),
 				new CutEntry(Constants.Ids.CATEGORY_VEGETABLE_RUB, Constants.Ids.CATEGORY_VEGETABLE, Constants.CUT_NAME_RUB, "", "", ""),
 				new CutEntry(Constants.Ids.CATEGORY_OTHER_RUB, Constants.Ids.CATEGORY_OTHER, Constants.CUT_NAME_RUB, "", "", ""),
@@ -212,8 +210,8 @@ public class CutEntry {
 		return id;
 	}
 	
-	public long getCategoryid() {
-		return categoryid;
+	public long getCategoryId() {
+		return categoryId;
 	}
 	
 	public String getName() {

@@ -12,7 +12,7 @@ import com.example.glm9637.myapplication.database.entry.StepEntry;
 public class StepFragmentViewModel {
 	
 	private LiveData<StepEntry> step;
-	private RecipeDatabase database;
+	private final RecipeDatabase database;
 	
 	public StepFragmentViewModel(Context context){
 		database = RecipeDatabase.getInstance(context);

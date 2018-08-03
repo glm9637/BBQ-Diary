@@ -30,8 +30,7 @@ public class CutsFragment extends Fragment {
     private CutFragmentViewModel viewModel;
     private RecyclerView recyclerView;
     private CutAdapter adapter;
-	
-	private Parcelable mLayoutManagerState;
+
 	private static Bundle mBundleRecyclerViewState;
     @Nullable
     @Override
@@ -39,7 +38,7 @@ public class CutsFragment extends Fragment {
         Long categoryId = getArguments().getLong(Constants.Arguments.CATEGORY_ID);
         View rootView = inflater.inflate(R.layout.fragment_list, container, false);
         recyclerView = rootView.findViewById(R.id.recyclerview);
-        adapter = new CutAdapter(getContext());
+        adapter = new CutAdapter(getActivity());
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
@@ -71,7 +70,7 @@ public class CutsFragment extends Fragment {
 		super.onPause();
 			super.onPause();
 			mBundleRecyclerViewState = new Bundle();
-			mLayoutManagerState = recyclerView.getLayoutManager().onSaveInstanceState();
+		Parcelable mLayoutManagerState = recyclerView.getLayoutManager().onSaveInstanceState();
 			mBundleRecyclerViewState.putParcelable(Constants.Arguments.SAVE_INSTANCE_RECYCLERVIEW, mLayoutManagerState);
 	}
 	

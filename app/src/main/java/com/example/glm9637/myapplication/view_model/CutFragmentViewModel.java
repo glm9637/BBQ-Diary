@@ -10,13 +10,10 @@ import java.util.List;
 
 public class CutFragmentViewModel extends ViewModel {
 
-    private RecipeDatabase database;
-
-    private LiveData<List<CutEntryForList>> cutList;
+	private final LiveData<List<CutEntryForList>> cutList;
 
     public CutFragmentViewModel(RecipeDatabase database, long categoryId){
-        this.database = database;
-        cutList = this.database.getCutDao().loadCutList(categoryId);
+		cutList = database.getCutDao().loadCutList(categoryId);
     }
 
     public LiveData<List<CutEntryForList>> getCutList() {

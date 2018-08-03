@@ -21,13 +21,10 @@ import com.example.glm9637.myapplication.view_model.StepFragmentViewModel;
  * Erzeugt von M. Fengels am 02.08.2018.
  */
 public class StepDetailFragment extends Fragment implements View.OnClickListener {
-	
-	private long stepId;
-	private StepFragmentViewModel viewModel;
+
 	private TextView title;
 	private TextView description;
 	private TextView duration;
-	private Button timer;
 	private StepEntry step;
 	
 	public static Fragment createFragment(long stepId) {
@@ -41,21 +38,21 @@ public class StepDetailFragment extends Fragment implements View.OnClickListener
 	@Nullable
 	@Override
 	public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-		stepId = getArguments().getLong(Constants.Arguments.STEP_ID);
+		long stepId = getArguments().getLong(Constants.Arguments.STEP_ID);
 		View rootView = inflater.inflate(R.layout.fragment_step, container, false);
 		title = rootView.findViewById(R.id.txt_title);
 		description = rootView.findViewById(R.id.txt_description);
 		duration = rootView.findViewById(R.id.txt_duration);
-		timer = rootView.findViewById(R.id.btn_timer);
+		Button timer = rootView.findViewById(R.id.btn_timer);
 		timer.setOnClickListener(this);
-		viewModel = new StepFragmentViewModel(getContext());
+		StepFragmentViewModel viewModel = new StepFragmentViewModel(getContext());
 		viewModel.setStepId(stepId);
 		viewModel.getStep().observe(getActivity(), new Observer<StepEntry>() {
 			@Override
 			public void onChanged(@Nullable StepEntry stepEntry) {
 				title.setText(stepEntry.getName());
 				description.setText(stepEntry.getDescription());
-				duration.setText(String.valueOf(stepEntry.getDuration()));
+				duration.setText(getContext().getString(R.string.time_min,stepEntry.getDuration()));
 				step = stepEntry;
 			}
 		});

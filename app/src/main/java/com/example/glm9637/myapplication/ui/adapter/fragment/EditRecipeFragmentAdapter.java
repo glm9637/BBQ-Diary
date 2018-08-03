@@ -4,14 +4,14 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
+import com.example.glm9637.myapplication.database.entry.IngredientEntry;
 import com.example.glm9637.myapplication.database.entry.RecipeEntry;
-import com.example.glm9637.myapplication.ui.adapter.recyclerView.StepListAdapter;
+import com.example.glm9637.myapplication.database.entry.StepEntry;
 import com.example.glm9637.myapplication.ui.fragment.edit_recipe.EditRecipeDescriptionFragment;
 import com.example.glm9637.myapplication.ui.fragment.edit_recipe.EditRecipeFinishFragment;
 import com.example.glm9637.myapplication.ui.fragment.edit_recipe.EditRecipeIngredientFragment;
 import com.example.glm9637.myapplication.ui.fragment.edit_recipe.EditRecipeNameFragment;
 import com.example.glm9637.myapplication.ui.fragment.edit_recipe.EditRecipeStepsFragment;
-import com.example.glm9637.myapplication.ui.fragment.step.StepListFragment;
 
 import java.util.List;
 
@@ -19,31 +19,33 @@ import java.util.List;
  * Erzeugt von M. Fengels am 02.08.2018.
  */
 public class EditRecipeFragmentAdapter extends FragmentPagerAdapter {
-	
+
 	private RecipeEntry recipe;
 	private boolean isRub;
-	
-	private List<Integer> stepList;
-	private StepListFragment stepListFragment;
-	private StepListAdapter.ListEntryClickedListener onStepListener;
-	
+
 	private EditRecipeNameFragment nameFragment;
 	private EditRecipeDescriptionFragment descriptionFragment;
 	private EditRecipeIngredientFragment ingredientFragment;
 	private EditRecipeStepsFragment stepsFragment;
 	private EditRecipeFinishFragment finishFragment;
-	
-	public EditRecipeFragmentAdapter(FragmentManager fm, RecipeEntry recipe) {
+
+	private final EditRecipeNameFragment.EnableSwipeListener swipeListener;
+	private final EditRecipeFinishFragment.RecipeFinishedListener finishedListener;
+
+	public EditRecipeFragmentAdapter(FragmentManager fm, RecipeEntry recipe, EditRecipeNameFragment.EnableSwipeListener swipeListener, EditRecipeFinishFragment.RecipeFinishedListener finishedListener) {
 		super(fm);
-		
+		this.swipeListener = swipeListener;
 		this.recipe = recipe;
+		this.finishedListener = finishedListener;
 	}
-	
-	public EditRecipeFragmentAdapter(FragmentManager fm, boolean isRub) {
+
+	public EditRecipeFragmentAdapter(FragmentManager fm, boolean isRub, EditRecipeNameFragment.EnableSwipeListener swipeListener, EditRecipeFinishFragment.RecipeFinishedListener finishedListener) {
 		super(fm);
+		this.swipeListener = swipeListener;
 		this.isRub = isRub;
+		this.finishedListener = finishedListener;
 	}
-	
+
 	@Override
 	public Fragment getItem(int position) {
 		switch (position) {
@@ -52,8 +54,9 @@ public class EditRecipeFragmentAdapter extends FragmentPagerAdapter {
 					if (recipe == null) {
 						nameFragment = EditRecipeNameFragment.createFragment(isRub);
 					} else {
-						nameFragment = EditRecipeNameFragment.createFragment(recipe.getName(), recipe.getShortDescription(),recipe.isSeasoning());
+						nameFragment = EditRecipeNameFragment.createFragment(recipe.getName(), recipe.getShortDescription(), recipe.isSeasoning(), recipe.getCookingStyle(), recipe.getDuration());
 					}
+					nameFragment.setEnableSwipeListener(swipeListener);
 				}
 				return nameFragment;
 			case 1:
@@ -85,16 +88,49 @@ public class EditRecipeFragmentAdapter extends FragmentPagerAdapter {
 				return stepsFragment;
 			default:
 				if (finishFragment == null) {
-					finishFragment = EditRecipeFinishFragment.createFragment(recipe == null);
+					finishFragment = EditRecipeFinishFragment.createFragment();
+					finishFragment.setRecipeFinishedListener(finishedListener);
 				}
+
 				return finishFragment;
 		}
-		
+
 	}
-	
+
 	@Override
 	public int getCount() {
 		return 5;
 	}
-	
+
+	public String getName() {
+		return nameFragment.getName();
+	}
+
+	public String getShortDescription() {
+		return nameFragment.getShortDescription();
+	}
+
+	public String getCookingStyle() {
+		return nameFragment.getCookingStyle();
+	}
+
+	public long getDuration() {
+		return nameFragment.getDuration();
+	}
+
+	public String getDescription() {
+		return descriptionFragment.getDescription();
+	}
+
+	public List<IngredientEntry> getIngredients() {
+		return ingredientFragment.getIngredients();
+	}
+
+	public List<StepEntry> getSteps() {
+		return stepsFragment.getSteps();
+	}
+
+	public boolean getIsRub() {
+		return nameFragment.isRub();
+	}
 }

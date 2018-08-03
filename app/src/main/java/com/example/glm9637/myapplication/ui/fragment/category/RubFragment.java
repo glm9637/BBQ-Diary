@@ -15,12 +15,9 @@ import android.view.ViewGroup;
 import com.example.glm9637.myapplication.R;
 import com.example.glm9637.myapplication.database.entry.RecipeEntry;
 import com.example.glm9637.myapplication.ui.activity.EditRecipeActivity;
-import com.example.glm9637.myapplication.ui.adapter.recyclerView.CutAdapter;
 import com.example.glm9637.myapplication.database.RecipeDatabase;
-import com.example.glm9637.myapplication.database.model.CutEntryForList;
 import com.example.glm9637.myapplication.ui.adapter.recyclerView.RecipeAdapter;
 import com.example.glm9637.myapplication.utils.Constants;
-import com.example.glm9637.myapplication.view_model.CutFragmentViewModel;
 import com.example.glm9637.myapplication.view_model.RubFragmentViewModel;
 
 import java.util.List;
@@ -33,16 +30,15 @@ public class RubFragment extends Fragment {
 	private long categoryId;
 
     private RubFragmentViewModel viewModel;
-    private RecyclerView recyclerView;
-    private RecipeAdapter adapter;
+	private RecipeAdapter adapter;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         categoryId = getArguments().getLong(Constants.Arguments.CATEGORY_ID);
         View rootView = inflater.inflate(R.layout.fragment_list_addable, container, false);
-        recyclerView = rootView.findViewById(R.id.recyclerview);
-        adapter = new RecipeAdapter(getContext());
+		RecyclerView recyclerView = rootView.findViewById(R.id.recyclerview);
+        adapter = new RecipeAdapter(getActivity());
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 

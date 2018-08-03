@@ -16,7 +16,6 @@ import com.example.glm9637.myapplication.database.entry.IngredientEntry;
 import com.example.glm9637.myapplication.ui.adapter.recyclerView.IngredientAdapter;
 import com.example.glm9637.myapplication.utils.Constants;
 import com.example.glm9637.myapplication.view_model.IngredientFragmentViewModel;
-import com.example.glm9637.myapplication.view_model.RecipeStepsViewModel;
 
 import java.util.List;
 
@@ -24,12 +23,10 @@ import java.util.List;
  * Erzeugt von M. Fengels am 02.08.2018.
  */
 public class StepIngredientFragment extends Fragment{
+
+	private IngredientAdapter adapter;
 	
-	long recipeId;
-	RecyclerView recyclerView;
-	IngredientAdapter adapter;
-	
-	IngredientFragmentViewModel viewModel;
+	private IngredientFragmentViewModel viewModel;
 	
 	public static Fragment createFragment(long recipeId) {
 		StepIngredientFragment fragment = new StepIngredientFragment();
@@ -42,9 +39,9 @@ public class StepIngredientFragment extends Fragment{
 	@Nullable
 	@Override
 	public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-		recipeId = getArguments().getLong(Constants.Arguments.RECIPE_ID);
+		long recipeId = getArguments().getLong(Constants.Arguments.RECIPE_ID);
 		View rootView = inflater.inflate(R.layout.fragment_list, container, false);
-		recyclerView = rootView.findViewById(R.id.recyclerview);
+		RecyclerView recyclerView = rootView.findViewById(R.id.recyclerview);
 		recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 		adapter = new IngredientAdapter(getContext());
 		recyclerView.setAdapter(adapter);

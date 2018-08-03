@@ -14,7 +14,7 @@ import java.util.List;
 public class RecipeStepsViewModel {
 
 	
-	LiveData<List<StepEntry>> steps;
+	private final LiveData<List<StepEntry>> steps;
 	
 	public RecipeStepsViewModel(Context context, long recipeId){
 		RecipeDatabase database = RecipeDatabase.getInstance(context);

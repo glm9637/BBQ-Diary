@@ -14,7 +14,7 @@ import java.util.List;
  */
 public class RecipeFragmentViewModel extends ViewModel {
 	
-	private LiveData<List<RecipeEntry>> recipeList;
+	private final LiveData<List<RecipeEntry>> recipeList;
 	
 	public RecipeFragmentViewModel(Context context,long cutId){
 		RecipeDatabase database = RecipeDatabase.getInstance(context);

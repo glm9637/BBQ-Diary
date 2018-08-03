@@ -5,7 +5,6 @@ import android.content.Context;
 
 import com.example.glm9637.myapplication.database.RecipeDatabase;
 import com.example.glm9637.myapplication.database.entry.IngredientEntry;
-import com.example.glm9637.myapplication.ui.adapter.recyclerView.IngredientAdapter;
 
 import java.util.List;
 
@@ -15,7 +14,7 @@ import java.util.List;
 public class IngredientFragmentViewModel {
 	
 	private LiveData<List<IngredientEntry>> data;
-	private RecipeDatabase database;
+	private final RecipeDatabase database;
 	
 	public IngredientFragmentViewModel(Context context){
 		database = RecipeDatabase.getInstance(context);

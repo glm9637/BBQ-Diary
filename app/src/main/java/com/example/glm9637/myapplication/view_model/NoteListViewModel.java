@@ -14,7 +14,7 @@ import java.util.List;
  */
 public class NoteListViewModel extends ViewModel {
 	
-	private LiveData<List<NoteEntryForList>> noteList;
+	private final LiveData<List<NoteEntryForList>> noteList;
 	
 	public NoteListViewModel(Context context, long recipeId) {
 		RecipeDatabase database = RecipeDatabase.getInstance(context);

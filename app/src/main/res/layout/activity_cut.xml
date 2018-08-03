@@ -19,6 +19,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:contentScrim="#ffffff"
+            android:transitionName="cut text"
             app:layout_scrollFlags="scroll|exitUntilCollapsed"
             app:expandedTitleTextAppearance="@android:color/transparent"
             android:fitsSystemWindows="true">
@@ -29,6 +30,7 @@
                 android:layout_height="350dp"
                 android:scaleType="centerCrop"
                 tools:src="@drawable/landing_header"
+                android:contentDescription="@string/title_image"
                 app:layout_collapseMode="parallax"/>
 
             <android.support.v7.widget.Toolbar
@@ -52,5 +54,12 @@
         android:layout_height="match_parent"
         android:fillViewport="true"
         app:layout_behavior="@string/appbar_scrolling_view_behavior"/>
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/btn_add"
+        style="@style/FloatingActionButton"
+        android:src="@drawable/ic_add_white_24dp"
+        app:fabSize="normal"
+        android:layout_gravity="bottom|end"/>
 
 </android.support.design.widget.CoordinatorLayout>

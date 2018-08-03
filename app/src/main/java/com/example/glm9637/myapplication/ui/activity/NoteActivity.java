@@ -3,7 +3,6 @@ package com.example.glm9637.myapplication.ui.activity;
 import android.arch.lifecycle.Observer;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
@@ -21,12 +20,12 @@ import java.util.Date;
 
 public class NoteActivity extends AppCompatActivity {
 	
-	long noteId;
-	long recipeId;
-	NoteViewModel viewModel;
-	EditText txtName;
-	EditText txtDescription;
-	NoteEntry noteEntry;
+	private long noteId;
+	private long recipeId;
+	private NoteViewModel viewModel;
+	private EditText txtName;
+	private EditText txtDescription;
+	private NoteEntry noteEntry;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {

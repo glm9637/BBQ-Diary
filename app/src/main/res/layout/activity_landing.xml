@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.design.widget.CoordinatorLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -29,7 +28,8 @@
                 android:adjustViewBounds="true"
                 android:scaleType="fitXY"
                 android:src="@drawable/landing_header"
-                app:layout_collapseMode="parallax"/>
+                android:contentDescription="@string/title_image"
+                app:layout_collapseMode="parallax" />
 
             <android.support.v7.widget.Toolbar
                 android:id="@+id/toolbar"
@@ -47,10 +47,10 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="center"
-                    android:text="WELCOME TO YOUR BBQ DIARY"
-                    android:textColor="#fff"
+                    android:text="@string/txt_title_landing"
                     android:textAllCaps="true"
-                    android:textStyle="bold"/>
+                    android:textColor="#fff"
+                    android:textStyle="bold" />
 
             </android.support.v7.widget.Toolbar>
 
@@ -69,26 +69,29 @@
             android:layout_marginTop="@dimen/activity_default_margin">
 
             <android.support.constraint.Guideline
-                android:id="@+id/gd_vert"
+                android:id="@+id/gd_vertical"
                 android:layout_width="1dp"
                 android:layout_height="1dp"
                 android:orientation="vertical"
-                app:layout_constraintGuide_percent=".5"/>
+                app:layout_constraintGuide_percent=".5" />
 
             <android.support.v7.widget.CardView
                 android:id="@+id/cv_beef"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:foreground="@drawable/selectable_item_background"
+                android:layout_margin="16dp"
                 android:clickable="true"
-                android:layout_margin="16dp">
+                android:focusable="true"
+                android:foreground="@drawable/selectable_item_background">
 
                 <ImageView
+                    android:id="@+id/iv_beef"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:contentDescription="Category Beef Image"
+                    android:contentDescription="@string/img_category_beef"
                     android:scaleType="center"
-                    android:src="@drawable/ic_beef"/>
+                    android:src="@drawable/ic_beef"
+                    android:transitionName="category image" />
 
                 <TextView
                     android:id="@+id/txt_beef"
@@ -99,7 +102,7 @@
                     android:fontFamily="@font/copaseti"
                     android:text="@string/cut_beef_title"
                     android:textAllCaps="true"
-                    android:textSize="36sp"/>
+                    android:textSize="36sp" />
 
             </android.support.v7.widget.CardView>
 
@@ -108,16 +111,19 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="16dp"
-                android:foreground="@drawable/selectable_item_background"
                 android:clickable="true"
+                android:focusable="true"
+                android:foreground="@drawable/selectable_item_background"
                 app:layout_constraintTop_toBottomOf="@id/cv_beef">
 
                 <ImageView
+                    android:id="@+id/iv_pork"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:contentDescription="Category Pig Image"
+                    android:contentDescription="@string/img_category_pig"
                     android:scaleType="centerInside"
-                    android:src="@drawable/ic_pork"/>
+                    android:src="@drawable/ic_pork"
+                    android:transitionName="category image" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -125,9 +131,9 @@
                     android:layout_gravity="bottom"
                     android:layout_margin="16dp"
                     android:fontFamily="@font/ff_copaseti"
-                    android:textAllCaps="true"
                     android:text="@string/cut_pork_title"
-                    android:textSize="36sp"/>
+                    android:textAllCaps="true"
+                    android:textSize="36sp" />
 
             </android.support.v7.widget.CardView>
 
@@ -136,10 +142,11 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_margin="16dp"
-                android:foreground="@drawable/selectable_item_background"
                 android:clickable="true"
+                android:focusable="true"
+                android:foreground="@drawable/selectable_item_background"
                 app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintRight_toLeftOf="@id/gd_vert"
+                app:layout_constraintRight_toLeftOf="@id/gd_vertical"
                 app:layout_constraintTop_toBottomOf="@id/cv_pork">
 
                 <LinearLayout
@@ -153,18 +160,20 @@
                         android:layout_margin="16dp"
                         android:fontFamily="@font/ff_copaseti"
                         android:gravity="bottom"
-                        android:textAllCaps="true"
                         android:text="@string/cut_poultry_title"
-                        android:textSize="36sp"/>
+                        android:textAllCaps="true"
+                        android:textSize="36sp" />
 
                     <ImageView
+                        android:id="@+id/iv_poultry"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_gravity="center|right"
-                        android:layout_marginRight="8dp"
-                        android:contentDescription="Category Poultry Image"
+                        android:layout_gravity="center|end"
+                        android:layout_marginEnd="8dp"
+                        android:contentDescription="@string/img_category_poultry"
                         android:scaleType="fitXY"
-                        android:src="@drawable/ic_poultry"/>
+                        android:src="@drawable/ic_poultry"
+                        android:transitionName="category image" />
 
                 </LinearLayout>
 
@@ -174,11 +183,12 @@
                 android:id="@+id/cv_fish"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
-                android:layout_marginRight="16dp"
-                android:foreground="@drawable/selectable_item_background"
+                android:layout_marginEnd="16dp"
                 android:clickable="true"
+                android:focusable="true"
+                android:foreground="@drawable/selectable_item_background"
                 app:layout_constraintBottom_toBottomOf="@id/cv_poultry"
-                app:layout_constraintLeft_toRightOf="@id/gd_vert"
+                app:layout_constraintLeft_toRightOf="@id/gd_vertical"
                 app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/cv_pork"
                 app:layout_constraintTop_toTopOf="@id/cv_poultry">
@@ -194,18 +204,20 @@
                         android:layout_margin="16dp"
                         android:fontFamily="@font/ff_copaseti"
                         android:gravity="center|bottom"
-                        android:textAllCaps="true"
                         android:text="@string/cut_fish_title"
-                        android:textSize="36sp"/>
+                        android:textAllCaps="true"
+                        android:textSize="36sp" />
 
                     <ImageView
+                        android:id="@+id/iv_fish"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_gravity="center|right"
-                        android:layout_marginRight="8dp"
-                        android:contentDescription="Category Fish Image"
+                        android:layout_gravity="center|end"
+                        android:layout_marginEnd="8dp"
+                        android:contentDescription="@string/img_category_fish"
                         android:scaleType="fitXY"
-                        android:src="@drawable/ic_fish"/>
+                        android:src="@drawable/ic_fish"
+                        android:transitionName="category image" />
 
                 </LinearLayout>
 
@@ -216,11 +228,12 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_margin="16dp"
-                android:foreground="@drawable/selectable_item_background"
                 android:clickable="true"
+                android:focusable="true"
+                android:foreground="@drawable/selectable_item_background"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintRight_toLeftOf="@id/gd_vert"
+                app:layout_constraintRight_toLeftOf="@id/gd_vertical"
                 app:layout_constraintTop_toBottomOf="@id/cv_poultry">
 
                 <LinearLayout
@@ -234,18 +247,20 @@
                         android:layout_margin="16dp"
                         android:fontFamily="@font/ff_copaseti"
                         android:gravity="bottom"
-                        android:textAllCaps="true"
                         android:text="@string/cut_vegetable_title"
-                        android:textSize="36sp"/>
+                        android:textAllCaps="true"
+                        android:textSize="36sp" />
 
                     <ImageView
+                        android:id="@+id/iv_vegetable"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_gravity="center|right"
-                        android:layout_marginRight="8dp"
-                        android:contentDescription="Category Vegetable Image"
+                        android:layout_gravity="center|end"
+                        android:layout_marginEnd="8dp"
+                        android:contentDescription="@string/img_category_vegetable"
                         android:scaleType="fitXY"
-                        android:src="@drawable/ic_poultry"/>
+                        android:src="@drawable/ic_poultry"
+                        android:transitionName="category image" />
 
                 </LinearLayout>
 
@@ -255,11 +270,12 @@
                 android:id="@+id/cv_other"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
-                android:layout_marginRight="16dp"
-                android:foreground="@drawable/selectable_item_background"
+                android:layout_marginEnd="16dp"
                 android:clickable="true"
+                android:focusable="true"
+                android:foreground="@drawable/selectable_item_background"
                 app:layout_constraintBottom_toBottomOf="@id/cv_vegetable"
-                app:layout_constraintLeft_toRightOf="@id/gd_vert"
+                app:layout_constraintLeft_toRightOf="@id/gd_vertical"
                 app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintTop_toTopOf="@id/cv_vegetable">
 
@@ -274,19 +290,20 @@
                         android:layout_margin="16dp"
                         android:fontFamily="@font/ff_copaseti"
                         android:gravity="center|bottom"
-                        android:textAllCaps="true"
                         android:text="@string/cut_other_title"
-                        android:textSize="36sp"/>
+                        android:textAllCaps="true"
+                        android:textSize="36sp" />
 
                     <ImageView
+                        android:id="@+id/iv_other"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_gravity="center|right"
-                        android:layout_marginRight="8dp"
-                        android:contentDescription="Category other Image"
+                        android:layout_gravity="center|end"
+                        android:layout_marginEnd="8dp"
+                        android:contentDescription="@string/img_category_other"
                         android:scaleType="fitXY"
                         android:src="@drawable/ic_fish"
-                        android:layout_marginEnd="8dp" />
+                        android:transitionName="category image" />
 
                 </LinearLayout>
 

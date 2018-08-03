@@ -12,7 +12,7 @@ import com.example.glm9637.myapplication.ui.fragment.cut.RecipeFragment;
  */
 public class CutFragmentAdapter extends FragmentPagerAdapter {
 	
-	private long cutId;
+	private final long cutId;
 	
 	public CutFragmentAdapter(FragmentManager fm, long cutId) {
 		super(fm);

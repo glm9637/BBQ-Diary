@@ -2,9 +2,7 @@ package com.example.glm9637.myapplication.ui.widget;
 
 import android.appwidget.AppWidgetManager;
 import android.appwidget.AppWidgetProvider;
-import android.content.ComponentName;
 import android.content.Context;
-import android.content.Intent;
 import android.widget.RemoteViews;
 
 import com.example.glm9637.myapplication.R;
@@ -15,8 +13,8 @@ import com.example.glm9637.myapplication.database.entry.StepEntry;
  */
 public class StepWidgetProvider extends AppWidgetProvider {
 	
-	static void updateAppWidget(Context context, AppWidgetManager appWidgetManager,
-	                            int appWidgetId) {
+	private static void updateAppWidget(Context context, AppWidgetManager appWidgetManager,
+										int appWidgetId) {
 		
 		RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.widget_step);
 		//Intent intent = new Intent(context,WidgetRemoteViewsService.class);
@@ -41,20 +39,5 @@ public class StepWidgetProvider extends AppWidgetProvider {
 			updateAppWidget(context, appWidgetManager, appWidgetId);
 		}
 		
-	}
-	
-	@Override
-	public void onReceive(Context context, Intent intent) {
-		super.onReceive(context, intent);
-	}
-	
-	@Override
-	public void onEnabled(Context context) {
-		// Enter relevant functionality for when the first widget is created
-	}
-	
-	@Override
-	public void onDisabled(Context context) {
-		// Enter relevant functionality for when the last widget is disabled
 	}
 }
