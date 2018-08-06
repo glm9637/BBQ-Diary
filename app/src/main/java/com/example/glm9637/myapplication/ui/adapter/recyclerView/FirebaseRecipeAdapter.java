@@ -11,25 +11,34 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.example.glm9637.myapplication.R;
-import com.example.glm9637.myapplication.ui.activity.RecipeActivity;
 import com.example.glm9637.myapplication.database.entry.RecipeEntry;
+import com.example.glm9637.myapplication.ui.activity.RecipeActivity;
 import com.example.glm9637.myapplication.utils.Constants;
 
+import java.util.ArrayList;
 import java.util.List;
 
-public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.RecipeViewHolder> {
+public class FirebaseRecipeAdapter extends RecyclerView.Adapter<FirebaseRecipeAdapter.RecipeViewHolder> {
 
 	private final LayoutInflater inflater;
 	private final Activity context;
 	private List<RecipeEntry> data;
 
-	public RecipeAdapter(Activity context) {
+	public FirebaseRecipeAdapter(Activity context) {
 		this.context = context;
 		inflater = LayoutInflater.from(context);
 	}
 
 	public void setData(List<RecipeEntry> data) {
 		this.data = data;
+		notifyDataSetChanged();
+	}
+
+	public void addData(RecipeEntry data){
+		if(this.data==null){
+			this.data = new ArrayList<>();
+		}
+		this.data.add(data);
 		notifyDataSetChanged();
 	}
 
@@ -72,6 +81,9 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.RecipeView
 					RecipeEntry item = data.get(getAdapterPosition());
 					Intent intent = new Intent(context, RecipeActivity.class);
 					intent.putExtra(Constants.Arguments.RECIPE_ID, Long.valueOf(item.getId()));
+					intent.putExtra(Constants.Arguments.CATEGORY_ID, Long.valueOf(item.getCategoryId()));
+					intent.putExtra(Constants.Arguments.CUT_ID, Long.valueOf(item.getCutId()));
+					intent.putExtra(Constants.Arguments.FIREBASE_REFERENCE,item.getDatabaseReference());
 					ActivityOptionsCompat options = ActivityOptionsCompat.
 							makeSceneTransitionAnimation(context, Name, "recipe name");
 					context.startActivity(intent, options.toBundle());

@@ -24,11 +24,11 @@ public class RecipeEntry {
 	private long id;
 	
 	@ColumnInfo(name = "category_id")
-	private final long categoryId;
+	private long categoryId;
 	
 	@ColumnInfo(name = "cut_id")
-	private final long cutId;
-	
+	private long cutId;
+
 	private String name;
 	@ColumnInfo(name = "short_description")
 	private String shortDescription;
@@ -36,9 +36,12 @@ public class RecipeEntry {
 	@ColumnInfo(name = "cooking_style")
 	private String cookingStyle;
 	private long duration;
-	
+
 	@ColumnInfo(name = "is_seasoning")
-	private final boolean isSeasoning;
+	private boolean isSeasoning;
+
+	@Ignore
+	private String databaseReference;
 
 
 	public RecipeEntry(long id, long categoryId, long cutId, String name, String shortDescription, String description, String cookingStyle, long duration, boolean isSeasoning) {
@@ -65,6 +68,11 @@ public class RecipeEntry {
 		this.isSeasoning = isSeasoning;
 	}
 
+	@Ignore
+	public RecipeEntry(){
+
+	}
+
 
 	public long getId() {
 		return id;
@@ -75,8 +83,16 @@ public class RecipeEntry {
 		return categoryId;
 	}
 
+	public void setCategoryId(long categoryId) {
+		this.categoryId = categoryId;
+	}
+
 	public long getCutId() {
 		return cutId;
+	}
+
+	public void setCutId(long cutId) {
+		this.cutId = cutId;
 	}
 
 	public String getName() {
@@ -122,6 +138,14 @@ public class RecipeEntry {
 	public boolean isSeasoning() {
 		return isSeasoning;
 	}
+
+	public void setDatabaseReference(String databaseReference) {
+		this.databaseReference = databaseReference;
+	}
+
+	public String getDatabaseReference() {
+		return databaseReference;
+	}
 	
 	public static RecipeEntry[] populateData() {
 		return  new RecipeEntry[]{
@@ -132,4 +156,6 @@ public class RecipeEntry {
 						"(This fills relatively fast anyway if you don't always want to buy all the finished rubs)","",0,true)
 		};
 	}
+
+
 }

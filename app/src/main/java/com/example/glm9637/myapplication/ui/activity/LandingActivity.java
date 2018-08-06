@@ -18,6 +18,7 @@ import com.example.glm9637.myapplication.R;
 import com.example.glm9637.myapplication.database.RecipeDatabase;
 import com.example.glm9637.myapplication.database.entry.CategoryEntry;
 import com.example.glm9637.myapplication.utils.Constants;
+import com.google.android.gms.ads.MobileAds;
 
 public class LandingActivity extends AppCompatActivity {
 
@@ -33,6 +34,9 @@ public class LandingActivity extends AppCompatActivity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_landing);
+
+		MobileAds.initialize(this, getString(R.string.admob_app_id));
+
 		TextView txt_beef = findViewById(R.id.txt_beef);
 		Typeface tf = Typeface.createFromAsset(getAssets(), "font/copaseti.ttf");
 		txt_beef.setTypeface(tf);

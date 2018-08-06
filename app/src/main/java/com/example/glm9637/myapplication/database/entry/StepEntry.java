@@ -52,6 +52,11 @@ public class StepEntry implements Serializable, Parcelable {
 		this.duration = duration;
 	}
 
+	@Ignore
+	public StepEntry(){
+
+	}
+
 	public long getId() {
 		return id;
 	}

@@ -11,6 +11,7 @@ import android.widget.TextView;
 import com.example.glm9637.myapplication.R;
 import com.example.glm9637.myapplication.database.entry.StepEntry;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class StepListAdapter extends RecyclerView.Adapter<StepListAdapter.StepListViewHolder> {
@@ -20,14 +21,17 @@ public class StepListAdapter extends RecyclerView.Adapter<StepListAdapter.StepLi
 	private List<StepEntry> data;
 	private ListEntryClickedListener onClickListener;
 
-
-	public interface ListEntryClickedListener {
-		void onListEntryClicked(int position);
-	}
-
 	public StepListAdapter(Context context) {
 		this.context = context;
 		inflater = LayoutInflater.from(context);
+	}
+
+	public void addData(StepEntry data) {
+		if (this.data == null) {
+			this.data = new ArrayList<>();
+		}
+		this.data.add(data);
+		notifyDataSetChanged();
 	}
 
 	public void setData(List<StepEntry> data) {
@@ -64,7 +68,7 @@ public class StepListAdapter extends RecyclerView.Adapter<StepListAdapter.StepLi
 		} else {
 			holder.Time.setVisibility(View.VISIBLE);
 		}
-		holder.Number.setText(context.getString(R.string.order, position));
+		holder.Number.setText(context.getString(R.string.order, position+1));
 	}
 
 	@Override
@@ -73,6 +77,10 @@ public class StepListAdapter extends RecyclerView.Adapter<StepListAdapter.StepLi
 			return 0;
 		}
 		return data.size() + 1;
+	}
+
+	public interface ListEntryClickedListener {
+		void onListEntryClicked(int position);
 	}
 
 	class StepListViewHolder extends RecyclerView.ViewHolder {

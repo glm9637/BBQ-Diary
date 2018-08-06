@@ -1,4 +1,7 @@
 <resources>
+
+    <string name="admob_app_id">ca-app-pub-3940256099942544~3347511713</string>
+
     <string name="app_name">BBQ Diary</string>
     <string name="cut_beef_title">Beef</string>
     <string name="cut_pork_title">Pork</string>
@@ -58,4 +61,8 @@
     <string name="note_title">Note</string>
     <string name="edit_recipe_title">Edit Recipe</string>
     <string name="cooking_title">Cooking</string>
+    <string name="title_recipes">Recipes</string>
+    <string name="title_discover">Discover</string>
+	<string name="save_recipe">Save Recipe</string>
+	<string name="share_recipe">Share Recipe</string>
 </resources>

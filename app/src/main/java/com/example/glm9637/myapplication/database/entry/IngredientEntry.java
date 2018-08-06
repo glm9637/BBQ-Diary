@@ -46,6 +46,11 @@ public class IngredientEntry {
 		this.unit = unit;
 	}
 
+	@Ignore
+	public IngredientEntry(){
+
+	}
+
 
     public long getId() {
 		return id;

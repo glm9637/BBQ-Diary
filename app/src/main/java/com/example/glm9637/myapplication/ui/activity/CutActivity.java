@@ -2,27 +2,28 @@ package com.example.glm9637.myapplication.ui.activity;
 
 import android.arch.lifecycle.Observer;
 import android.content.Intent;
+import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.ImageView;
 
 import com.example.glm9637.myapplication.R;
-import com.example.glm9637.myapplication.ui.adapter.fragment.CutFragmentAdapter;
 import com.example.glm9637.myapplication.database.RecipeDatabase;
 import com.example.glm9637.myapplication.database.entry.CutEntry;
+import com.example.glm9637.myapplication.ui.adapter.fragment.CutFragmentAdapter;
 import com.example.glm9637.myapplication.ui.fragment.cut.RecipeFragment;
 import com.example.glm9637.myapplication.utils.Constants;
 import com.example.glm9637.myapplication.view_model.CutViewModel;
 
 public class CutActivity extends AppCompatActivity {
 
+	private static Bundle mState;
 	private ImageView titleImage;
 	private CollapsingToolbarLayout collapsingToolbarLayout;
 	private FloatingActionButton fab;
@@ -30,8 +31,7 @@ public class CutActivity extends AppCompatActivity {
 	private ViewPager pager;
 	private long cutId;
 	private long categoryId;
-
-	private static Bundle mState;
+	private CutFragmentAdapter adapter;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -39,7 +39,7 @@ public class CutActivity extends AppCompatActivity {
 		setContentView(R.layout.activity_cut);
 		collapsingToolbarLayout = findViewById(R.id.collapsing_toolbar);
 		cutId = getIntent().getLongExtra(Constants.Arguments.CUT_ID, 0);
-		categoryId = getIntent().getLongExtra(Constants.Arguments.CATEGORY_ID,0);
+		categoryId = getIntent().getLongExtra(Constants.Arguments.CATEGORY_ID, 0);
 		fab = findViewById(R.id.btn_add);
 		Toolbar toolbar = findViewById(R.id.toolbar);
 		titleImage = findViewById(R.id.title_image);
@@ -52,9 +52,9 @@ public class CutActivity extends AppCompatActivity {
 		tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
 			@Override
 			public void onTabSelected(TabLayout.Tab tab) {
-				if(tab.getPosition()==0){
+				if (tab.getPosition() == 0) {
 					fab.setVisibility(View.VISIBLE);
-				}else {
+				} else {
 					fab.setVisibility(View.GONE);
 				}
 			}
@@ -66,9 +66,9 @@ public class CutActivity extends AppCompatActivity {
 
 			@Override
 			public void onTabReselected(TabLayout.Tab tab) {
-				if(tab.getPosition()==0){
+				if (tab.getPosition() == 0) {
 					fab.setVisibility(View.VISIBLE);
-				}else {
+				} else {
 					fab.setVisibility(View.GONE);
 				}
 			}
@@ -78,8 +78,8 @@ public class CutActivity extends AppCompatActivity {
 			@Override
 			public void onClick(View view) {
 				Intent intent = new Intent(CutActivity.this, EditRecipeActivity.class);
-				intent.putExtra(Constants.Arguments.CUT_ID,cutId);
-				intent.putExtra(Constants.Arguments.CATEGORY_ID,categoryId);
+				intent.putExtra(Constants.Arguments.CUT_ID, cutId);
+				intent.putExtra(Constants.Arguments.CATEGORY_ID, categoryId);
 				startActivity(intent);
 			}
 		});
@@ -90,6 +90,7 @@ public class CutActivity extends AppCompatActivity {
 		super.onPause();
 		mState = new Bundle();
 		mState.putLong(Constants.Arguments.CATEGORY_ID, cutId);
+		mState.putParcelable(Constants.Arguments.SAVE_INSTANCE_ADAPTER, adapter.saveState());
 	}
 
 	@Override
@@ -128,11 +129,11 @@ public class CutActivity extends AppCompatActivity {
 			}
 		});
 
-
-
-		CutFragmentAdapter adapter = new CutFragmentAdapter(getSupportFragmentManager(), cutId);
-		pager.setAdapter(adapter);
-		tabLayout.setupWithViewPager(pager);
+		if (pager.getAdapter() == null) {
+			adapter = new CutFragmentAdapter(this, getSupportFragmentManager(), cutId, categoryId);
+			pager.setAdapter(adapter);
+			tabLayout.setupWithViewPager(pager);
+		}
 	}
 
 	@Override

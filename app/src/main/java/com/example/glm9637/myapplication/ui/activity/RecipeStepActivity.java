@@ -2,6 +2,7 @@ package com.example.glm9637.myapplication.ui.activity;
 
 import android.arch.lifecycle.Observer;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
@@ -15,35 +16,60 @@ import com.example.glm9637.myapplication.database.RecipeDatabase;
 import com.example.glm9637.myapplication.ui.adapter.fragment.RecipeStepsFragmentAdapter;
 import com.example.glm9637.myapplication.ui.adapter.recyclerView.StepListAdapter;
 import com.example.glm9637.myapplication.utils.Constants;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class RecipeStepActivity extends AppCompatActivity {
 
+	long recipeId;
+	String firebaseRef;
 	private RecipeStepsFragmentAdapter adapter;
 	private ViewPager pager;
 	private TabLayout tabLayout;
-	
+	private FirebaseDatabase firebaseDatabase;
+	private DatabaseReference recipeDatabaseReference;
+	private ValueEventListener valueEventListener;
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_recipe_step);
 
-		long recipeId = getIntent().getLongExtra(Constants.Arguments.RECIPE_ID, 0);
-		
+		recipeId = getIntent().getLongExtra(Constants.Arguments.RECIPE_ID, 0);
+		firebaseRef = getIntent().getStringExtra(Constants.Arguments.FIREBASE_REFERENCE);
 		Toolbar toolbar = findViewById(R.id.toolbar);
 		setSupportActionBar(toolbar);
 		getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-		
+
 		tabLayout = findViewById(R.id.tab_layout);
 		pager = findViewById(R.id.view_pager);
-		
-		adapter = new RecipeStepsFragmentAdapter(getSupportFragmentManager(), recipeId, new StepListAdapter.ListEntryClickedListener() {
+		StepListAdapter.ListEntryClickedListener listEntryClickedListener = new StepListAdapter.ListEntryClickedListener() {
 			@Override
 			public void onListEntryClicked(int position) {
 				pager.setCurrentItem(position, true);
 			}
-		});
+		};
+
+		if (firebaseRef == null) {
+			adapter = new RecipeStepsFragmentAdapter(getSupportFragmentManager(), recipeId, listEntryClickedListener);
+			initDataRoom();
+		} else {
+			adapter = new RecipeStepsFragmentAdapter(getSupportFragmentManager(), firebaseRef, listEntryClickedListener);
+			initDataFirebase();
+		}
+		pager.setAdapter(adapter);
+		tabLayout.setupWithViewPager(pager);
+
+
+	}
+
+	private void initDataRoom() {
 		RecipeDatabase database = RecipeDatabase.getInstance(RecipeStepActivity.this);
 		database.getStepDao().loadStepIdList(recipeId).observe(this, new Observer<List<Integer>>() {
 			@Override
@@ -53,23 +79,57 @@ public class RecipeStepActivity extends AppCompatActivity {
 				tabLayout.setupWithViewPager(pager);
 			}
 		});
-		
 	}
-	
+
+	private void initDataFirebase() {
+		firebaseDatabase = FirebaseDatabase.getInstance();
+		recipeDatabaseReference = firebaseDatabase.getReference(firebaseRef);
+		valueEventListener = new ValueEventListener() {
+			@Override
+			public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+				ArrayList<String> data = new ArrayList<>();
+				for (DataSnapshot snapshot : dataSnapshot.child("/steps").getChildren()) {
+					data.add(String.format("%1s/%2s/%3s", firebaseRef, "steps", snapshot.getKey()));
+				}
+				adapter.setStepList(data);
+			}
+
+			@Override
+			public void onCancelled(@NonNull DatabaseError databaseError) {
+
+			}
+		};
+
+		recipeDatabaseReference.addValueEventListener(valueEventListener);
+	}
+
+
+	@Override
+	protected void onPause() {
+		super.onPause();
+		detachDatabaseReadListener();
+	}
+
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
-		getMenuInflater().inflate(R.menu.menu_activity_recipe, menu);
-		return true;
+		return super.onCreateOptionsMenu(menu);
 	}
-	
+
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		switch (item.getItemId()) {
 			case R.id.mnu_step:
-				pager.setCurrentItem(0,true);
+				pager.setCurrentItem(0, true);
 			default:
 				return super.onOptionsItemSelected(item);
 		}
-		
+
+	}
+
+	private void detachDatabaseReadListener() {
+		if (valueEventListener != null) {
+			recipeDatabaseReference.removeEventListener(valueEventListener);
+			valueEventListener = null;
+		}
 	}
 }

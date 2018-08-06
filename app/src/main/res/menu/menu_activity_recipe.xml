@@ -12,4 +12,10 @@
         android:title="@string/mnu_edit_recipe"
         android:icon="@drawable/ic_edit_black_24dp"
         />
+
+    <item android:id="@+id/mnu_share"
+        app:showAsAction="ifRoom"
+        android:title="@string/share_recipe"
+        android:icon="@drawable/ic_cloud_upload_black_24dp"
+        />
 </menu>
