@@ -112,19 +112,7 @@ public class CutActivity extends AppCompatActivity {
 
 				//ToDo: Load Images from Firebase
 				collapsingToolbarLayout.setTitle(cutEntry.getName());
-				if (cutEntry.getCategoryId() == Constants.Ids.CATEGORY_BEEF) {
-					titleImage.setImageResource(R.drawable.ic_beef);
-				} else if (cutEntry.getCategoryId() == Constants.Ids.CATEGORY_PORK) {
-					titleImage.setImageResource(R.drawable.ic_pork);
-				} else if (cutEntry.getCategoryId() == Constants.Ids.CATEGORY_POULTRY) {
-					titleImage.setImageResource(R.drawable.ic_poultry);
-				} else if (cutEntry.getCategoryId() == Constants.Ids.CATEGORY_FISH) {
-					titleImage.setImageResource(R.drawable.ic_fish);
-				} else if (cutEntry.getCategoryId() == Constants.Ids.CATEGORY_VEGETABLE) {
-					titleImage.setImageResource(R.drawable.ic_beef);
-				} else if (cutEntry.getCategoryId() == Constants.Ids.CATEGORY_OTHER) {
-					titleImage.setImageResource(R.drawable.ic_beef);
-				}
+				titleImage.setImageResource(Constants.getIconForCategory(cutEntry.getCategoryId()));
 
 			}
 		});

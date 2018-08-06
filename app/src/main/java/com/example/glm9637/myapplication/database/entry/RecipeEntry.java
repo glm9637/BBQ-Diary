@@ -43,8 +43,16 @@ public class RecipeEntry {
 	@Ignore
 	private String databaseReference;
 
+	private boolean uploaded;
 
-	public RecipeEntry(long id, long categoryId, long cutId, String name, String shortDescription, String description, String cookingStyle, long duration, boolean isSeasoning) {
+	@Ignore
+	private String Author;
+
+	@Ignore
+	private boolean approved;
+
+
+	public RecipeEntry(long id, long categoryId, long cutId, String name, String shortDescription, String description, String cookingStyle, long duration, boolean isSeasoning,boolean uploaded) {
 		this.id = id;
 		this.categoryId = categoryId;
 		this.cutId = cutId;
@@ -54,10 +62,11 @@ public class RecipeEntry {
 		this.cookingStyle = cookingStyle;
 		this.duration = duration;
 		this.isSeasoning = isSeasoning;
+		this.uploaded = uploaded;
 	}
 	
 	@Ignore
-	public RecipeEntry(long categoryId, long cutId, String name, String shortDescription, String description, String cookingStyle, long duration, boolean isSeasoning) {
+	public RecipeEntry(long categoryId, long cutId, String name, String shortDescription, String description, String cookingStyle, long duration, boolean isSeasoning,boolean uploaded) {
 		this.categoryId = categoryId;
 		this.cutId = cutId;
 		this.name = name;
@@ -66,6 +75,7 @@ public class RecipeEntry {
 		this.cookingStyle = cookingStyle;
 		this.duration = duration;
 		this.isSeasoning = isSeasoning;
+		this.uploaded = uploaded;
 	}
 
 	@Ignore
@@ -143,17 +153,37 @@ public class RecipeEntry {
 		this.databaseReference = databaseReference;
 	}
 
+	public void setUploaded(boolean uploaded) {
+		this.uploaded = uploaded;
+	}
+
+	public void setAuthor(String author) {
+		Author = author;
+	}
+
+	public boolean isUploaded() {
+		return uploaded;
+	}
+
+	public String getAuthor() {
+		return Author;
+	}
+
+	public boolean isApproved(){
+		return false;
+	}
+
 	public String getDatabaseReference() {
 		return databaseReference;
 	}
 	
 	public static RecipeEntry[] populateData() {
 		return  new RecipeEntry[]{
-				new RecipeEntry(1,39,"Standard","Quick and easy way to get some tasty meat","This method allows the meat to keep its juices and prevents the spices from burning?","Grill",20,false),
+				new RecipeEntry(1,39,"Standard","Quick and easy way to get some tasty meat","This method allows the meat to keep its juices and prevents the spices from burning?","Grill",20,false,false),
 				new RecipeEntry(1,137,"Magic Dust","One of the most famous rubs","Magic Dust is probably the best known of all BBQ rubs. It is suitable for almost anything that fits on the smoker, but especially to pork.\n" +
 						"\n" +
 						"Making Magic Dust yourself is, like almost all rubs, quite easy if you have a reasonably well filled herbal cupboard.\n" +
-						"(This fills relatively fast anyway if you don't always want to buy all the finished rubs)","",0,true)
+						"(This fills relatively fast anyway if you don't always want to buy all the finished rubs)","",0,true,false)
 		};
 	}
 

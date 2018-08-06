@@ -41,6 +41,10 @@ dependencies {
     implementation 'com.google.android.gms:play-services-ads:15.0.1'
     implementation 'com.google.firebase:firebase-core:16.0.1'
     implementation 'com.google.firebase:firebase-database:16.0.1'
+    implementation 'com.google.firebase:firebase-auth:16.0.2'
+
+    // FirebaseUI
+    implementation 'com.firebaseui:firebase-ui-auth:4.1.0'
 
     testImplementation "junit:junit:$jUnitVersion"
     androidTestImplementation 'com.android.support.test:runner:1.0.2'

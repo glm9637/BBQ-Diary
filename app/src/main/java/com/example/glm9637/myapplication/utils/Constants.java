@@ -19,9 +19,9 @@ public class Constants {
 			case 4:
 				return R.drawable.ic_fish;
 			case 5:
-				return R.drawable.ic_beef;
+				return R.drawable.ic_vegetable;
 			default:
-				return R.drawable.ic_beef;
+				return R.drawable.ic_other;
 		}
 
 	}
@@ -52,12 +52,12 @@ public class Constants {
 		public static final long CATEGORY_VEGETABLE = 5;
 		public static final long CATEGORY_OTHER = 6;
 
-		public static final long CATEGORY_BEEF_RUB = 138;
-		public static final long CATEGORY_PORK_RUB = 139;
-		public static final long CATEGORY_POULTRY_RUB = 140;
-		public static final long CATEGORY_FISH_RUB = 141;
-		public static final long CATEGORY_VEGETABLE_RUB = 142;
-		public static final long CATEGORY_OTHER_RUB = 143;
+		public static final long CATEGORY_BEEF_RUB = 139;
+		public static final long CATEGORY_PORK_RUB = 140;
+		public static final long CATEGORY_POULTRY_RUB = 141;
+		public static final long CATEGORY_FISH_RUB = 142;
+		public static final long CATEGORY_VEGETABLE_RUB = 143;
+		public static final long CATEGORY_OTHER_RUB = 144;
 
 		public static final int TIMER_NOTIFICATION_ID = 100;
 

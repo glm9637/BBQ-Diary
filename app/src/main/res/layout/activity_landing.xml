@@ -259,7 +259,7 @@
                         android:layout_marginEnd="8dp"
                         android:contentDescription="@string/img_category_vegetable"
                         android:scaleType="fitXY"
-                        android:src="@drawable/ic_poultry"
+                        android:src="@drawable/ic_vegetable"
                         android:transitionName="category image" />
 
                 </LinearLayout>
@@ -302,7 +302,7 @@
                         android:layout_marginEnd="8dp"
                         android:contentDescription="@string/img_category_other"
                         android:scaleType="fitXY"
-                        android:src="@drawable/ic_fish"
+                        android:src="@drawable/ic_other"
                         android:transitionName="category image" />
 
                 </LinearLayout>

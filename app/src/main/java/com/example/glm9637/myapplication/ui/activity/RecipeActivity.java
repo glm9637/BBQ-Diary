@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -14,19 +15,27 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.glm9637.myapplication.R;
+import com.example.glm9637.myapplication.database.RecipeDatabase;
 import com.example.glm9637.myapplication.database.entry.IngredientEntry;
 import com.example.glm9637.myapplication.database.entry.RecipeEntry;
+import com.example.glm9637.myapplication.database.entry.StepEntry;
 import com.example.glm9637.myapplication.ui.adapter.recyclerView.IngredientAdapter;
+import com.example.glm9637.myapplication.utils.AppExecutors;
 import com.example.glm9637.myapplication.utils.Constants;
 import com.example.glm9637.myapplication.view_model.RecipeActivityViewModel;
+import com.firebase.ui.auth.AuthUI;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.util.Arrays;
 import java.util.List;
 
 public class RecipeActivity extends AppCompatActivity {
@@ -46,6 +55,16 @@ public class RecipeActivity extends AppCompatActivity {
 	private long categoryId;
 	private long cutId;
 	private String firebaseReference;
+	private MenuItem uploadRecipe;
+	private RecipeActivityViewModel viewModel;
+
+	//Authentication fields
+	private String username;
+	private FirebaseAuth firebaseAuth;
+	private FirebaseAuth.AuthStateListener authStateListener;
+	private boolean upload = false;
+
+	public static final int RC_SIGN_IN = 1;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -63,7 +82,7 @@ public class RecipeActivity extends AppCompatActivity {
 		categoryId = getIntent().getLongExtra(Constants.Arguments.CATEGORY_ID, 0);
 		cutId = getIntent().getLongExtra(Constants.Arguments.CUT_ID, 0);
 		firebaseReference = getIntent().getStringExtra(Constants.Arguments.FIREBASE_REFERENCE);
-
+		firebaseAuth = FirebaseAuth.getInstance();
 
 		adapter = new IngredientAdapter(this);
 		recyclerView.setLayoutManager(new LinearLayoutManager(this));
@@ -77,19 +96,42 @@ public class RecipeActivity extends AppCompatActivity {
 				Intent intent = new Intent(RecipeActivity.this, RecipeStepActivity.class);
 				if (firebaseReference == null) {
 					intent.putExtra(Constants.Arguments.RECIPE_ID, recipeId);
-				}else {
-					intent.putExtra(Constants.Arguments.FIREBASE_REFERENCE,firebaseReference);
+				} else {
+					intent.putExtra(Constants.Arguments.FIREBASE_REFERENCE, firebaseReference);
 				}
 				startActivity(intent);
 			}
 		});
+
+		authStateListener = new FirebaseAuth.AuthStateListener() {
+			@Override
+			public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
+				FirebaseUser user = firebaseAuth.getCurrentUser();
+				if (user != null) {
+					// User is signed in
+					username = user.getDisplayName();
+					if(upload){
+						upload = false;
+						shareRecipe();
+					}
+				} else {
+					// User is signed out
+					username = "";
+				}
+			}
+		};
+
+
 	}
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
-		if(firebaseReference==null) {
+		if (firebaseReference == null) {
 			getMenuInflater().inflate(R.menu.menu_activity_recipe, menu);
-		}else {
+			uploadRecipe = menu.findItem(R.id.mnu_share);
+			if (recipeEntry != null)
+				uploadRecipe.setVisible(!recipeEntry.isUploaded());
+		} else {
 			getMenuInflater().inflate(R.menu.menu_activity_recipe_firebase, menu);
 		}
 		return true;
@@ -130,6 +172,9 @@ public class RecipeActivity extends AppCompatActivity {
 		mState.putLong(Constants.Arguments.CUT_ID, cutId);
 		mState.putString(Constants.Arguments.FIREBASE_REFERENCE, firebaseReference);
 		detachDatabaseReadListener();
+		if (authStateListener != null) {
+			firebaseAuth.removeAuthStateListener(authStateListener);
+		}
 	}
 
 	@Override
@@ -144,16 +189,18 @@ public class RecipeActivity extends AppCompatActivity {
 			mState = null;
 		}
 
-		if(firebaseReference==null){
+		firebaseAuth.addAuthStateListener(authStateListener);
+
+		if (firebaseReference == null) {
 			initDataFromRoom();
-		}else {
+		} else {
 			initDataFromFirebase();
 		}
 
 	}
 
-	private void initDataFromRoom(){
-		RecipeActivityViewModel viewModel = new RecipeActivityViewModel(this, recipeId);
+	private void initDataFromRoom() {
+		viewModel = new RecipeActivityViewModel(this, recipeId);
 
 		viewModel.getRecipe().observe(this, new Observer<RecipeEntry>() {
 			@Override
@@ -162,6 +209,9 @@ public class RecipeActivity extends AppCompatActivity {
 					return;
 				}
 				RecipeActivity.this.recipeEntry = recipeEntry;
+				if (uploadRecipe != null) {
+					uploadRecipe.setVisible(!recipeEntry.isUploaded());
+				}
 				loadDataIntoUi();
 			}
 		});
@@ -185,7 +235,7 @@ public class RecipeActivity extends AppCompatActivity {
 					recipeEntry.setDatabaseReference(firebaseReference);
 					recipeEntry.setCategoryId(categoryId);
 					recipeEntry.setCutId(cutId);
-					for(DataSnapshot snapshot: dataSnapshot.child("/ingredients").getChildren()){
+					for (DataSnapshot snapshot : dataSnapshot.child("/ingredients").getChildren()) {
 						IngredientEntry ingredientEntry = snapshot.getValue(IngredientEntry.class);
 						adapter.addData(ingredientEntry);
 					}
@@ -207,7 +257,7 @@ public class RecipeActivity extends AppCompatActivity {
 		}
 	}
 
-	private void loadDataIntoUi(){
+	private void loadDataIntoUi() {
 		getSupportActionBar().setTitle(recipeEntry.getName());
 		getSupportActionBar().setSubtitle(recipeEntry.getShortDescription());
 		descriptionText.setText(recipeEntry.getDescription());
@@ -215,23 +265,89 @@ public class RecipeActivity extends AppCompatActivity {
 		cookingStyleText.setText(recipeEntry.getCookingStyle());
 	}
 
-	public static void reset(){
-		mState=null;
+	public static void reset() {
+		mState = null;
 	}
 
-	public void shareRecipe(){
-		final FirebaseDatabase database = FirebaseDatabase.getInstance();
-		DatabaseReference insertReference;
-		String category = "category-"+recipeEntry.getCategoryId();
-		String cut = "cut-"+recipeEntry.getCutId();
-		String reference = String.format("/recipes/%s/%s",category,cut);
-		insertReference = database.getReference(reference);
+	public void shareRecipe() {
+		if (username.isEmpty()) {
 
-		String recipeId = insertReference.push().getKey();
-		recipeDatabaseReference.child(recipeId).setValue(recipeEntry);
+			// Choose authentication providers
+			List<AuthUI.IdpConfig> providers = Arrays.asList(
+					new AuthUI.IdpConfig.EmailBuilder().build(),
+					new AuthUI.IdpConfig.GoogleBuilder().build());
+
+			startActivityForResult(
+					AuthUI.getInstance()
+							.createSignInIntentBuilder()
+							.setIsSmartLockEnabled(false)
+							.setAvailableProviders(providers)
+							.build(),
+					RC_SIGN_IN);
+			return;
+		}
+		String category = "category-" + recipeEntry.getCategoryId();
+		String cut = "cut-" + recipeEntry.getCutId();
+		DatabaseReference ref = FirebaseDatabase.getInstance().getReference().child("/recipes-pending").child(category).child("cuts").child(cut).child("recipes").push();
+		String id = ref.getKey();
+		recipeEntry.setUploaded(true);
+		recipeEntry.setAuthor(username);
+		AppExecutors.getInstance().diskIO().execute(new Runnable() {
+			@Override
+			public void run() {
+				RecipeDatabase.getInstance(RecipeActivity.this).getRecipeDao().updateRecipe(recipeEntry);
+			}
+		});
+		ref.setValue(recipeEntry);
+		shareIngredients(ref);
+		shareSteps(ref);
+		uploadRecipe.setVisible(false);
+		Toast.makeText(this,"Your Recipe is in Review!",Toast.LENGTH_LONG).show();
 
 	}
 
+	private void shareSteps(final DatabaseReference recipeRef) {
+		viewModel.getSteps().observe(this, new Observer<List<StepEntry>>() {
+			@Override
+			public void onChanged(@Nullable List<StepEntry> stepEntries) {
+				viewModel.getSteps().removeObserver(this);
+				for (StepEntry stepEntry : stepEntries) {
+					DatabaseReference ingredientsRef = recipeRef.child("steps").push();
+					ingredientsRef.setValue(stepEntry);
+				}
+			}
+		});
 
+	}
+
+	private void shareIngredients(final DatabaseReference recipeRef) {
+		viewModel.getIngredients().observe(this, new Observer<List<IngredientEntry>>() {
+			@Override
+			public void onChanged(@Nullable List<IngredientEntry> ingredientEntries) {
+				viewModel.getIngredients().removeObserver(this);
+				for (IngredientEntry ingredientEntry : ingredientEntries) {
+					DatabaseReference ingredientsRef = recipeRef.child("ingredients").push();
+					ingredientsRef.setValue(ingredientEntry);
+				}
+
+
+			}
+		});
+	}
+
+	@Override
+	public void onActivityResult(int requestCode, int resultCode, Intent data) {
+		super.onActivityResult(requestCode, resultCode, data);
+		if (requestCode == RC_SIGN_IN) {
+			if (resultCode == RESULT_OK) {
+				if (username.isEmpty()) {
+					upload = true;
+				} else {
+					shareRecipe();
+				}
+			}
+		}
+
+	}
 
 }

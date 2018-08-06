@@ -194,7 +194,9 @@ public class CutEntry {
 				new CutEntry(135, Constants.Ids.CATEGORY_VEGETABLE, "Onions", "", "", "Veggies"),
 				new CutEntry(136, Constants.Ids.CATEGORY_VEGETABLE, "Tomatoes", "", "", "Veggies"),
 				new CutEntry(137, Constants.Ids.CATEGORY_VEGETABLE, "Other", "", "", "Veggies"),
-				
+
+				new CutEntry(138, Constants.Ids.CATEGORY_OTHER, "Other", "", "", "Other"),
+
 				new CutEntry(Constants.Ids.CATEGORY_BEEF_RUB, Constants.Ids.CATEGORY_BEEF, Constants.CUT_NAME_RUB, "", "", ""),
 				new CutEntry(Constants.Ids.CATEGORY_PORK_RUB, Constants.Ids.CATEGORY_PORK, Constants.CUT_NAME_RUB, "", "", ""),
 				new CutEntry(Constants.Ids.CATEGORY_POULTRY_RUB, Constants.Ids.CATEGORY_POULTRY, Constants.CUT_NAME_RUB, "", "", ""),

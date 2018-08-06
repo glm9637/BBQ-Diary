@@ -56,7 +56,7 @@ public class DiscoverFragment extends Fragment {
 		cutId = getArguments().getLong(Constants.Arguments.CUT_ID);
 		categoryId = getArguments().getLong(Constants.Arguments.CATEGORY_ID);
 
-		reference = String.format("/recipes/category-%d/cut-%d", categoryId, cutId);
+		reference = String.format("/recipes/category-%d/cuts/cut-%d/recipes", categoryId, cutId);
 
 		initializeAd(rootView);
 		initializeRecyclerView(rootView);
@@ -84,7 +84,6 @@ public class DiscoverFragment extends Fragment {
 		firebaseDatabase = FirebaseDatabase.getInstance();
 
 		recipeDatabaseReference = firebaseDatabase.getReference().child(reference);
-		attachDatabaseReadListener();
 	}
 
 	private void attachDatabaseReadListener() {
@@ -119,7 +118,14 @@ public class DiscoverFragment extends Fragment {
 		if (childEventListener != null) {
 			recipeDatabaseReference.removeEventListener(childEventListener);
 			childEventListener = null;
+			adapter.setData(null);
 		}
+	}
+
+	@Override
+	public void onResume() {
+		super.onResume();
+		attachDatabaseReadListener();
 	}
 
 	@Override

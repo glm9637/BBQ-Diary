@@ -117,7 +117,7 @@ public class EditRecipeActivity extends AppCompatActivity implements EditRecipeF
 				if (isRub) {
 					categoryId = Constants.Ids.getRubCutId(categoryId);
 				}
-				recipeEntry = new RecipeEntry(categoryId, cutId, adapter.getName(), adapter.getShortDescription(), adapter.getDescription(), adapter.getCookingStyle(), adapter.getDuration(), isRub);
+				recipeEntry = new RecipeEntry(categoryId, cutId, adapter.getName(), adapter.getShortDescription(), adapter.getDescription(), adapter.getCookingStyle(), adapter.getDuration(), isRub, false);
 
 				long recipeId = database.getRecipeDao().insertRecipe(recipeEntry);
 
