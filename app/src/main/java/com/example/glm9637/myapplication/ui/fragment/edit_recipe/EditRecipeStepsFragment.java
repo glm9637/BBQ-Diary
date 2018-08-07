@@ -105,7 +105,7 @@ public class EditRecipeStepsFragment extends Fragment {
 					return;
 				}
 
-				StepEntry stepEntry = new StepEntry(Integer.parseInt(order.getText().toString()), name.getText().toString(), description.getText().toString(), Long.parseLong(duration.getText().toString()));
+				StepEntry stepEntry = new StepEntry(Integer.parseInt(order.getText().toString()), name.getText().toString(), description.getText().toString(),duration.getText().toString().isEmpty()?0:Long.parseLong(duration.getText().toString()));
 				adapter.addData(stepEntry);
 				adapter.notifyDataSetChanged();
 				addDialog.dismiss();

@@ -65,4 +65,13 @@
     <string name="title_discover">Discover</string>
 	<string name="save_recipe">Save Recipe</string>
 	<string name="share_recipe">Share Recipe</string>
+	<string name="author_text_template">Creator: %s</string>
+	<string name="dlg_share_title">To share a Recipe, you first need to log in</string>
+    <string name="dlg_share_message">Would you like to Log in now?\nYou can always Log out from the Menu in the top right corner.</string>
+    <string name="dlg_share_positive">Yes</string>
+    <string name="dlg_share_negative">No</string>
+    <string name="toast_recipe_uploaded">Your Recipe is in Review!</string>
+    <string name="toast_logged_out">You are now logged out</string>
+    <string name="toast_logged_out_error">You couldn\'t be logged out, please try again later.</string>
+    <string name="recipe_saved">Recipe saved</string>
 </resources>

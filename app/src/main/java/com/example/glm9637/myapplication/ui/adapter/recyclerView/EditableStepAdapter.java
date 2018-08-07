@@ -73,8 +73,12 @@ public class EditableStepAdapter extends RecyclerView.Adapter<EditableStepAdapte
 
 	public List<StepEntry> getData() {
 		ArrayList<StepEntry> completeData = new ArrayList<>();
-		completeData.addAll(data);
-		completeData.addAll(deletedData);
+		if(data!=null) {
+			completeData.addAll(data);
+		}
+		if(deletedData!=null) {
+			completeData.addAll(deletedData);
+		}
 		return completeData;
 	}
 

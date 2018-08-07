@@ -9,6 +9,8 @@ import android.arch.persistence.room.PrimaryKey;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import com.google.firebase.database.Exclude;
+
 import java.io.Serializable;
 
 /**
@@ -21,10 +23,12 @@ import java.io.Serializable;
 		@Index(name = "IX_STEP_RECIPE_ID", value = "recipe_id"),
 })
 public class StepEntry implements Serializable, Parcelable {
-	
+
+	@Exclude
 	@PrimaryKey(autoGenerate = true)
 	private long id;
-	
+
+	@Exclude
 	@ColumnInfo(name = "recipe_id")
 	private long recipeId;
 	@ColumnInfo(name = "step_order")
@@ -32,6 +36,7 @@ public class StepEntry implements Serializable, Parcelable {
 	private String name;
 	private String description;
 	private long duration;
+	@Exclude
 	@Ignore
 	private boolean deleted;
 	
@@ -57,10 +62,12 @@ public class StepEntry implements Serializable, Parcelable {
 
 	}
 
+	@Exclude
 	public long getId() {
 		return id;
 	}
-	
+
+	@Exclude
 	public long getRecipeId() {
 		return recipeId;
 	}
@@ -147,6 +154,7 @@ public class StepEntry implements Serializable, Parcelable {
 		}
 	};
 
+	@Exclude
 	public boolean isDeleted() {
 		return deleted;
 	}

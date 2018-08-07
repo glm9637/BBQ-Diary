@@ -7,6 +7,8 @@ import android.arch.persistence.room.Ignore;
 import android.arch.persistence.room.Index;
 import android.arch.persistence.room.PrimaryKey;
 
+import com.google.firebase.database.Exclude;
+
 /**
  * Erzeugt von M. Fengels am 27.07.2018.
  */
@@ -17,10 +19,12 @@ import android.arch.persistence.room.PrimaryKey;
 		@Index(name = "IX_INGREDIENT_RECIPE_ID",value = "recipe_id")
 })
 public class IngredientEntry {
-	
+
+	@Exclude
 	@PrimaryKey(autoGenerate = true)
 	private long id;
-	
+
+	@Exclude
 	@ColumnInfo(name = "recipe_id")
 	private long recipeId;
 	
@@ -51,11 +55,11 @@ public class IngredientEntry {
 
 	}
 
-
+	@Exclude
     public long getId() {
 		return id;
 	}
-
+	@Exclude
 	public long getRecipeId() {
 		return recipeId;
 	}

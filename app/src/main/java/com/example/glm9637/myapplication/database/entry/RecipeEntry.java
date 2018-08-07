@@ -7,6 +7,8 @@ import android.arch.persistence.room.Ignore;
 import android.arch.persistence.room.Index;
 import android.arch.persistence.room.PrimaryKey;
 
+import com.google.firebase.database.Exclude;
+
 /**
  * Erzeugt von M. Fengels am 27.07.2018.
  */
@@ -19,7 +21,8 @@ import android.arch.persistence.room.PrimaryKey;
 		@Index(name = "IX_RECIPE_CUT_ID",value = "cut_id")
 })
 public class RecipeEntry {
-	
+
+	@Exclude
 	@PrimaryKey(autoGenerate = true)
 	private long id;
 	
@@ -43,6 +46,7 @@ public class RecipeEntry {
 	@Ignore
 	private String databaseReference;
 
+	@Exclude
 	private boolean uploaded;
 
 	@Ignore
@@ -83,11 +87,10 @@ public class RecipeEntry {
 
 	}
 
-
+	@Exclude
 	public long getId() {
 		return id;
 	}
-
 
 	public long getCategoryId() {
 		return categoryId;
@@ -161,6 +164,7 @@ public class RecipeEntry {
 		Author = author;
 	}
 
+	@Exclude
 	public boolean isUploaded() {
 		return uploaded;
 	}
@@ -179,11 +183,11 @@ public class RecipeEntry {
 	
 	public static RecipeEntry[] populateData() {
 		return  new RecipeEntry[]{
-				new RecipeEntry(1,39,"Standard","Quick and easy way to get some tasty meat","This method allows the meat to keep its juices and prevents the spices from burning?","Grill",20,false,false),
+				new RecipeEntry(1,39,"Standard","Quick and easy way to get some tasty meat","This method allows the meat to keep its juices and prevents the spices from burning?","Grill",20,false,true),
 				new RecipeEntry(1,137,"Magic Dust","One of the most famous rubs","Magic Dust is probably the best known of all BBQ rubs. It is suitable for almost anything that fits on the smoker, but especially to pork.\n" +
 						"\n" +
 						"Making Magic Dust yourself is, like almost all rubs, quite easy if you have a reasonably well filled herbal cupboard.\n" +
-						"(This fills relatively fast anyway if you don't always want to buy all the finished rubs)","",0,true,false)
+						"(This fills relatively fast anyway if you don't always want to buy all the finished rubs)","",0,true,true)
 		};
 	}
 

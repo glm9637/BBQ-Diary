@@ -110,7 +110,11 @@ public class EditRecipeNameFragment extends Fragment {
 			descriptionText.setText(shortDescription);
 			rubCheck.setChecked(isRub);
 			cookingStyleText.setText(cookingStyle);
-			durationText.setText(String.valueOf(duration));
+			if(duration==0) {
+				durationText.setText("");
+			}else {
+				durationText.setText(String.valueOf(duration));
+			}
 			if (isRub) {
 				rubCheck.setEnabled(false);
 			}

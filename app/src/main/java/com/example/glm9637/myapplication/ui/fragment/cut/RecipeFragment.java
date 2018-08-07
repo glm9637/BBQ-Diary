@@ -13,8 +13,8 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.glm9637.myapplication.R;
-import com.example.glm9637.myapplication.ui.adapter.recyclerView.RecipeAdapter;
 import com.example.glm9637.myapplication.database.entry.RecipeEntry;
+import com.example.glm9637.myapplication.ui.adapter.recyclerView.RecipeAdapter;
 import com.example.glm9637.myapplication.utils.Constants;
 import com.example.glm9637.myapplication.view_model.RecipeFragmentViewModel;
 
@@ -24,12 +24,13 @@ import java.util.List;
  * Erzeugt von M. Fengels am 31.07.2018.
  */
 public class RecipeFragment extends Fragment {
-	
-	
+
+
 	private static Bundle mBundleRecyclerViewState;
 	private RecipeFragmentViewModel viewModel;
 	private RecyclerView recyclerView;
 	private RecipeAdapter adapter;
+	private Observer<List<RecipeEntry>> observer;
 
 
 	public static RecipeFragment createFragment(long cutId) {
@@ -39,7 +40,11 @@ public class RecipeFragment extends Fragment {
 		fragment.setArguments(bundle);
 		return fragment;
 	}
-	
+
+	public static void reset() {
+		mBundleRecyclerViewState = null;
+	}
+
 	@Nullable
 	@Override
 	public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -49,20 +54,18 @@ public class RecipeFragment extends Fragment {
 		adapter = new RecipeAdapter(getActivity());
 		recyclerView.setAdapter(adapter);
 		recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-		
+
 		viewModel = new RecipeFragmentViewModel(getContext(), cutId);
-		viewModel.getRecipeList().observe(this, new Observer<List<RecipeEntry>>() {
+		observer = new Observer<List<RecipeEntry>>() {
 			@Override
-			public void onChanged(@Nullable List<RecipeEntry> cutEntries) {
-				viewModel.getRecipeList().removeObserver(this);
-				adapter.setData(cutEntries);
-				
+			public void onChanged(@Nullable List<RecipeEntry> recipeEntries) {
+				adapter.setData(recipeEntries);
 			}
-		});
+		};
 
 		return rootView;
 	}
-	
+
 	@Override
 	public void onPause() {
 		super.onPause();
@@ -70,8 +73,9 @@ public class RecipeFragment extends Fragment {
 		mBundleRecyclerViewState = new Bundle();
 		Parcelable mLayoutManagerState = recyclerView.getLayoutManager().onSaveInstanceState();
 		mBundleRecyclerViewState.putParcelable(Constants.Arguments.SAVE_INSTANCE_RECYCLERVIEW, mLayoutManagerState);
+		viewModel.getRecipeList().removeObserver(observer);
 	}
-	
+
 	@Override
 	public void onResume() {
 		super.onResume();
@@ -79,9 +83,6 @@ public class RecipeFragment extends Fragment {
 			Parcelable listState = mBundleRecyclerViewState.getParcelable(Constants.Arguments.SAVE_INSTANCE_RECYCLERVIEW);
 			recyclerView.getLayoutManager().onRestoreInstanceState(listState);
 		}
-	}
-	
-	public static void reset() {
-		mBundleRecyclerViewState = null;
+		viewModel.getRecipeList().observe(this, observer);
 	}
 }

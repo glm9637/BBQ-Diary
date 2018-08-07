@@ -65,6 +65,10 @@ public class IngredientAdapter extends RecyclerView.Adapter<IngredientAdapter.In
 		notifyDataSetChanged();
 	}
 
+	public List<IngredientEntry> getData() {
+		return data;
+	}
+
 	class IngredientViewHolder extends RecyclerView.ViewHolder {
 
 		final TextView Ingredient;

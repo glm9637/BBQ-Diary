@@ -36,4 +36,13 @@
         <item name="android:layout_margin">16dp</item>
     </style>
 
+    <style name="LandingCaptionText">
+        <item name="android:textColor">@color/text_light</item>
+		<item name="android:textStyle">bold</item>
+		<item name="android:fontFamily">@font/copaseti</item>
+		<item name="android:textAllCaps">true</item>
+		<item name="android:textSize">@dimen/text_size_title</item>
+		<item name="android:layout_margin">@dimen/margin_large</item>
+    </style>
+
 </resources>

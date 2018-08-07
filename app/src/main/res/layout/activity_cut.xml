@@ -20,7 +20,7 @@
 			android:layout_height="wrap_content"
 			android:fitsSystemWindows="true"
 			android:transitionName="cut text"
-			app:contentScrim="#ffffff"
+			app:contentScrim="@color/toolbar_content_scrim"
 			app:expandedTitleTextAppearance="@android:color/transparent"
 			app:layout_scrollFlags="scroll|exitUntilCollapsed">
 
@@ -29,7 +29,7 @@
 				android:layout_width="match_parent"
 				android:layout_height="@dimen/expanded_toolbar_height"
 				android:contentDescription="@string/title_image"
-				android:scaleType="centerCrop"
+				android:scaleType="fitCenter"
 				app:layout_collapseMode="parallax"
 				tools:src="@drawable/landing_header" />
 			

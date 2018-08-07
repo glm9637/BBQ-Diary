@@ -21,7 +21,7 @@
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:gravity="center"
-            android:textSize="36sp"
+            android:textSize="@dimen/text_size_caption"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             tools:text="1." />
@@ -30,7 +30,7 @@
             android:id="@+id/txt_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
+            android:layout_marginStart="@dimen/margin_default"
             app:layout_constraintLeft_toRightOf="@id/txt_step_number"
             tools:text="Ingredients" />
 
@@ -38,7 +38,7 @@
             android:id="@+id/txt_duration"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="8dp"
+            android:layout_marginEnd="@dimen/margin_default"
             android:drawableStart="@drawable/ic_access_time_black_24dp"
             android:gravity="center"
             app:layout_constraintRight_toRightOf="parent"
@@ -50,8 +50,8 @@
             android:id="@+id/txt_description"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="8dp"
-            android:layout_marginStart="8dp"
+            android:layout_marginEnd="@dimen/margin_default"
+            android:layout_marginStart="@dimen/margin_default"
             android:ellipsize="end"
             android:inputType="none"
             android:maxLines="2"

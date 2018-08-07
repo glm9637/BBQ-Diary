@@ -2,8 +2,6 @@
 <appwidget-provider xmlns:android="http://schemas.android.com/apk/res/android"
                     android:initialKeyguardLayout="@layout/widget_step"
                     android:initialLayout="@layout/widget_step"
-                    android:minHeight="240dp"
-                    android:minWidth="360dp"
                     android:previewImage="@drawable/ic_cook_service_white_24dp"
                     android:resizeMode="horizontal|vertical"
                     android:updatePeriodMillis="86400000"

@@ -29,7 +29,9 @@
         <android.support.design.widget.TextInputEditText
             android:id="@+id/txt_name"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content"
+            android:maxLines="1"
+			android:inputType="text"/>
 
     </android.support.design.widget.TextInputLayout>
 
@@ -43,7 +45,9 @@
         <android.support.design.widget.TextInputEditText
             android:id="@+id/txt_description_short"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content"
+            android:maxLines="1"
+			android:inputType="text"/>
 
     </android.support.design.widget.TextInputLayout>
 
@@ -57,7 +61,9 @@
         <android.support.design.widget.TextInputEditText
             android:id="@+id/txt_cooking_style"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content"
+            android:maxLines="1"
+			android:inputType="text"/>
 
     </android.support.design.widget.TextInputLayout>
 
@@ -72,7 +78,8 @@
             android:id="@+id/txt_duration"
             android:inputType="number"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content"
+            android:maxLines="1"/>
 
     </android.support.design.widget.TextInputLayout>
 

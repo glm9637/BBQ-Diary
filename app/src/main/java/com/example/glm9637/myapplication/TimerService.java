@@ -23,6 +23,7 @@ public class TimerService extends Service {
 	
 	private NotificationCompat.Builder notification;
 	private NotificationManager manager;
+	private CountDownTimer timer;
 
 	@Nullable
 	@Override
@@ -46,7 +47,7 @@ public class TimerService extends Service {
 	@Override
 	public int onStartCommand(Intent intent, int flags, int startId) {
 		long duration = intent.getLongExtra(Constants.Arguments.TIMER_DURATION, 0);
-		CountDownTimer timer = new CountDownTimer(duration * 60000, 1000) {
+		timer = new CountDownTimer(duration * 60000, 1000) {
 			@Override
 			public void onTick(long millisUntilFinished) {
 				int numMessages = 0;
@@ -89,5 +90,11 @@ public class TimerService extends Service {
 		}
 		timer.start();
 		return START_STICKY;
+	}
+
+	@Override
+	public void onDestroy() {
+		super.onDestroy();
+		timer.cancel();
 	}
 }
