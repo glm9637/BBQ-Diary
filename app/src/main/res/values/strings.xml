@@ -74,4 +74,5 @@
     <string name="toast_logged_out">You are now logged out</string>
     <string name="toast_logged_out_error">You couldn\'t be logged out, please try again later.</string>
     <string name="recipe_saved">Recipe saved</string>
+	<string name="delete_recipe">Delete Recipe</string>
 </resources>

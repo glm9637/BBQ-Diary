@@ -18,6 +18,7 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.glm9637.myapplication.BuildConfig;
 import com.example.glm9637.myapplication.R;
 import com.example.glm9637.myapplication.database.RecipeDatabase;
 import com.example.glm9637.myapplication.database.entry.IngredientEntry;
@@ -187,6 +188,10 @@ public class RecipeActivity extends AppCompatActivity {
 				return true;
 			case R.id.mnu_save:
 				saveRecipe();
+				return true;
+			case R.id.mnu_delete:
+				deleteRecipe();
+				return true;
 			default:
 				return super.onOptionsItemSelected(item);
 		}
@@ -371,7 +376,7 @@ public class RecipeActivity extends AppCompatActivity {
 		}
 		String category = "category-" + recipeEntry.getCategoryId();
 		String cut = "cut-" + recipeEntry.getCutId();
-		DatabaseReference ref = FirebaseDatabase.getInstance().getReference().child("/recipes").child(category).child("cuts").child(cut).child("recipes").push();
+		DatabaseReference ref = FirebaseDatabase.getInstance().getReference().child("/recipes").child(category).child("cuts").child(cut).child(BuildConfig.FIREBASE_UPLOAD_PATH).push();
 		recipeEntry.setUploaded(true);
 		recipeEntry.setAuthor(username);
 		AppExecutors.getInstance().diskIO().execute(new Runnable() {
@@ -448,7 +453,29 @@ public class RecipeActivity extends AppCompatActivity {
 						recipeDatabaseReference.removeEventListener(this);
 					}
 				});
-				Toast.makeText(RecipeActivity.this, R.string.recipe_saved, Toast.LENGTH_LONG).show();
+				runOnUiThread(new Runnable() {
+					@Override
+					public void run() {
+						Toast.makeText(RecipeActivity.this, R.string.recipe_saved, Toast.LENGTH_LONG).show();
+					}
+				});
+
+			}
+		});
+	}
+
+	private void deleteRecipe() {
+		AppExecutors.getInstance().diskIO().execute(new Runnable() {
+			@Override
+			public void run() {
+				RecipeDatabase database = RecipeDatabase.getInstance(RecipeActivity.this);
+				database.getRecipeDao().deleteRecipe(recipeEntry.getId());
+				runOnUiThread(new Runnable() {
+					@Override
+					public void run() {
+						RecipeActivity.this.finish();
+					}
+				});
 			}
 		});
 	}

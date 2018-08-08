@@ -19,6 +19,11 @@
         android:icon="@drawable/ic_cloud_upload_black_24dp"
         />
 
+    <item android:id="@+id/mnu_delete"
+        app:showAsAction="ifRoom"
+        android:title="@string/delete_recipe"
+        />
+
     <item android:id="@+id/mnu_log_in"
         app:showAsAction="never"
         android:title="Log in"/>

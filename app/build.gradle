@@ -16,6 +16,22 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+
+    flavorDimensions "default"
+
+    productFlavors {
+        //only for testing purposes
+        directUpload {
+            buildConfigField 'String', 'FIREBASE_UPLOAD_PATH', '"recipes"'
+            versionNameSuffix "-debug"
+            dimension "default"
+        }
+
+        indirectUpload {
+            buildConfigField 'String', 'FIREBASE_UPLOAD_PATH', '"recipes-upload"'
+            dimension "default"
+        }
+    }
 }
 
 dependencies {
