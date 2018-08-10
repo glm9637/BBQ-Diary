@@ -7,6 +7,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -34,6 +35,7 @@ import java.util.List;
 public class StepListFragment extends Fragment {
 
 	private StepListAdapter adapter;
+	private RecyclerView recyclerView;
 
 	private StepListAdapter.ListEntryClickedListener entryClickedListener;
 
@@ -55,10 +57,18 @@ public class StepListFragment extends Fragment {
 	@Nullable
 	@Override
 	public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+		Log.w("StepListFragment","onCreateView");
 		recipeId = getArguments().getLong(Constants.Arguments.RECIPE_ID,0);
 		firebaseReference = getArguments().getString(Constants.Arguments.FIREBASE_REFERENCE);
 		View rootView = inflater.inflate(R.layout.fragment_list, container, false);
-		RecyclerView recyclerView = rootView.findViewById(R.id.recyclerview);
+		recyclerView = rootView.findViewById(R.id.recyclerview);
+		return rootView;
+	}
+
+	@Override
+	public void onResume() {
+		super.onResume();
+		Log.w("StepListFragment","onResume");
 		recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 		adapter = new StepListAdapter(getContext());
 		if(entryClickedListener!=null){
@@ -70,9 +80,8 @@ public class StepListFragment extends Fragment {
 		}else {
 			initDataFromFirebase();
 		}
-		return rootView;
 	}
-	
+
 	public void setOnStepClickListener(StepListAdapter.ListEntryClickedListener listener){
 		entryClickedListener=listener;
 		if(adapter!=null){
@@ -116,6 +125,7 @@ public class StepListFragment extends Fragment {
 	@Override
 	public void onPause() {
 		super.onPause();
+		Log.w("StepListFragment","onPause");
 		detachDatabaseReadListener();
 	}
 

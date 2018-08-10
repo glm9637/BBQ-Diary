@@ -3,6 +3,7 @@ package com.example.glm9637.myapplication.ui.adapter.fragment;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
+import android.util.Log;
 
 import com.example.glm9637.myapplication.ui.adapter.recyclerView.StepListAdapter;
 import com.example.glm9637.myapplication.ui.fragment.step.StepDetailFragment;
@@ -17,47 +18,56 @@ import java.util.List;
  */
 public class RecipeStepsFragmentAdapter extends FragmentPagerAdapter {
 
+	private final StepListAdapter.ListEntryClickedListener onStepListener;
 	private long recipeId;
 	private String recipeRef;
-	private final StepListAdapter.ListEntryClickedListener onStepListener;
 	private List<Integer> stepList;
 	private ArrayList<String> firebaseStepList;
+	private StepListFragment stepListFragment;
 
 	public RecipeStepsFragmentAdapter(FragmentManager fm, long recipeId, StepListAdapter.ListEntryClickedListener onStepListener) {
 		super(fm);
 		this.recipeId = recipeId;
 		this.onStepListener = onStepListener;
+		Log.w("Step","new Adapter");
 	}
 
 	public RecipeStepsFragmentAdapter(FragmentManager fm, String recipeRef, StepListAdapter.ListEntryClickedListener onStepListener) {
 		super(fm);
 		this.recipeRef = recipeRef;
 		this.onStepListener = onStepListener;
+		Log.w("Step","new Adapter");
 	}
 
 	@Override
 	public Fragment getItem(int position) {
+		Log.w("Step","getItem: "+position);
 		switch (position) {
 			case 0:
-				StepListFragment stepListFragment;
-				if(recipeRef==null) {
-					stepListFragment = StepListFragment.createFragment(recipeId);
-				}else {
-					stepListFragment = StepListFragment.createFragment(recipeRef);
+
+				if (stepListFragment == null) {
+					if (recipeRef == null) {
+						stepListFragment = StepListFragment.createFragment(recipeId);
+					} else {
+						stepListFragment = StepListFragment.createFragment(recipeRef);
+					}
 				}
-				stepListFragment.setOnStepClickListener(onStepListener);
+				if (onStepListener != null) {
+					stepListFragment.setOnStepClickListener(onStepListener);
+				}
+				Log.w("Step","Recipe fragment returned");
 				return stepListFragment;
 			case 1:
 				StepIngredientFragment stepIngredientFragment;
-				if(recipeRef==null) {
+				if (recipeRef == null) {
 					stepIngredientFragment = StepIngredientFragment.createFragment(recipeId);
-				}else {
+				} else {
 					stepIngredientFragment = StepIngredientFragment.createFragment(recipeRef);
 				}
 				return stepIngredientFragment;
 			default:
 				if (stepList == null) {
-					return StepDetailFragment.createFragment(firebaseStepList.get(position-2));
+					return StepDetailFragment.createFragment(firebaseStepList.get(position - 2));
 				} else {
 					return StepDetailFragment.createFragment(stepList.get(position - 2));
 				}

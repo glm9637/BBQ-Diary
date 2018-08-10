@@ -8,6 +8,7 @@ import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
@@ -36,6 +37,7 @@ public class RecipeStepActivity extends AppCompatActivity {
 	private DatabaseReference recipeDatabaseReference;
 	private ValueEventListener valueEventListener;
 
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -49,24 +51,6 @@ public class RecipeStepActivity extends AppCompatActivity {
 
 		tabLayout = findViewById(R.id.tab_layout);
 		pager = findViewById(R.id.view_pager);
-		StepListAdapter.ListEntryClickedListener listEntryClickedListener = new StepListAdapter.ListEntryClickedListener() {
-			@Override
-			public void onListEntryClicked(int position) {
-				pager.setCurrentItem(position, true);
-			}
-		};
-
-		if (firebaseRef == null) {
-			adapter = new RecipeStepsFragmentAdapter(getSupportFragmentManager(), recipeId, listEntryClickedListener);
-			initDataRoom();
-		} else {
-			adapter = new RecipeStepsFragmentAdapter(getSupportFragmentManager(), firebaseRef, listEntryClickedListener);
-			initDataFirebase();
-		}
-		pager.setAdapter(adapter);
-		tabLayout.setupWithViewPager(pager);
-
-
 	}
 
 	private void initDataRoom() {
@@ -77,6 +61,7 @@ public class RecipeStepActivity extends AppCompatActivity {
 				adapter.setStepList(idList);
 				pager.setAdapter(adapter);
 				tabLayout.setupWithViewPager(pager);
+				adapter.notifyDataSetChanged();
 			}
 		});
 	}
@@ -92,6 +77,9 @@ public class RecipeStepActivity extends AppCompatActivity {
 					data.add(String.format("%1s/%2s/%3s", firebaseRef, "steps", snapshot.getKey()));
 				}
 				adapter.setStepList(data);
+				pager.setAdapter(adapter);
+				tabLayout.setupWithViewPager(pager);
+				adapter.notifyDataSetChanged();
 			}
 
 			@Override
@@ -103,6 +91,45 @@ public class RecipeStepActivity extends AppCompatActivity {
 		recipeDatabaseReference.addValueEventListener(valueEventListener);
 	}
 
+	@Override
+	protected void onSaveInstanceState(Bundle outState) {
+		super.onSaveInstanceState(outState);
+		outState.putInt("test", pager.getCurrentItem());
+	}
+
+	@Override
+	protected void onRestoreInstanceState(Bundle savedInstanceState) {
+		super.onRestoreInstanceState(savedInstanceState);
+		int item = savedInstanceState.getInt("test");
+		pager.setCurrentItem(item, false);
+	}
+
+	@Override
+	protected void onResume() {
+		super.onResume();
+		StepListAdapter.ListEntryClickedListener listEntryClickedListener = new StepListAdapter.ListEntryClickedListener() {
+			@Override
+			public void onListEntryClicked(int position) {
+				pager.setCurrentItem(position, true);
+			}
+		};
+		Log.w("RecipeStepActivity", "onResume");
+		if (firebaseRef == null) {
+			if (adapter == null) {
+				adapter = new RecipeStepsFragmentAdapter(getSupportFragmentManager(), recipeId, listEntryClickedListener);
+			} else {
+				Log.w("Step", "Adapter not null");
+			}
+			initDataRoom();
+		} else {
+			if (adapter == null) {
+				adapter = new RecipeStepsFragmentAdapter(getSupportFragmentManager(), firebaseRef, listEntryClickedListener);
+			} else {
+				Log.w("Step", "Adapter not null");
+			}
+			initDataFirebase();
+		}
+	}
 
 	@Override
 	protected void onPause() {

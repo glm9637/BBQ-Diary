@@ -47,6 +47,7 @@ public class RecipeActivity extends AppCompatActivity {
 
 	public static final int RC_SIGN_IN = 1;
 	private static Bundle mState;
+	RecyclerView recyclerView;
 	private TextView descriptionText;
 	private TextView durationText;
 	private TextView cookingStyleText;
@@ -69,6 +70,7 @@ public class RecipeActivity extends AppCompatActivity {
 	private FirebaseAuth.AuthStateListener authStateListener;
 	private boolean upload = false;
 	private TextView authorText;
+	private FloatingActionButton btnCook;
 
 	public static void reset() {
 		mState = null;
@@ -82,7 +84,7 @@ public class RecipeActivity extends AppCompatActivity {
 		descriptionText = findViewById(R.id.txt_description);
 		durationText = findViewById(R.id.txt_duration);
 		cookingStyleText = findViewById(R.id.txt_cooking_style);
-		RecyclerView recyclerView = findViewById(R.id.recyclerview);
+		recyclerView = findViewById(R.id.recyclerview);
 		authorText = findViewById(R.id.txt_author);
 		setSupportActionBar(toolbar);
 		getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -93,50 +95,7 @@ public class RecipeActivity extends AppCompatActivity {
 		firebaseReference = getIntent().getStringExtra(Constants.Arguments.FIREBASE_REFERENCE);
 		firebaseAuth = FirebaseAuth.getInstance();
 
-		adapter = new IngredientAdapter(this);
-		recyclerView.setLayoutManager(new LinearLayoutManager(this));
-		recyclerView.setAdapter(adapter);
-
-
-		FloatingActionButton btn = findViewById(R.id.btn_cook);
-		btn.setOnClickListener(new View.OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				Intent intent = new Intent(RecipeActivity.this, RecipeStepActivity.class);
-				if (firebaseReference == null) {
-					intent.putExtra(Constants.Arguments.RECIPE_ID, recipeId);
-				} else {
-					intent.putExtra(Constants.Arguments.FIREBASE_REFERENCE, firebaseReference);
-				}
-				startActivity(intent);
-			}
-		});
-
-		authStateListener = new FirebaseAuth.AuthStateListener() {
-			@Override
-			public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
-				FirebaseUser user = firebaseAuth.getCurrentUser();
-				if (user != null) {
-					// User is signed in
-					username = user.getDisplayName();
-					if (logInMenu != null) {
-						logInMenu.setVisible(false);
-						logOutMenu.setVisible(true);
-					}
-					if (upload) {
-						upload = false;
-						shareRecipe();
-					}
-				} else {
-					// User is signed out
-					if (logInMenu != null) {
-						logInMenu.setVisible(true);
-						logOutMenu.setVisible(false);
-					}
-					username = "";
-				}
-			}
-		};
+		btnCook = findViewById(R.id.btn_cook);
 
 
 	}
@@ -209,7 +168,52 @@ public class RecipeActivity extends AppCompatActivity {
 			mState = null;
 		}
 
+		authStateListener = new FirebaseAuth.AuthStateListener() {
+			@Override
+			public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
+				FirebaseUser user = firebaseAuth.getCurrentUser();
+				if (user != null) {
+					// User is signed in
+					username = user.getDisplayName();
+					if (logInMenu != null) {
+						logInMenu.setVisible(false);
+						logOutMenu.setVisible(true);
+					}
+					if (upload) {
+						upload = false;
+						shareRecipe();
+					}
+				} else {
+					// User is signed out
+					if (logInMenu != null) {
+						logInMenu.setVisible(true);
+						logOutMenu.setVisible(false);
+					}
+					username = "";
+				}
+			}
+		};
+
+
+
 		firebaseAuth.addAuthStateListener(authStateListener);
+
+		adapter = new IngredientAdapter(this);
+		recyclerView.setLayoutManager(new LinearLayoutManager(this));
+		recyclerView.setAdapter(adapter);
+
+		btnCook.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				Intent intent = new Intent(RecipeActivity.this, RecipeStepActivity.class);
+				if (firebaseReference == null) {
+					intent.putExtra(Constants.Arguments.RECIPE_ID, recipeId);
+				} else {
+					intent.putExtra(Constants.Arguments.FIREBASE_REFERENCE, firebaseReference);
+				}
+				startActivity(intent);
+			}
+		});
 
 		if (firebaseReference == null) {
 			initDataFromRoom();
