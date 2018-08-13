@@ -10,9 +10,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.example.glm9637.myapplication.ui.activity.CutActivity;
 import com.example.glm9637.myapplication.R;
 import com.example.glm9637.myapplication.database.model.CutEntryForList;
+import com.example.glm9637.myapplication.ui.activity.CutActivity;
 import com.example.glm9637.myapplication.utils.Constants;
 
 import java.util.List;

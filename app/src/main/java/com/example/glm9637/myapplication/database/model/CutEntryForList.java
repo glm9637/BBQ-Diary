@@ -7,9 +7,9 @@ import android.arch.persistence.room.ColumnInfo;
  */
 
 public class CutEntryForList {
-	
+
 	private final long id;
-	
+
 	private final String name;
 	private final String description;
 	private final String origin;
@@ -27,23 +27,23 @@ public class CutEntryForList {
 		this.recipeCount = recipeCount;
 		this.categoryId = categoryId;
 	}
-	
+
 	public long getId() {
 		return id;
 	}
-	
+
 	public String getName() {
 		return name;
 	}
-	
+
 	public String getDescription() {
 		return description;
 	}
-	
+
 	public String getOrigin() {
 		return origin;
 	}
-	
+
 	public int getRecipeCount() {
 		return recipeCount;
 	}

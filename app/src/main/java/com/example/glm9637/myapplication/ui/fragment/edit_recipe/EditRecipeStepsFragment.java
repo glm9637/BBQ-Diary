@@ -9,6 +9,7 @@ import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -29,8 +30,8 @@ import java.util.List;
  */
 public class EditRecipeStepsFragment extends Fragment {
 
+	private static Bundle instanceState;
 	private EditableStepAdapter adapter;
-
 	private RecipeStepsViewModel viewModel;
 
 	public static EditRecipeStepsFragment createFragment() {
@@ -43,6 +44,10 @@ public class EditRecipeStepsFragment extends Fragment {
 		bundle.putLong(Constants.Arguments.RECIPE_ID, recipeId);
 		fragment.setArguments(bundle);
 		return fragment;
+	}
+
+	public static void reset() {
+		instanceState = null;
 	}
 
 	@Nullable
@@ -62,11 +67,13 @@ public class EditRecipeStepsFragment extends Fragment {
 				@Override
 				public void onChanged(@Nullable List<StepEntry> stepEntries) {
 					viewModel.getSteps().removeObserver(this);
-					adapter.setData(stepEntries);
+					if (instanceState != null) {
+						adapter.setData(instanceState.<StepEntry>getParcelableArrayList(Constants.Arguments.EDIT_STEPS_DATA));
+					} else {
+						adapter.setData(stepEntries);
+					}
 				}
 			});
-		}else {
-			adapter.setData(new ArrayList<StepEntry>());
 		}
 		rootView.findViewById(R.id.btn_add).setOnClickListener(new View.OnClickListener() {
 			@Override
@@ -101,11 +108,11 @@ public class EditRecipeStepsFragment extends Fragment {
 				TextInputEditText order = addDialogView.findViewById(R.id.txt_order);
 
 				if (name.getText().toString().isEmpty() || order.getText().toString().isEmpty()) {
-					Toast.makeText(getContext(), "Please Provide a Name and Order, or cancel this dialog.", Toast.LENGTH_LONG).show();
+					Toast.makeText(getContext(), R.string.step_dialog_error, Toast.LENGTH_LONG).show();
 					return;
 				}
 
-				StepEntry stepEntry = new StepEntry(Integer.parseInt(order.getText().toString()), name.getText().toString(), description.getText().toString(),duration.getText().toString().isEmpty()?0:Long.parseLong(duration.getText().toString()));
+				StepEntry stepEntry = new StepEntry(Integer.parseInt(order.getText().toString()), name.getText().toString(), description.getText().toString(), duration.getText().toString().isEmpty() ? 0 : Long.parseLong(duration.getText().toString()));
 				adapter.addData(stepEntry);
 				adapter.notifyDataSetChanged();
 				addDialog.dismiss();
@@ -116,6 +123,25 @@ public class EditRecipeStepsFragment extends Fragment {
 	}
 
 	public List<StepEntry> getSteps() {
+		if (adapter == null) {
+			return instanceState.getParcelableArrayList(Constants.Arguments.EDIT_STEPS_DATA);
+		}
 		return adapter.getData();
+	}
+
+	@Override
+	public void onPause() {
+		super.onPause();
+		instanceState = new Bundle();
+		instanceState.putParcelableArrayList(Constants.Arguments.EDIT_STEPS_DATA, adapter.getData());
+		Log.w("Step data count onPause", adapter.getData().size() + "");
+	}
+
+	@Override
+	public void onResume() {
+		super.onResume();
+		if (instanceState != null) {
+			adapter.setData(instanceState.<StepEntry>getParcelableArrayList(Constants.Arguments.EDIT_STEPS_DATA));
+		}
 	}
 }

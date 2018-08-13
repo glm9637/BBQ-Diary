@@ -10,11 +10,11 @@ public class CutViewModel extends ViewModel {
 
 	private final LiveData<CutEntry> cut;
 
-    public CutViewModel(RecipeDatabase database, long cutId){
+	public CutViewModel(RecipeDatabase database, long cutId) {
 		cut = database.getCutDao().loadCut(cutId);
-    }
+	}
 
-    public LiveData<CutEntry> getCut() {
-        return cut;
-    }
+	public LiveData<CutEntry> getCut() {
+		return cut;
+	}
 }

@@ -20,7 +20,7 @@ import com.example.glm9637.myapplication.utils.Constants;
  * Erzeugt von M. Fengels am 03.08.2018.
  */
 public class TimerService extends Service {
-	
+
 	private NotificationCompat.Builder notification;
 	private NotificationManager manager;
 	private CountDownTimer timer;
@@ -30,11 +30,11 @@ public class TimerService extends Service {
 	public IBinder onBind(Intent intent) {
 		return null;
 	}
-	
+
 	@Override
 	public void onCreate() {
 		super.onCreate();
-		
+
 		notification = new NotificationCompat.Builder(this, Constants.NOTIFICATION_CHANNEL_ID);
 		notification.setAutoCancel(true);
 		notification.setSmallIcon(R.drawable.ic_access_time_black_24dp);
@@ -43,7 +43,7 @@ public class TimerService extends Service {
 		notification.setOngoing(true);
 		manager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
 	}
-	
+
 	@Override
 	public int onStartCommand(Intent intent, int flags, int startId) {
 		long duration = intent.getLongExtra(Constants.Arguments.TIMER_DURATION, 0);
@@ -58,7 +58,7 @@ public class TimerService extends Service {
 						Constants.Ids.TIMER_NOTIFICATION_ID,
 						notification.build());
 			}
-			
+
 			@Override
 			public void onFinish() {
 				notification.setContentText("Step finished");

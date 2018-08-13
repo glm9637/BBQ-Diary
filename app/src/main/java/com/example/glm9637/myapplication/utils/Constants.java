@@ -37,11 +37,15 @@ public class Constants {
 		public static final String TIMER_DURATION = "timer duration";
 		public static final String IS_RUB = "is rub";
 		public static final String DESCRIPTION = "description";
+		public static final String SHORT_DESCRIPTION = "short description";
 		public static final String NAME = "name";
 		public static final String COOKING_STYLE = "cooking style";
 		public static final String DURATION = "duration";
 		public static final String FIREBASE_REFERENCE = "firebase reference";
 		public static final String SAVE_INSTANCE_ADAPTER = "save adapter state";
+
+		public static final String EDIT_INGREDIENTS_DATA = "edit ingredients data";
+		public static final String EDIT_STEPS_DATA = "edit steps data";
 	}
 
 	public static class Ids {

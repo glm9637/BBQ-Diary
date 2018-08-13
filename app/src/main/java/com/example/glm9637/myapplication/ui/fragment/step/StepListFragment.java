@@ -13,13 +13,9 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.glm9637.myapplication.R;
-import com.example.glm9637.myapplication.database.entry.IngredientEntry;
-import com.example.glm9637.myapplication.database.entry.RecipeEntry;
 import com.example.glm9637.myapplication.database.entry.StepEntry;
-import com.example.glm9637.myapplication.ui.activity.RecipeActivity;
 import com.example.glm9637.myapplication.ui.adapter.recyclerView.StepListAdapter;
 import com.example.glm9637.myapplication.utils.Constants;
-import com.example.glm9637.myapplication.view_model.RecipeActivityViewModel;
 import com.example.glm9637.myapplication.view_model.RecipeStepsViewModel;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -45,7 +41,7 @@ public class StepListFragment extends Fragment {
 
 	private long recipeId;
 	private String firebaseReference;
-	
+
 	public static StepListFragment createFragment(long recipeId) {
 		StepListFragment fragment = new StepListFragment();
 		Bundle bundle = new Bundle();
@@ -53,12 +49,21 @@ public class StepListFragment extends Fragment {
 		fragment.setArguments(bundle);
 		return fragment;
 	}
-	
+
+	public static StepListFragment createFragment(String recipeRef) {
+		StepListFragment fragment = new StepListFragment();
+		Bundle bundle = new Bundle();
+		bundle.putString(Constants.Arguments.FIREBASE_REFERENCE, recipeRef);
+		fragment.setArguments(bundle);
+		return fragment;
+
+	}
+
 	@Nullable
 	@Override
 	public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-		Log.w("StepListFragment","onCreateView");
-		recipeId = getArguments().getLong(Constants.Arguments.RECIPE_ID,0);
+		Log.w("StepListFragment", "onCreateView");
+		recipeId = getArguments().getLong(Constants.Arguments.RECIPE_ID, 0);
 		firebaseReference = getArguments().getString(Constants.Arguments.FIREBASE_REFERENCE);
 		View rootView = inflater.inflate(R.layout.fragment_list, container, false);
 		recyclerView = rootView.findViewById(R.id.recyclerview);
@@ -68,29 +73,28 @@ public class StepListFragment extends Fragment {
 	@Override
 	public void onResume() {
 		super.onResume();
-		Log.w("StepListFragment","onResume");
+		Log.w("StepListFragment", "onResume");
 		recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 		adapter = new StepListAdapter(getContext());
-		if(entryClickedListener!=null){
+		if (entryClickedListener != null) {
 			adapter.setOnClickListener(entryClickedListener);
 		}
 		recyclerView.setAdapter(adapter);
-		if(firebaseReference==null){
+		if (firebaseReference == null) {
 			initDataFromRoom();
-		}else {
+		} else {
 			initDataFromFirebase();
 		}
 	}
 
-	public void setOnStepClickListener(StepListAdapter.ListEntryClickedListener listener){
-		entryClickedListener=listener;
-		if(adapter!=null){
+	public void setOnStepClickListener(StepListAdapter.ListEntryClickedListener listener) {
+		entryClickedListener = listener;
+		if (adapter != null) {
 			adapter.setOnClickListener(entryClickedListener);
 		}
 	}
 
-
-	private void initDataFromRoom(){
+	private void initDataFromRoom() {
 		RecipeStepsViewModel viewModel = new RecipeStepsViewModel(getContext(), recipeId);
 		viewModel.getSteps().observe(this, new Observer<List<StepEntry>>() {
 			@Override
@@ -108,7 +112,7 @@ public class StepListFragment extends Fragment {
 			valueEventListener = new ValueEventListener() {
 				@Override
 				public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-					for(DataSnapshot snapshot: dataSnapshot.child("/steps").getChildren()){
+					for (DataSnapshot snapshot : dataSnapshot.child("/steps").getChildren()) {
 						StepEntry stepEntry = snapshot.getValue(StepEntry.class);
 						adapter.addData(stepEntry);
 					}
@@ -125,7 +129,7 @@ public class StepListFragment extends Fragment {
 	@Override
 	public void onPause() {
 		super.onPause();
-		Log.w("StepListFragment","onPause");
+		Log.w("StepListFragment", "onPause");
 		detachDatabaseReadListener();
 	}
 
@@ -134,15 +138,5 @@ public class StepListFragment extends Fragment {
 			recipeDatabaseReference.removeEventListener(valueEventListener);
 			valueEventListener = null;
 		}
-	}
-
-
-	public static StepListFragment createFragment(String recipeRef) {
-		StepListFragment fragment = new StepListFragment();
-		Bundle bundle = new Bundle();
-		bundle.putString(Constants.Arguments.FIREBASE_REFERENCE, recipeRef);
-		fragment.setArguments(bundle);
-		return fragment;
-
 	}
 }

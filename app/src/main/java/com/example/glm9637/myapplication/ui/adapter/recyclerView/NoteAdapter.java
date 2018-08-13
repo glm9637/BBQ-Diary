@@ -51,7 +51,7 @@ public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.NoteViewHolder
 		NoteEntryForList noteEntry = data.get(position);
 		holder.Name.setText(noteEntry.getName());
 		Date date = new Date(noteEntry.getDate());
-		holder.Date.setText(context.getString(R.string.date_and_time, dateFormat.format(date),timeFormat.format(date)));
+		holder.Date.setText(context.getString(R.string.date_and_time, dateFormat.format(date), timeFormat.format(date)));
 	}
 
 	@Override

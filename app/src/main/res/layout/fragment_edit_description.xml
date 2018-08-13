@@ -1,32 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:padding="@dimen/activity_default_margin"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:app="http://schemas.android.com/apk/res-auto"
+	android:layout_width="match_parent"
+	android:layout_height="match_parent"
+	android:padding="@dimen/activity_default_margin">
 
 
-    <TextView
-        android:id="@+id/txt_label"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/describe_your_recipe"/>
+	<TextView
+		android:id="@+id/txt_label"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:text="@string/describe_your_recipe" />
 
-    <android.support.design.widget.TextInputLayout
-        android:id="@+id/til_description"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:hint="@string/hint_recipe_description"
-        app:layout_constraintTop_toBottomOf="@id/txt_label"
-        app:layout_constraintBottom_toBottomOf="parent">
+	<android.support.design.widget.TextInputLayout
+		android:id="@+id/til_description"
+		android:layout_width="match_parent"
+		android:layout_height="0dp"
+		android:hint="@string/hint_recipe_description"
+		app:layout_constraintBottom_toBottomOf="parent"
+		app:layout_constraintTop_toBottomOf="@id/txt_label">
 
-        <android.support.design.widget.TextInputEditText
-            android:id="@+id/txt_description"
-            android:inputType="textMultiLine"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"/>
+		<android.support.design.widget.TextInputEditText
+			android:id="@+id/txt_description"
+			android:layout_width="match_parent"
+			android:layout_height="match_parent"
+			android:inputType="textMultiLine" />
 
-    </android.support.design.widget.TextInputLayout>
+	</android.support.design.widget.TextInputLayout>
 
 </android.support.constraint.ConstraintLayout>

@@ -18,17 +18,17 @@ import java.util.List;
 public abstract class RecipeDao {
 
 	@Query("SELECT * FROM recipe WHERE cut_id = :cutId")
- 	public abstract LiveData<List<RecipeEntry>> loadRecipeForCut(long cutId);
+	public abstract LiveData<List<RecipeEntry>> loadRecipeForCut(long cutId);
 
 	@Query("SELECT * FROM recipe WHERE category_id = :categoryId and is_seasoning = 1")
 	public abstract LiveData<List<RecipeEntry>> loadRubForCategory(long categoryId);
 
 	@Update
 	public abstract void updateRecipe(RecipeEntry recipe);
-	
+
 	@Insert
 	public abstract long insertRecipe(RecipeEntry recipe);
-	
+
 	@Insert
 	public abstract void insertAll(RecipeEntry[] recipeEntries);
 
@@ -39,7 +39,7 @@ public abstract class RecipeDao {
 	public abstract RecipeEntry loadRecipe_sync(long recipeId);
 
 
-	public void deleteRecipe(long id){
+	public void deleteRecipe(long id) {
 		deleteRecipeSteps(id);
 		deleteRecipeIngredients(id);
 		deleteRecipeInternal(id);

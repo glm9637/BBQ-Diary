@@ -1,10 +1,10 @@
 package com.example.glm9637.myapplication.ui.activity;
 
 import android.arch.lifecycle.Observer;
+import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.MotionEvent;
 import android.view.View;
@@ -17,8 +17,11 @@ import com.example.glm9637.myapplication.database.entry.IngredientEntry;
 import com.example.glm9637.myapplication.database.entry.RecipeEntry;
 import com.example.glm9637.myapplication.database.entry.StepEntry;
 import com.example.glm9637.myapplication.ui.adapter.fragment.EditRecipeFragmentAdapter;
+import com.example.glm9637.myapplication.ui.fragment.edit_recipe.EditRecipeDescriptionFragment;
 import com.example.glm9637.myapplication.ui.fragment.edit_recipe.EditRecipeFinishFragment;
+import com.example.glm9637.myapplication.ui.fragment.edit_recipe.EditRecipeIngredientFragment;
 import com.example.glm9637.myapplication.ui.fragment.edit_recipe.EditRecipeNameFragment;
+import com.example.glm9637.myapplication.ui.fragment.edit_recipe.EditRecipeStepsFragment;
 import com.example.glm9637.myapplication.ui.view.EditRecipeViewPager;
 import com.example.glm9637.myapplication.utils.AppExecutors;
 import com.example.glm9637.myapplication.utils.Constants;
@@ -35,6 +38,13 @@ public class EditRecipeActivity extends AppCompatActivity implements EditRecipeF
 	private EditRecipeFragmentAdapter adapter;
 	private EditRecipeViewPager pager;
 	private boolean swipeEnabled = false;
+
+	public static void reset() {
+		EditRecipeNameFragment.reset();
+		EditRecipeDescriptionFragment.reset();
+		EditRecipeIngredientFragment.reset();
+		EditRecipeStepsFragment.reset();
+	}
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -57,12 +67,12 @@ public class EditRecipeActivity extends AppCompatActivity implements EditRecipeF
 			viewModel.getRecipe().observe(this, new Observer<RecipeEntry>() {
 				@Override
 				public void onChanged(@Nullable RecipeEntry recipeEntry) {
-					adapter = new EditRecipeFragmentAdapter(getSupportFragmentManager(), recipeEntry, EditRecipeActivity.this, EditRecipeActivity.this);
+					adapter = new EditRecipeFragmentAdapter(getSupportFragmentManager(), recipeEntry);
 					pager.setAdapter(adapter);
 				}
 			});
 		} else {
-			adapter = new EditRecipeFragmentAdapter(getSupportFragmentManager(), isRub, this, this);
+			adapter = new EditRecipeFragmentAdapter(getSupportFragmentManager(), isRub);
 			pager.setAdapter(adapter);
 		}
 		tabLayout.setupWithViewPager(pager);
@@ -186,5 +196,4 @@ public class EditRecipeActivity extends AppCompatActivity implements EditRecipeF
 
 		});
 	}
-
 }

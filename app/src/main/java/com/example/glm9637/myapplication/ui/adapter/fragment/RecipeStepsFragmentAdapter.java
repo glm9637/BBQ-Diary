@@ -29,19 +29,19 @@ public class RecipeStepsFragmentAdapter extends FragmentPagerAdapter {
 		super(fm);
 		this.recipeId = recipeId;
 		this.onStepListener = onStepListener;
-		Log.w("Step","new Adapter");
+		Log.w("Step", "new Adapter");
 	}
 
 	public RecipeStepsFragmentAdapter(FragmentManager fm, String recipeRef, StepListAdapter.ListEntryClickedListener onStepListener) {
 		super(fm);
 		this.recipeRef = recipeRef;
 		this.onStepListener = onStepListener;
-		Log.w("Step","new Adapter");
+		Log.w("Step", "new Adapter");
 	}
 
 	@Override
 	public Fragment getItem(int position) {
-		Log.w("Step","getItem: "+position);
+		Log.w("Step", "getItem: " + position);
 		switch (position) {
 			case 0:
 
@@ -55,7 +55,7 @@ public class RecipeStepsFragmentAdapter extends FragmentPagerAdapter {
 				if (onStepListener != null) {
 					stepListFragment.setOnStepClickListener(onStepListener);
 				}
-				Log.w("Step","Recipe fragment returned");
+				Log.w("Step", "Recipe fragment returned");
 				return stepListFragment;
 			case 1:
 				StepIngredientFragment stepIngredientFragment;

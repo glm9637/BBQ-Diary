@@ -21,23 +21,14 @@ import com.example.glm9637.myapplication.utils.Constants;
  */
 public class EditRecipeNameFragment extends Fragment {
 
+	private static Bundle instanceState;
 	private TextInputEditText nameText;
 	private TextInputEditText descriptionText;
 	private TextInputEditText cookingStyleText;
 	private TextInputEditText durationText;
 	private CheckBox rubCheck;
 	private Button btnNext;
-
-	private EnableSwipeListener swipeListener;
 	private boolean swipeEnabled = false;
-
-	public interface EnableSwipeListener {
-		void onEnableSwipe();
-
-		void onDisableSwipe();
-
-		void onSwipeToNextPage();
-	}
 
 	public static EditRecipeNameFragment createFragment(boolean isRub) {
 		EditRecipeNameFragment fragment = new EditRecipeNameFragment();
@@ -59,6 +50,10 @@ public class EditRecipeNameFragment extends Fragment {
 		return fragment;
 	}
 
+	public static void reset() {
+		instanceState = null;
+	}
+
 	@Nullable
 	@Override
 	public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -77,12 +72,12 @@ public class EditRecipeNameFragment extends Fragment {
 				if (charSequence.length() > 3) {
 					if (!swipeEnabled) {
 						swipeEnabled = true;
-						swipeListener.onEnableSwipe();
+						((EnableSwipeListener) getActivity()).onEnableSwipe();
 						btnNext.setEnabled(true);
 					}
 				} else {
 					if (swipeEnabled) {
-						swipeListener.onDisableSwipe();
+						((EnableSwipeListener) getActivity()).onDisableSwipe();
 						btnNext.setEnabled(false);
 						swipeEnabled = false;
 					}
@@ -110,9 +105,9 @@ public class EditRecipeNameFragment extends Fragment {
 			descriptionText.setText(shortDescription);
 			rubCheck.setChecked(isRub);
 			cookingStyleText.setText(cookingStyle);
-			if(duration==0) {
+			if (duration == 0) {
 				durationText.setText("");
-			}else {
+			} else {
 				durationText.setText(String.valueOf(duration));
 			}
 			if (isRub) {
@@ -124,35 +119,74 @@ public class EditRecipeNameFragment extends Fragment {
 		btnNext.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View view) {
-				swipeListener.onSwipeToNextPage();
+				((EnableSwipeListener) getActivity()).onSwipeToNextPage();
 			}
 		});
+		if (nameText.getText().toString().length() < 4) {
+			((EnableSwipeListener) getActivity()).onDisableSwipe();
+		}
 		return rootView;
 	}
 
-	public void setEnableSwipeListener(EnableSwipeListener swipeListener) {
-		this.swipeListener = swipeListener;
-		swipeListener.onDisableSwipe();
+	@Override
+	public void onPause() {
+		super.onPause();
+		instanceState = new Bundle();
+		instanceState.putString(Constants.Arguments.NAME, nameText.getText().toString());
+		instanceState.putString(Constants.Arguments.SHORT_DESCRIPTION, descriptionText.getText().toString());
+		instanceState.putString(Constants.Arguments.COOKING_STYLE, cookingStyleText.getText().toString());
+		long duration = 0;
+		if (!durationText.getText().toString().equals("")) {
+			duration = Long.parseLong(durationText.getText().toString());
+		}
+		instanceState.putLong(Constants.Arguments.DURATION, duration);
+		instanceState.putBoolean(Constants.Arguments.IS_RUB, rubCheck.isChecked());
 	}
 
-
 	public boolean isRub() {
+		if (rubCheck == null) {
+			return instanceState.getBoolean(Constants.Arguments.IS_RUB);
+		}
 		return rubCheck.isChecked();
 	}
 
 	public String getName() {
+		if (nameText == null) {
+			return instanceState.getString(Constants.Arguments.NAME);
+		}
 		return nameText.getText().toString();
 	}
 
 	public String getShortDescription() {
+		if (descriptionText == null) {
+			return instanceState.getString(Constants.Arguments.SHORT_DESCRIPTION);
+		}
 		return descriptionText.getText().toString();
 	}
 
 	public String getCookingStyle() {
+		if (cookingStyleText == null) {
+			return instanceState.getString(Constants.Arguments.COOKING_STYLE);
+		}
 		return cookingStyleText.getText().toString();
 	}
 
 	public long getDuration() {
-		return Long.parseLong(durationText.getText().toString());
+		if (durationText == null) {
+			return instanceState.getLong(Constants.Arguments.DURATION);
+		}
+		long duration = 0;
+		if (!durationText.getText().toString().equals("")) {
+			duration = Long.parseLong(durationText.getText().toString());
+		}
+		return duration;
+	}
+
+	public interface EnableSwipeListener {
+		void onEnableSwipe();
+
+		void onDisableSwipe();
+
+		void onSwipeToNextPage();
 	}
 }

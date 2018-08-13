@@ -1,35 +1,38 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
-      xmlns:app="http://schemas.android.com/apk/res-auto">
-    <item android:id="@+id/mnu_notes"
-          app:showAsAction="always"
-          android:title="@string/mnu_notes"
-          android:icon="@drawable/ic_assignment_black_24dp"
-      />
+	xmlns:app="http://schemas.android.com/apk/res-auto">
+	<item
+		android:id="@+id/mnu_notes"
+		android:icon="@drawable/ic_assignment_black_24dp"
+		android:title="@string/mnu_notes"
+		app:showAsAction="always" />
 
-    <item android:id="@+id/mnu_edit"
-        app:showAsAction="ifRoom"
-        android:title="@string/mnu_edit_recipe"
-        android:icon="@drawable/ic_edit_black_24dp"
-        />
+	<item
+		android:id="@+id/mnu_edit"
+		android:icon="@drawable/ic_edit_black_24dp"
+		android:title="@string/mnu_edit_recipe"
+		app:showAsAction="ifRoom" />
 
-    <item android:id="@+id/mnu_share"
-        app:showAsAction="ifRoom"
-        android:title="@string/share_recipe"
-        android:icon="@drawable/ic_cloud_upload_black_24dp"
-        />
+	<item
+		android:id="@+id/mnu_share"
+		android:icon="@drawable/ic_cloud_upload_black_24dp"
+		android:title="@string/share_recipe"
+		app:showAsAction="ifRoom" />
 
-    <item android:id="@+id/mnu_delete"
-        app:showAsAction="ifRoom"
-        android:title="@string/delete_recipe"
-        />
+	<item
+		android:id="@+id/mnu_delete"
+		android:icon="@drawable/ic_delete_black_24dp"
+		android:title="@string/delete_recipe"
+		app:showAsAction="ifRoom" />
 
-    <item android:id="@+id/mnu_log_in"
-        app:showAsAction="never"
-        android:title="Log in"/>
+	<item
+		android:id="@+id/mnu_log_in"
+		android:title="@string/log_in"
+		app:showAsAction="never" />
 
-    <item android:id="@+id/mnu_log_out"
-        app:showAsAction="never"
-        android:visible="false"
-        android:title="Log out"/>
+	<item
+		android:id="@+id/mnu_log_out"
+		android:title="@string/log_out"
+		android:visible="false"
+		app:showAsAction="never" />
 </menu>

@@ -11,29 +11,29 @@ import com.example.glm9637.myapplication.database.entry.StepEntry;
 
 import java.util.List;
 
-public class RecipeActivityViewModel extends ViewModel{
+public class RecipeActivityViewModel extends ViewModel {
 
-    private final LiveData<RecipeEntry> recipe;
-    private final LiveData<List<IngredientEntry>> ingredients;
-    private final LiveData<List<StepEntry>> steps;
+	private final LiveData<RecipeEntry> recipe;
+	private final LiveData<List<IngredientEntry>> ingredients;
+	private final LiveData<List<StepEntry>> steps;
 
 
-    public RecipeActivityViewModel(Context context, long recipeId){
-        RecipeDatabase database = RecipeDatabase.getInstance(context);
-        recipe = database.getRecipeDao().loadRecipe(recipeId);
-        ingredients = database.getIngredientDao().loadIngredients(recipeId);
-        steps = database.getStepDao().loadStepList(recipeId);
-    }
+	public RecipeActivityViewModel(Context context, long recipeId) {
+		RecipeDatabase database = RecipeDatabase.getInstance(context);
+		recipe = database.getRecipeDao().loadRecipe(recipeId);
+		ingredients = database.getIngredientDao().loadIngredients(recipeId);
+		steps = database.getStepDao().loadStepList(recipeId);
+	}
 
-    public LiveData<RecipeEntry> getRecipe() {
-        return recipe;
-    }
+	public LiveData<RecipeEntry> getRecipe() {
+		return recipe;
+	}
 
-    public LiveData<List<IngredientEntry>> getIngredients() {
-        return ingredients;
-    }
+	public LiveData<List<IngredientEntry>> getIngredients() {
+		return ingredients;
+	}
 
-    public LiveData<List<StepEntry>> getSteps() {
-        return steps;
-    }
+	public LiveData<List<StepEntry>> getSteps() {
+		return steps;
+	}
 }

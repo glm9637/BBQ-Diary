@@ -36,15 +36,15 @@ import java.util.concurrent.Executors;
 public abstract class RecipeDatabase extends RoomDatabase {
 	private static final String DATABASE_NAME = "Recipe.db";
 	private static RecipeDatabase sInstance;
-	
+
 	public static RecipeDatabase getInstance(Context context) {
 		if (sInstance == null) {
 			sInstance = buildDatabase(context);
 		}
-		
+
 		return sInstance;
 	}
-	
+
 	private static RecipeDatabase buildDatabase(final Context context) {
 		return Room.databaseBuilder(context.getApplicationContext(),
 				RecipeDatabase.class, RecipeDatabase.DATABASE_NAME)
@@ -56,11 +56,11 @@ public abstract class RecipeDatabase extends RoomDatabase {
 							@Override
 							public void run() {
 								RecipeDatabase instance = getInstance(context);
-								instance .getCategoryDao().insertAll(CategoryEntry.populateData(context));
-								instance .getCutDao().insertAll(CutEntry.populateData());
-								instance .getRecipeDao().insertAll(RecipeEntry.populateData());
-								instance .getIngredientDao().insertAll(IngredientEntry.populateData());
-								instance .getStepDao().insertAll(StepEntry.populateData());
+								instance.getCategoryDao().insertAll(CategoryEntry.populateData(context));
+								instance.getCutDao().insertAll(CutEntry.populateData());
+								instance.getRecipeDao().insertAll(RecipeEntry.populateData());
+								instance.getIngredientDao().insertAll(IngredientEntry.populateData());
+								instance.getStepDao().insertAll(StepEntry.populateData());
 								instance.getNoteDao().insertAll(NoteEntry.populateData());
 							}
 						});
@@ -68,18 +68,18 @@ public abstract class RecipeDatabase extends RoomDatabase {
 				})
 				.build();
 	}
-	
+
 	public abstract CategoryDao getCategoryDao();
-	
+
 	public abstract CutDao getCutDao();
-	
+
 	public abstract RecipeDao getRecipeDao();
-	
+
 	public abstract IngredientDao getIngredientDao();
-	
+
 	public abstract StepDao getStepDao();
-	
+
 	public abstract NoteDao getNoteDao();
-	
-	
+
+
 }

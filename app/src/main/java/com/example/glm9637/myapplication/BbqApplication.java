@@ -10,6 +10,6 @@ import com.facebook.stetho.Stetho;
 public class BbqApplication extends Application {
 	public void onCreate() {
 		super.onCreate();
-			Stetho.initializeWithDefaults(this);
+		Stetho.initializeWithDefaults(this);
 	}
 }

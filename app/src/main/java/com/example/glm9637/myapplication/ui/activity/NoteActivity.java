@@ -19,14 +19,14 @@ import com.example.glm9637.myapplication.view_model.NoteViewModel;
 import java.util.Date;
 
 public class NoteActivity extends AppCompatActivity {
-	
+
 	private long noteId;
 	private long recipeId;
 	private NoteViewModel viewModel;
 	private EditText txtName;
 	private EditText txtDescription;
 	private NoteEntry noteEntry;
-	
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -36,7 +36,7 @@ public class NoteActivity extends AppCompatActivity {
 		getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 		txtName = findViewById(R.id.txt_name);
 		txtDescription = findViewById(R.id.txt_description);
-		
+
 		noteId = getIntent().getLongExtra(Constants.Arguments.NOTE_ID, 0);
 		recipeId = getIntent().getLongExtra(Constants.Arguments.RECIPE_ID, 0);
 		if (noteId != 0) {
@@ -54,7 +54,7 @@ public class NoteActivity extends AppCompatActivity {
 			viewModel = new NoteViewModel(this);
 		}
 	}
-	
+
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		if (noteId != 0) {
@@ -62,7 +62,7 @@ public class NoteActivity extends AppCompatActivity {
 		}
 		return super.onCreateOptionsMenu(menu);
 	}
-	
+
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		switch (item.getItemId()) {
@@ -73,7 +73,7 @@ public class NoteActivity extends AppCompatActivity {
 				return super.onOptionsItemSelected(item);
 		}
 	}
-	
+
 	@Override
 	protected void onPause() {
 		super.onPause();
@@ -81,13 +81,13 @@ public class NoteActivity extends AppCompatActivity {
 			@Override
 			public void run() {
 				if (noteEntry == null) {
-					if(txtName.getText().toString().isEmpty()){
-						Toast.makeText(getApplicationContext(),"Note has note been saved.",Toast.LENGTH_LONG).show();
-					}else {
+					if (txtName.getText().toString().isEmpty()) {
+						Toast.makeText(getApplicationContext(), "Note has note been saved.", Toast.LENGTH_LONG).show();
+					} else {
 						noteEntry = new NoteEntry(recipeId, txtName.getText().toString(), txtDescription.getText().toString());
 						viewModel.saveNote(noteEntry);
 					}
-					
+
 				} else {
 					noteEntry.setDate(new Date());
 					noteEntry.setName(txtName.getText().toString());
@@ -97,7 +97,7 @@ public class NoteActivity extends AppCompatActivity {
 			}
 		});
 	}
-	
+
 	private void deleteNote() {
 		AppExecutors.getInstance().diskIO().execute(new Runnable() {
 			@Override

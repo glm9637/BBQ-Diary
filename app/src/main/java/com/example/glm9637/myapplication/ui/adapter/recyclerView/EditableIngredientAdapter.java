@@ -21,128 +21,134 @@ import java.util.List;
 
 public class EditableIngredientAdapter extends RecyclerView.Adapter<EditableIngredientAdapter.IngredientViewHolder> {
 
-    private final LayoutInflater inflater;
-    private final Context context;
-    private List<IngredientEntry> data;
-    private final List<IngredientEntry> deletedData;
+	private final LayoutInflater inflater;
+	private final Context context;
+	private final List<IngredientEntry> deletedData;
+	private List<IngredientEntry> data;
 
-    public EditableIngredientAdapter(Context context) {
-        this.context = context;
-        inflater = LayoutInflater.from(context);
-        deletedData = new ArrayList<>();
-    }
+	public EditableIngredientAdapter(Context context) {
+		this.context = context;
+		inflater = LayoutInflater.from(context);
+		this.data = new ArrayList<>();
+		this.deletedData = new ArrayList<>();
+	}
 
-    public void setData(List<IngredientEntry> data) {
-        this.data = data;
-        notifyDataSetChanged();
-    }
+	@NonNull
+	@Override
+	public IngredientViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+		View rootView = inflater.inflate(R.layout.item_ingredient_clickable, parent, false);
+		return new IngredientViewHolder(rootView);
+	}
 
-    @NonNull
-    @Override
-    public IngredientViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View rootView = inflater.inflate(R.layout.item_ingredient_clickable, parent, false);
+	@Override
+	public void onBindViewHolder(@NonNull IngredientViewHolder holder, int position) {
+		IngredientEntry ingredient = data.get(position);
+		holder.Ingredient.setText(context.getString(R.string.ingredient_template, String.valueOf(ingredient.getAmount()), ingredient.getUnit(), ingredient.getName()));
+	}
 
-        return new IngredientViewHolder(rootView);
-    }
+	@Override
+	public int getItemCount() {
+		if (data == null) {
+			return 0;
+		}
+		return data.size();
+	}
 
-    @Override
-    public void onBindViewHolder(@NonNull IngredientViewHolder holder, int position) {
-        IngredientEntry ingredient = data.get(position);
-        holder.Ingredient.setText(context.getString(R.string.ingredient_template, String.valueOf(ingredient.getAmount()), ingredient.getUnit(), ingredient.getName()));
-    }
+	public void addData(IngredientEntry entry) {
+		data.add(entry);
+		Collections.sort(data, new Comparator<IngredientEntry>() {
+			@Override
+			public int compare(IngredientEntry ingredientEntry, IngredientEntry t1) {
+				return (ingredientEntry.getName().compareTo(t1.getName()));
+			}
+		});
+	}
 
-    @Override
-    public int getItemCount() {
-        if (data == null) {
-            return 0;
-        }
-        return data.size();
-    }
+	public ArrayList<IngredientEntry> getData() {
+		ArrayList<IngredientEntry> completeData = new ArrayList<>();
+		completeData.addAll(data);
+		completeData.addAll(deletedData);
+		return completeData;
+	}
 
-    public void addData(IngredientEntry entry) {
-        data.add(entry);
-        Collections.sort(data, new Comparator<IngredientEntry>() {
-            @Override
-            public int compare(IngredientEntry ingredientEntry, IngredientEntry t1) {
-                return (ingredientEntry.getName().compareTo(t1.getName()));
-            }
-        });
-    }
+	public void setData(List<IngredientEntry> data) {
+		for (IngredientEntry ingredient : data) {
+			if (ingredient.isDeleted()) {
+				deletedData.add(ingredient);
+			} else {
+				this.data.add(ingredient);
+			}
+		}
+		notifyDataSetChanged();
+	}
 
-    public List<IngredientEntry> getData() {
-        ArrayList<IngredientEntry> completeData = new ArrayList<>();
-        completeData.addAll(data);
-        completeData.addAll(deletedData);
-        return completeData;
-    }
+	private void showEditIngredientDialog(final IngredientEntry ingredientEntry) {
+		LayoutInflater factory = LayoutInflater.from(context);
+		final View deleteDialogView = factory.inflate(R.layout.dialog_ingredient_edit, null);
+		final AlertDialog deleteDialog = new AlertDialog.Builder(context).create();
+		deleteDialog.setView(deleteDialogView);
 
-    class IngredientViewHolder extends RecyclerView.ViewHolder {
+		TextInputEditText name = deleteDialogView.findViewById(R.id.txt_name);
+		TextInputEditText amount = deleteDialogView.findViewById(R.id.txt_amount);
+		TextInputEditText unit = deleteDialogView.findViewById(R.id.txt_unit);
 
-        final TextView Ingredient;
+		name.setText(ingredientEntry.getName());
+		amount.setText(String.valueOf(ingredientEntry.getAmount()));
+		unit.setText(ingredientEntry.getUnit());
 
-        IngredientViewHolder(View itemView) {
-            super(itemView);
-            Ingredient = itemView.findViewById(R.id.txt_ingredient);
-            itemView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    IngredientEntry ingredientEntry = data.get(getAdapterPosition());
-                    showEditIngredientDialog(ingredientEntry);
-                }
-            });
-        }
-    }
+		deleteDialogView.findViewById(R.id.btn_cancel).setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				deleteDialog.dismiss();
+			}
+		});
+		deleteDialogView.findViewById(R.id.btn_save).setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				TextInputEditText name = deleteDialogView.findViewById(R.id.txt_name);
+				TextInputEditText amount = deleteDialogView.findViewById(R.id.txt_amount);
+				TextInputEditText unit = deleteDialogView.findViewById(R.id.txt_unit);
 
-    private void showEditIngredientDialog(final IngredientEntry ingredientEntry) {
-        LayoutInflater factory = LayoutInflater.from(context);
-        final View deleteDialogView = factory.inflate(R.layout.dialog_ingredient_edit, null);
-        final AlertDialog deleteDialog = new AlertDialog.Builder(context).create();
-        deleteDialog.setView(deleteDialogView);
+				if (name.getText().toString().isEmpty()) {
+					Toast.makeText(context, "Please Provide a Name or cancel this dialog.", Toast.LENGTH_LONG).show();
+					return;
+				}
 
-        TextInputEditText name = deleteDialogView.findViewById(R.id.txt_name);
-        TextInputEditText amount = deleteDialogView.findViewById(R.id.txt_amount);
-        TextInputEditText unit = deleteDialogView.findViewById(R.id.txt_unit);
+				ingredientEntry.setName(name.getText().toString());
+				ingredientEntry.setAmount(Long.valueOf(amount.getText().toString()));
+				ingredientEntry.setUnit(unit.getText().toString());
+				notifyDataSetChanged();
+				deleteDialog.dismiss();
+			}
+		});
+		deleteDialogView.findViewById(R.id.btn_delete).setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View view) {
+				data.remove(ingredientEntry);
+				notifyDataSetChanged();
+				ingredientEntry.setDeleted(true);
+				deletedData.add(ingredientEntry);
+				deleteDialog.dismiss();
+			}
+		});
 
-        name.setText(ingredientEntry.getName());
-        amount.setText(String.valueOf(ingredientEntry.getAmount()));
-        unit.setText(ingredientEntry.getUnit());
+		deleteDialog.show();
+	}
 
-        deleteDialogView.findViewById(R.id.btn_cancel).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                deleteDialog.dismiss();
-            }
-        });
-        deleteDialogView.findViewById(R.id.btn_save).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                TextInputEditText name = deleteDialogView.findViewById(R.id.txt_name);
-                TextInputEditText amount = deleteDialogView.findViewById(R.id.txt_amount);
-                TextInputEditText unit = deleteDialogView.findViewById(R.id.txt_unit);
+	class IngredientViewHolder extends RecyclerView.ViewHolder {
 
-                if(name.getText().toString().isEmpty()){
-                    Toast.makeText(context,"Please Provide a Name or cancel this dialog.",Toast.LENGTH_LONG).show();
-                    return;
-                }
+		final TextView Ingredient;
 
-                ingredientEntry.setName(name.getText().toString());
-                ingredientEntry.setAmount(Long.valueOf(amount.getText().toString()));
-                ingredientEntry.setUnit(unit.getText().toString());
-                notifyDataSetChanged();
-                deleteDialog.dismiss();
-            }
-        });
-        deleteDialogView.findViewById(R.id.btn_delete).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                data.remove(ingredientEntry);
-                notifyDataSetChanged();
-                ingredientEntry.setDeleted(true);
-                deletedData.add(ingredientEntry);
-                deleteDialog.dismiss();
-            }
-        });
-
-        deleteDialog.show();
-    }
+		IngredientViewHolder(View itemView) {
+			super(itemView);
+			Ingredient = itemView.findViewById(R.id.txt_ingredient);
+			itemView.setOnClickListener(new View.OnClickListener() {
+				@Override
+				public void onClick(View view) {
+					IngredientEntry ingredientEntry = data.get(getAdapterPosition());
+					showEditIngredientDialog(ingredientEntry);
+				}
+			});
+		}
+	}
 }

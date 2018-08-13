@@ -1,48 +1,48 @@
 <resources>
 
-    <!-- Base application theme. -->
-    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
-        <!-- Customize your theme here. -->
-        <item name="colorPrimary">@color/colorPrimary</item>
-        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
-        <item name="colorAccent">@color/colorAccent</item>
-        <item name="android:windowContentTransitions">true</item>
-        <item name="android:windowExitTransition">@transition/activity_exit</item>
-    </style>
+	<!-- Base application theme. -->
+	<style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
+		<!-- Customize your theme here. -->
+		<item name="colorPrimary">@color/colorPrimary</item>
+		<item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+		<item name="colorAccent">@color/colorAccent</item>
+		<item name="android:windowContentTransitions">true</item>
+		<item name="android:windowExitTransition">@transition/activity_exit</item>
+	</style>
 
-    <!-- Base application theme. -->
-    <style name="CutTheme" parent="Theme.AppCompat.Light.NoActionBar">
-        <!-- Customize your theme here. -->
-        <item name="colorPrimary">@color/white</item>
-        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
-        <item name="colorAccent">@color/colorAccent</item>
-        <item name="android:windowContentTransitions">true</item>
-        <item name="android:windowExitTransition">@transition/activity_exit</item>
-    </style>
+	<!-- Base application theme. -->
+	<style name="CutTheme" parent="Theme.AppCompat.Light.NoActionBar">
+		<!-- Customize your theme here. -->
+		<item name="colorPrimary">@color/white</item>
+		<item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+		<item name="colorAccent">@color/colorAccent</item>
+		<item name="android:windowContentTransitions">true</item>
+		<item name="android:windowExitTransition">@transition/activity_exit</item>
+	</style>
 
-    <style name="tabLayout" parent="Widget.Design.TabLayout">
-        <item name="tabBackground">?attr/selectableItemBackground</item>
-        <item name="tabSelectedTextColor">@color/text_light</item>
-        <item name="tabTextColor">@color/text_light_light</item>
-        <item name="android:layout_width">match_parent</item>
-        <item name="android:layout_height">?attr/actionBarSize</item>
-        <item name="tabGravity">fill</item>
-        <item name="tabMode">fixed</item>
-    </style>
+	<style name="tabLayout" parent="Widget.Design.TabLayout">
+		<item name="tabBackground">?attr/selectableItemBackground</item>
+		<item name="tabSelectedTextColor">@color/text_light</item>
+		<item name="tabTextColor">@color/text_light_light</item>
+		<item name="android:layout_width">match_parent</item>
+		<item name="android:layout_height">?attr/actionBarSize</item>
+		<item name="tabGravity">fill</item>
+		<item name="tabMode">fixed</item>
+	</style>
 
-    <style name="FloatingActionButton">
-        <item name="android:layout_width">wrap_content</item>
-        <item name="android:layout_height">wrap_content</item>
-        <item name="android:layout_margin">16dp</item>
-    </style>
+	<style name="FloatingActionButton">
+		<item name="android:layout_width">wrap_content</item>
+		<item name="android:layout_height">wrap_content</item>
+		<item name="android:layout_margin">16dp</item>
+	</style>
 
-    <style name="LandingCaptionText">
-        <item name="android:textColor">@color/text_light</item>
+	<style name="LandingCaptionText">
+		<item name="android:textColor">@color/text_light</item>
 		<item name="android:textStyle">bold</item>
 		<item name="android:fontFamily">@font/copaseti</item>
 		<item name="android:textAllCaps">true</item>
 		<item name="android:textSize">@dimen/text_size_title</item>
 		<item name="android:layout_margin">@dimen/margin_large</item>
-    </style>
+	</style>
 
 </resources>

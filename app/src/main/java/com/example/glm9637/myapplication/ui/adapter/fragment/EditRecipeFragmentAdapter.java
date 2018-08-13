@@ -4,6 +4,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
+import com.example.glm9637.myapplication.R;
 import com.example.glm9637.myapplication.database.entry.IngredientEntry;
 import com.example.glm9637.myapplication.database.entry.RecipeEntry;
 import com.example.glm9637.myapplication.database.entry.StepEntry;
@@ -20,30 +21,29 @@ import java.util.List;
  */
 public class EditRecipeFragmentAdapter extends FragmentPagerAdapter {
 
+	private final FragmentManager fragmentManager;
 	private RecipeEntry recipe;
 	private boolean isRub;
-
 	private EditRecipeNameFragment nameFragment;
 	private EditRecipeDescriptionFragment descriptionFragment;
 	private EditRecipeIngredientFragment ingredientFragment;
 	private EditRecipeStepsFragment stepsFragment;
 	private EditRecipeFinishFragment finishFragment;
 
-	private final EditRecipeNameFragment.EnableSwipeListener swipeListener;
-	private final EditRecipeFinishFragment.RecipeFinishedListener finishedListener;
-
-	public EditRecipeFragmentAdapter(FragmentManager fm, RecipeEntry recipe, EditRecipeNameFragment.EnableSwipeListener swipeListener, EditRecipeFinishFragment.RecipeFinishedListener finishedListener) {
+	public EditRecipeFragmentAdapter(FragmentManager fm, RecipeEntry recipe) {
 		super(fm);
-		this.swipeListener = swipeListener;
 		this.recipe = recipe;
-		this.finishedListener = finishedListener;
+		fragmentManager = fm;
 	}
 
-	public EditRecipeFragmentAdapter(FragmentManager fm, boolean isRub, EditRecipeNameFragment.EnableSwipeListener swipeListener, EditRecipeFinishFragment.RecipeFinishedListener finishedListener) {
+	public EditRecipeFragmentAdapter(FragmentManager fm, boolean isRub) {
 		super(fm);
-		this.swipeListener = swipeListener;
 		this.isRub = isRub;
-		this.finishedListener = finishedListener;
+		fragmentManager = fm;
+	}
+
+	private static String makeFragmentName(long id) {
+		return "android:switcher:" + R.id.view_pager + ":" + id;
 	}
 
 	@Override
@@ -56,7 +56,6 @@ public class EditRecipeFragmentAdapter extends FragmentPagerAdapter {
 					} else {
 						nameFragment = EditRecipeNameFragment.createFragment(recipe.getName(), recipe.getShortDescription(), recipe.isSeasoning(), recipe.getCookingStyle(), recipe.getDuration());
 					}
-					nameFragment.setEnableSwipeListener(swipeListener);
 				}
 				return nameFragment;
 			case 1:
@@ -89,7 +88,6 @@ public class EditRecipeFragmentAdapter extends FragmentPagerAdapter {
 			default:
 				if (finishFragment == null) {
 					finishFragment = EditRecipeFinishFragment.createFragment();
-					finishFragment.setRecipeFinishedListener(finishedListener);
 				}
 
 				return finishFragment;
@@ -103,34 +101,40 @@ public class EditRecipeFragmentAdapter extends FragmentPagerAdapter {
 	}
 
 	public String getName() {
-		return nameFragment.getName();
+
+		return ((EditRecipeNameFragment) getRegisteredFragment(0)).getName();
 	}
 
 	public String getShortDescription() {
-		return nameFragment.getShortDescription();
+		return ((EditRecipeNameFragment) getRegisteredFragment(0)).getShortDescription();
 	}
 
 	public String getCookingStyle() {
-		return nameFragment.getCookingStyle();
+		return ((EditRecipeNameFragment) getRegisteredFragment(0)).getCookingStyle();
 	}
 
 	public long getDuration() {
-		return nameFragment.getDuration();
+		return ((EditRecipeNameFragment) getRegisteredFragment(0)).getDuration();
 	}
 
 	public String getDescription() {
-		return descriptionFragment.getDescription();
+		return ((EditRecipeDescriptionFragment) getRegisteredFragment(1)).getDescription();
 	}
 
 	public List<IngredientEntry> getIngredients() {
-		return ingredientFragment.getIngredients();
+		return ((EditRecipeIngredientFragment) getRegisteredFragment(2)).getIngredients();
 	}
 
 	public List<StepEntry> getSteps() {
-		return stepsFragment.getSteps();
+		return ((EditRecipeStepsFragment) getRegisteredFragment(3)).getSteps();
 	}
 
 	public boolean getIsRub() {
-		return nameFragment.isRub();
+
+		return ((EditRecipeNameFragment) getRegisteredFragment(0)).isRub();
+	}
+
+	public Fragment getRegisteredFragment(int position) {
+		return fragmentManager.findFragmentByTag(makeFragmentName(position));
 	}
 }

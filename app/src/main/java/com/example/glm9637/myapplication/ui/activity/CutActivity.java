@@ -77,6 +77,7 @@ public class CutActivity extends AppCompatActivity {
 		fab.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View view) {
+				EditRecipeActivity.reset();
 				Intent intent = new Intent(CutActivity.this, EditRecipeActivity.class);
 				intent.putExtra(Constants.Arguments.CUT_ID, cutId);
 				intent.putExtra(Constants.Arguments.CATEGORY_ID, categoryId);

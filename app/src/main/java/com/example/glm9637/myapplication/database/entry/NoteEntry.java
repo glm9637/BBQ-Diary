@@ -17,17 +17,15 @@ import java.util.Date;
 		@Index(name = "IX_NOTE_RECIPE_ID", value = "recipe_id")
 })
 public class NoteEntry {
-	
-	@PrimaryKey(autoGenerate = true)
-	private long id;
-	
+
 	@ColumnInfo(name = "recipe_id")
 	private final long recipeId;
-	
+	@PrimaryKey(autoGenerate = true)
+	private long id;
 	private String name;
 	private String text;
 	private Date date;
-	
+
 	public NoteEntry(long id, long recipeId, String name, String text, Date date) {
 		this.id = id;
 		this.recipeId = recipeId;
@@ -35,14 +33,20 @@ public class NoteEntry {
 		this.text = text;
 		this.date = date;
 	}
-	
+
 	public NoteEntry(long recipeId, String name, String description) {
-		this.recipeId=recipeId;
+		this.recipeId = recipeId;
 		this.name = name;
 		this.text = description;
 		this.date = new Date();
 	}
-	
+
+	public static NoteEntry[] populateData() {
+		return new NoteEntry[]{
+				new NoteEntry(1, 1, "Test Note", "Just to see if this note thing works", new Date())
+		};
+	}
+
 	public long getId() {
 		return id;
 	}
@@ -50,35 +54,29 @@ public class NoteEntry {
 	public long getRecipeId() {
 		return recipeId;
 	}
-	
+
 	public String getName() {
 		return name;
 	}
-	
+
 	public void setName(String name) {
 		this.name = name;
 	}
-	
+
 	public String getText() {
 		return text;
 	}
-	
+
 	public void setText(String text) {
 		this.text = text;
 	}
-	
+
 	public Date getDate() {
 		return date;
 	}
-	
+
 	public void setDate(Date date) {
 		this.date = date;
-	}
-	
-	public static NoteEntry[] populateData(){
-		return new NoteEntry[]{
-				new NoteEntry(1,1,"Test Note","Just to see if this note thing works",new Date())
-		};
 	}
 }
 

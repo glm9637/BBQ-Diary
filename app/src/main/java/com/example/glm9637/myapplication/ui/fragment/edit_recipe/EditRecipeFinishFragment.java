@@ -15,16 +15,10 @@ import com.example.glm9637.myapplication.R;
  */
 public class EditRecipeFinishFragment extends Fragment {
 
-	private RecipeFinishedListener recipeFinishedListener;
-
 	public static EditRecipeFinishFragment createFragment() {
 		return new EditRecipeFinishFragment();
 	}
-	
-	public interface RecipeFinishedListener{
-		void onRecipeFinished();
-	}
-	
+
 	@Nullable
 	@Override
 	public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -32,15 +26,15 @@ public class EditRecipeFinishFragment extends Fragment {
 		rootView.findViewById(R.id.btn_save).setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View view) {
-				recipeFinishedListener.onRecipeFinished();
+				((RecipeFinishedListener) getActivity()).onRecipeFinished();
 			}
 		});
-		
+
 		return rootView;
 	}
 
-	public void setRecipeFinishedListener(RecipeFinishedListener recipeFinishedListener){
-		this.recipeFinishedListener = recipeFinishedListener;
+	public interface RecipeFinishedListener {
+		void onRecipeFinished();
 	}
-	
+
 }

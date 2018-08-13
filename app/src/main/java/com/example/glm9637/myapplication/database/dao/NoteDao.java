@@ -17,22 +17,22 @@ import java.util.List;
  */
 @Dao
 public interface NoteDao {
-	
+
 	@Query("SELECT id, recipe_id, name, date FROM note WHERE recipe_id = :recipeId")
 	LiveData<List<NoteEntryForList>> loadNoteListForRecipe(long recipeId);
-	
+
 	@Query("SELECT * FROM note WHERE id = :noteId")
 	LiveData<NoteEntry> loadNote(long noteId);
-	
+
 	@Update
 	void updateNote(NoteEntry noteEntry);
-	
+
 	@Insert
 	void insertNote(NoteEntry noteEntry);
-	
+
 	@Delete
 	void deleteNote(NoteEntry noteEntry);
-	
+
 	@Insert
 	void insertAll(NoteEntry[] cutEntries);
 }

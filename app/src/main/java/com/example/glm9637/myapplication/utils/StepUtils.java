@@ -11,12 +11,12 @@ import com.example.glm9637.myapplication.ui.widget.WidgetHelper;
  * Erzeugt von M. Fengels am 03.08.2018.
  */
 public class StepUtils {
-	
-	public static void setStepTimer(Context context, StepEntry stepEntry){
-		WidgetHelper.saveToFile(stepEntry,context);
+
+	public static void setStepTimer(Context context, StepEntry stepEntry) {
+		WidgetHelper.saveToFile(stepEntry, context);
 		WidgetHelper.sendRefreshBroadcast(context);
-		
-		context.stopService(new Intent(context,TimerService.class));
+
+		context.stopService(new Intent(context, TimerService.class));
 		Intent intent = new Intent(context, TimerService.class);
 		intent.putExtra(Constants.Arguments.TIMER_DURATION, stepEntry.getDuration());
 		context.startService(intent);
