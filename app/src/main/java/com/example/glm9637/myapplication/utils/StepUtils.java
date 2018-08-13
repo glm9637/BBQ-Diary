@@ -14,8 +14,6 @@ import com.example.glm9637.myapplication.ui.widget.WidgetHelper;
 public class StepUtils {
 	public static void setStepTimer(Context context, StepEntry stepEntry, long categoryId, long cutId) {
 		WidgetHelper.saveToFile(stepEntry, context);
-
-
 		context.stopService(new Intent(context, TimerService.class));
 		Intent intent = new Intent(context, TimerService.class);
 		intent.putExtra(Constants.Arguments.TIMER_DURATION, stepEntry.getDuration());

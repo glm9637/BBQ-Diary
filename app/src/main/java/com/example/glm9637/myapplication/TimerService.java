@@ -56,7 +56,7 @@ public class TimerService extends Service {
 		notification.setContentTitle(title);
 		Intent notifyIntent = new Intent(this, RecipeStepActivity.class);
 		notifyIntent.putExtras(intent.getExtras());
-		PendingIntent contentIntent = PendingIntent.getActivity(this, 0, notifyIntent, 0);
+		PendingIntent contentIntent = PendingIntent.getActivity(this, 0, notifyIntent, PendingIntent.FLAG_UPDATE_CURRENT);
 		notification.setContentIntent(contentIntent);
 		timer = new CountDownTimer(duration * 60000, 1000) {
 			@Override

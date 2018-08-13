@@ -6,11 +6,13 @@ import android.appwidget.AppWidgetProvider;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.RemoteViews;
 
 import com.example.glm9637.myapplication.R;
 import com.example.glm9637.myapplication.database.entry.StepEntry;
 import com.example.glm9637.myapplication.ui.activity.RecipeStepActivity;
+import com.example.glm9637.myapplication.utils.Constants;
 
 /**
  * Erzeugt von M. Fengels am 03.08.2018.
@@ -34,6 +36,7 @@ public class StepWidgetProvider extends AppWidgetProvider {
 			views.setTextViewText(R.id.txt_description, stepEntry.getDescription());
 			views.setTextViewText(R.id.txt_duration, stepEntry.getDuration() + "");
 		}
+
 		views.setOnClickPendingIntent(R.id.root_view,pendingIntent);
 		// Instruct the widget manager to update the widget
 		appWidgetManager.updateAppWidget(appWidgetId, views);
@@ -63,7 +66,7 @@ public class StepWidgetProvider extends AppWidgetProvider {
 	private void update(Context context, AppWidgetManager appWidgetManager, int[] appWidgetIds, Bundle data) {
 		Intent notifyIntent = new Intent(context, RecipeStepActivity.class);
 		notifyIntent.putExtras(data);
-		PendingIntent contentIntent = PendingIntent.getActivity(context, 0, notifyIntent, 0);
+		PendingIntent contentIntent = PendingIntent.getActivity(context, 0, notifyIntent,  PendingIntent.FLAG_UPDATE_CURRENT);
 		for (int appWidgetId : appWidgetIds) {
 			updateAppWidget(context, appWidgetManager, appWidgetId, contentIntent);
 		}

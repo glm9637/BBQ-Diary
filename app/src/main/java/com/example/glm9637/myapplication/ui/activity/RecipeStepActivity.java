@@ -1,6 +1,7 @@
 package com.example.glm9637.myapplication.ui.activity;
 
 import android.arch.lifecycle.Observer;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
