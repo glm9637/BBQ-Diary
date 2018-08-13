@@ -1,8 +1,10 @@
 package com.example.glm9637.myapplication.ui.adapter.recyclerView;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.support.annotation.NonNull;
+import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -21,12 +23,12 @@ import java.util.List;
 public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.NoteViewHolder> {
 
 	private final LayoutInflater inflater;
-	private final Context context;
+	private final Activity context;
 	private List<NoteEntryForList> data;
 	private DateFormat dateFormat;
 	private DateFormat timeFormat;
 
-	public NoteAdapter(Context context) {
+	public NoteAdapter(Activity context) {
 		this.context = context;
 		inflater = LayoutInflater.from(context);
 		dateFormat = android.text.format.DateFormat.getDateFormat(context);
@@ -51,7 +53,7 @@ public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.NoteViewHolder
 		NoteEntryForList noteEntry = data.get(position);
 		holder.Name.setText(noteEntry.getName());
 		Date date = new Date(noteEntry.getDate());
-		holder.Date.setText(context.getString(R.string.date_and_time, dateFormat.format(date),timeFormat.format(date)));
+		holder.Date.setText(context.getString(R.string.date_and_time, dateFormat.format(date), timeFormat.format(date)));
 	}
 
 	@Override
@@ -74,11 +76,14 @@ public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.NoteViewHolder
 			itemView.setOnClickListener(new View.OnClickListener() {
 				@Override
 				public void onClick(View view) {
+					NoteActivity.reset();
 					NoteEntryForList item = data.get(getAdapterPosition());
 					Intent intent = new Intent(context, NoteActivity.class);
 					intent.putExtra(Constants.Arguments.NOTE_ID, item.getId());
 					intent.putExtra(Constants.Arguments.RECIPE_ID, item.getRecipeId());
-					context.startActivity(intent);
+					ActivityOptionsCompat options = ActivityOptionsCompat.
+							makeSceneTransitionAnimation(context,Name,"note name");
+					context.startActivity(intent,options.toBundle());
 				}
 			});
 		}

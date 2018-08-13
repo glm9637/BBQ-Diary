@@ -11,8 +11,8 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.example.glm9637.myapplication.R;
-import com.example.glm9637.myapplication.ui.activity.RecipeActivity;
 import com.example.glm9637.myapplication.database.entry.RecipeEntry;
+import com.example.glm9637.myapplication.ui.activity.RecipeActivity;
 import com.example.glm9637.myapplication.utils.Constants;
 
 import java.util.List;

@@ -10,11 +10,11 @@ public class CategoryViewModel extends ViewModel {
 
 	private final LiveData<CategoryEntry> category;
 
-    public CategoryViewModel(RecipeDatabase database, long categoryId){
+	public CategoryViewModel(RecipeDatabase database, long categoryId) {
 		category = database.getCategoryDao().loadCategory(categoryId);
-    }
+	}
 
-    public LiveData<CategoryEntry> getCategory() {
-        return category;
-    }
+	public LiveData<CategoryEntry> getCategory() {
+		return category;
+	}
 }

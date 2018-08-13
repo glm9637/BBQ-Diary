@@ -4,6 +4,7 @@ import android.appwidget.AppWidgetManager;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Bundle;
 
 import com.example.glm9637.myapplication.database.entry.StepEntry;
 
@@ -45,10 +46,16 @@ public class WidgetHelper {
 		return null;
 	}
 
-	public static void sendRefreshBroadcast(Context context) {
-		Intent intent = new Intent(AppWidgetManager.ACTION_APPWIDGET_UPDATE);
-		intent.setComponent(new ComponentName(context, StepWidgetProvider.class));
-		context.sendBroadcast(intent);
+	public static void sendRefreshBroadcast(Context context, Bundle data) {
+
+		AppWidgetManager man = AppWidgetManager.getInstance(context);
+		int[] ids = man.getAppWidgetIds(
+				new ComponentName(context,StepWidgetProvider.class));
+		Intent updateIntent = new Intent();
+		updateIntent.setAction(AppWidgetManager.ACTION_APPWIDGET_UPDATE);
+		updateIntent.putExtra(StepWidgetProvider.WIDGET_ID_KEY, ids);
+		updateIntent.putExtra(StepWidgetProvider.WIDGET_DATA_KEY, data);
+		context.sendBroadcast(updateIntent);
 	}
 
 }

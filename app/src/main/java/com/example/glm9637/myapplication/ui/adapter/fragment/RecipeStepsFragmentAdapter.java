@@ -67,7 +67,7 @@ public class RecipeStepsFragmentAdapter extends FragmentPagerAdapter {
 				if (stepList == null) {
 					return StepDetailFragment.createFragment(firebaseStepList.get(position - 2));
 				} else {
-					return StepDetailFragment.createFragment(stepList.get(position - 2),cutId,categoryId);
+					return StepDetailFragment.createFragment(stepList.get(position - 2), cutId, categoryId);
 				}
 		}
 

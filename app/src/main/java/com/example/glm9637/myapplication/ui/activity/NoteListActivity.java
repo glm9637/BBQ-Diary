@@ -20,14 +20,11 @@ import com.example.glm9637.myapplication.view_model.NoteListViewModel;
 import java.util.List;
 
 public class NoteListActivity extends AppCompatActivity {
+	private static Bundle mState;
 	private long recipeId;
-	
 	private NoteAdapter adapter;
 	private NoteListViewModel viewModel;
-	
-	private static Bundle mState;
-	
-	
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -40,34 +37,35 @@ public class NoteListActivity extends AppCompatActivity {
 		recyclerView.setAdapter(adapter);
 		recyclerView.setLayoutManager(new LinearLayoutManager(this));
 		recipeId = getIntent().getLongExtra(Constants.Arguments.RECIPE_ID, 0);
-		
-		
+
+
 		findViewById(R.id.btn_add).setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				Intent intent = new Intent(NoteListActivity.this,NoteActivity.class);
-				intent.putExtra(Constants.Arguments.RECIPE_ID,recipeId);
+				NoteActivity.reset();
+				Intent intent = new Intent(NoteListActivity.this, NoteActivity.class);
+				intent.putExtra(Constants.Arguments.RECIPE_ID, recipeId);
 				startActivity(intent);
 			}
 		});
 	}
-	
+
 	@Override
 	protected void onPause() {
 		super.onPause();
 		mState = new Bundle();
 		mState.putLong(Constants.Arguments.RECIPE_ID, recipeId);
 	}
-	
+
 	@Override
 	protected void onResume() {
 		super.onResume();
-		if(mState!=null && recipeId == 0){
+		if (mState != null && recipeId == 0) {
 			recipeId = mState.getLong(Constants.Arguments.RECIPE_ID);
-		}else {
+		} else {
 			CutsFragment.reset();
 		}
-		
+
 		viewModel = new NoteListViewModel(this, recipeId);
 		viewModel.getNoteList().observe(this, new Observer<List<NoteEntryForList>>() {
 			@Override
@@ -76,9 +74,9 @@ public class NoteListActivity extends AppCompatActivity {
 				adapter.setData(noteEntryForLists);
 			}
 		});
-		
-		
+
+
 	}
-	
-	
+
+
 }

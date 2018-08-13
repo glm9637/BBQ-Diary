@@ -20,7 +20,6 @@ import com.example.glm9637.myapplication.ui.adapter.recyclerView.EditableIngredi
 import com.example.glm9637.myapplication.utils.Constants;
 import com.example.glm9637.myapplication.view_model.IngredientFragmentViewModel;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -29,10 +28,9 @@ import java.util.List;
 public class EditRecipeIngredientFragment extends Fragment {
 
 
+	private static Bundle instanceState;
 	private EditableIngredientAdapter adapter;
 	private IngredientFragmentViewModel viewModel;
-
-	private static Bundle saveInstance;
 
 	public static EditRecipeIngredientFragment createFragment() {
 
@@ -47,6 +45,9 @@ public class EditRecipeIngredientFragment extends Fragment {
 		return fragment;
 	}
 
+	public static void reset() {
+		instanceState = null;
+	}
 
 	@Nullable
 	@Override
@@ -68,8 +69,6 @@ public class EditRecipeIngredientFragment extends Fragment {
 					adapter.setData(ingredientEntries);
 				}
 			});
-		} else {
-			adapter.setData(new ArrayList<IngredientEntry>());
 		}
 
 		rootView.findViewById(R.id.btn_add).setOnClickListener(new View.OnClickListener() {
@@ -91,7 +90,6 @@ public class EditRecipeIngredientFragment extends Fragment {
 		deleteDialogView.findViewById(R.id.btn_cancel).setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				//your business logic
 				deleteDialog.dismiss();
 			}
 		});
@@ -102,18 +100,13 @@ public class EditRecipeIngredientFragment extends Fragment {
 				TextInputEditText amount = deleteDialog.findViewById(R.id.txt_amount);
 				TextInputEditText unit = deleteDialog.findViewById(R.id.txt_unit);
 
-				if (name.getText().toString().isEmpty()) {
-					Toast.makeText(getContext(), "Please Provide a Name or cancel this dialog.", Toast.LENGTH_LONG).show();
-					return;
-				}
-
 				String ingredientName = name.getText().toString();
 				String ingredientAmount = amount.getText().toString();
 				String ingredientUnit = unit.getText().toString();
 				if (ingredientName.isEmpty()) {
-					Toast.makeText(getContext(),"Please specify a name or cancel",Toast.LENGTH_LONG).show();;
+					Toast.makeText(getContext(), R.string.ingredient_dialog_error, Toast.LENGTH_LONG).show();
 				} else {
-					if(ingredientAmount.isEmpty()){
+					if (ingredientAmount.isEmpty()) {
 						ingredientAmount = "0";
 					}
 					IngredientEntry entry = new IngredientEntry(ingredientName, Integer.parseInt(ingredientAmount), ingredientUnit);
@@ -121,6 +114,7 @@ public class EditRecipeIngredientFragment extends Fragment {
 					adapter.notifyDataSetChanged();
 					deleteDialog.dismiss();
 				}
+
 			}
 		});
 
@@ -128,27 +122,27 @@ public class EditRecipeIngredientFragment extends Fragment {
 		deleteDialog.show();
 	}
 
+	public List<IngredientEntry> getIngredients() {
+		if (adapter == null) {
+			return instanceState.getParcelableArrayList(Constants.Arguments.EDIT_INGREDIENTS_DATA);
+		}
+		return adapter.getData();
+	}
 
 	@Override
+
 	public void onPause() {
 		super.onPause();
-		saveInstance = new Bundle();
-		saveInstance.putParcelableArrayList(Constants.Arguments.INGREDIENT_DATA, adapter.getData());
+		instanceState = new Bundle();
+		instanceState.putParcelableArrayList(Constants.Arguments.EDIT_INGREDIENTS_DATA, adapter.getData());
 	}
 
 	@Override
 	public void onResume() {
 		super.onResume();
-		if (saveInstance != null) {
-			adapter.setData(saveInstance.<IngredientEntry>getParcelableArrayList(Constants.Arguments.INGREDIENT_DATA));
+		if (instanceState != null) {
+			adapter.setData(instanceState.<IngredientEntry>getParcelableArrayList(Constants.Arguments.INGREDIENT_DATA));
 		}
 	}
 
-	public List<IngredientEntry> getIngredients() {
-		return adapter.getData();
-	}
-
-	public static void resetData() {
-		saveInstance = null;
-	}
 }

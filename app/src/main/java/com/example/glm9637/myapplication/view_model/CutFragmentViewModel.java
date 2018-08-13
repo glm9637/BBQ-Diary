@@ -12,11 +12,11 @@ public class CutFragmentViewModel extends ViewModel {
 
 	private final LiveData<List<CutEntryForList>> cutList;
 
-    public CutFragmentViewModel(RecipeDatabase database, long categoryId){
+	public CutFragmentViewModel(RecipeDatabase database, long categoryId) {
 		cutList = database.getCutDao().loadCutList(categoryId);
-    }
+	}
 
-    public LiveData<List<CutEntryForList>> getCutList() {
-        return cutList;
-    }
+	public LiveData<List<CutEntryForList>> getCutList() {
+		return cutList;
+	}
 }

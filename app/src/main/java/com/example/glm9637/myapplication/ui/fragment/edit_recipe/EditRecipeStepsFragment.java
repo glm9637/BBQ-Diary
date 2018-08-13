@@ -9,6 +9,7 @@ import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -30,9 +31,9 @@ import java.util.List;
  */
 public class EditRecipeStepsFragment extends Fragment {
 
+	private static Bundle instanceState;
 	private EditableStepAdapter adapter;
 	private RecipeStepsViewModel viewModel;
-	private static Bundle saveInstance;
 
 	public static EditRecipeStepsFragment createFragment() {
 		return new EditRecipeStepsFragment();
@@ -63,11 +64,13 @@ public class EditRecipeStepsFragment extends Fragment {
 				@Override
 				public void onChanged(@Nullable List<StepEntry> stepEntries) {
 					viewModel.getSteps().removeObserver(this);
-					adapter.setData(stepEntries);
+					if (instanceState != null) {
+						adapter.setData(instanceState.<StepEntry>getParcelableArrayList(Constants.Arguments.EDIT_STEPS_DATA));
+					} else {
+						adapter.setData(stepEntries);
+					}
 				}
 			});
-		} else {
-			adapter.setData(new ArrayList<StepEntry>());
 		}
 		rootView.findViewById(R.id.btn_add).setOnClickListener(new View.OnClickListener() {
 			@Override
@@ -102,7 +105,7 @@ public class EditRecipeStepsFragment extends Fragment {
 				TextInputEditText order = addDialogView.findViewById(R.id.txt_order);
 
 				if (name.getText().toString().isEmpty() || order.getText().toString().isEmpty()) {
-					Toast.makeText(getContext(), "Please Provide a Name and Order, or cancel this dialog.", Toast.LENGTH_LONG).show();
+					Toast.makeText(getContext(), R.string.step_dialog_error, Toast.LENGTH_LONG).show();
 					return;
 				}
 
@@ -116,27 +119,31 @@ public class EditRecipeStepsFragment extends Fragment {
 		addDialog.show();
 	}
 
+
+	public static void reset() {
+		instanceState = null;
+	}
+
+	public List<StepEntry> getSteps() {
+		if (adapter == null) {
+			return instanceState.getParcelableArrayList(Constants.Arguments.EDIT_STEPS_DATA);
+		}
+		return adapter.getData();
+	}
+
 	@Override
 	public void onPause() {
 		super.onPause();
-		saveInstance = new Bundle();
-		saveInstance.putParcelableArrayList(Constants.Arguments.INGREDIENT_DATA, adapter.getData());
+		instanceState = new Bundle();
+		instanceState.putParcelableArrayList(Constants.Arguments.EDIT_STEPS_DATA, adapter.getData());
+		Log.w("Step data count onPause", adapter.getData().size() + "");
 	}
 
 	@Override
 	public void onResume() {
 		super.onResume();
-		if (saveInstance != null) {
-			adapter.setData(saveInstance.<StepEntry>getParcelableArrayList(Constants.Arguments.INGREDIENT_DATA));
+		if (instanceState != null) {
+			adapter.setData(instanceState.<StepEntry>getParcelableArrayList(Constants.Arguments.EDIT_STEPS_DATA));
 		}
-	}
-
-
-	public static void resetData() {
-		saveInstance = null;
-	}
-
-	public List<StepEntry> getSteps() {
-		return adapter.getData();
 	}
 }

@@ -21,6 +21,7 @@ import com.example.glm9637.myapplication.database.RecipeDatabase;
 import com.example.glm9637.myapplication.database.entry.CategoryEntry;
 import com.example.glm9637.myapplication.ui.adapter.fragment.CategoryFragmentAdapter;
 import com.example.glm9637.myapplication.ui.fragment.category.CutsFragment;
+import com.example.glm9637.myapplication.ui.fragment.category.RubFragment;
 import com.example.glm9637.myapplication.utils.Constants;
 import com.example.glm9637.myapplication.view_model.CategoryViewModel;
 
@@ -117,8 +118,6 @@ public class CategoryActivity extends AppCompatActivity {
 		super.onResume();
 		if (mState != null && categoryId == 0) {
 			categoryId = mState.getLong(Constants.Arguments.CATEGORY_ID);
-		} else {
-			CutsFragment.reset();
 		}
 
 		viewModel = new CategoryViewModel(RecipeDatabase.getInstance(this), categoryId);
@@ -157,4 +156,9 @@ public class CategoryActivity extends AppCompatActivity {
 	}
 
 
+	public static void reset() {
+		mState = null;
+		CutsFragment.reset();
+		RubFragment.reset();
+	}
 }

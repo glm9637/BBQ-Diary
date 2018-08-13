@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
-      xmlns:app="http://schemas.android.com/apk/res-auto">
-    <item android:id="@+id/mnu_step"
-          app:showAsAction="always"
-          android:title="@string/to_list_overview"
-          android:icon="@drawable/ic_format_list_numbered_black_24dp"
-        />
+	xmlns:app="http://schemas.android.com/apk/res-auto">
+	<item
+		android:id="@+id/mnu_step"
+		android:icon="@drawable/ic_format_list_numbered_black_24dp"
+		android:title="@string/to_list_overview"
+		app:showAsAction="always" />
 </menu>

@@ -60,9 +60,9 @@
 			android:id="@+id/txt_name"
 			android:layout_width="match_parent"
 			android:layout_height="wrap_content"
+			android:inputType="text"
 			android:maxLines="1"
 			android:nextFocusForward="@id/txt_duration"
-			android:inputType="text"
 			tools:text="Beef" />
 
 	</android.support.design.widget.TextInputLayout>

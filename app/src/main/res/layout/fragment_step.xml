@@ -1,49 +1,48 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:padding="8dp">
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:app="http://schemas.android.com/apk/res-auto"
+	xmlns:tools="http://schemas.android.com/tools"
+	android:layout_width="match_parent"
+	android:layout_height="match_parent"
+	android:padding="8dp">
 
-    <TextView
-        android:id="@+id/txt_title"
-        android:layout_width="match_parent"
-        android:textSize="@dimen/text_size_title"
-        android:layout_height="wrap_content"/>
+	<TextView
+		android:id="@+id/txt_title"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:textSize="@dimen/text_size_title" />
 
-    <android.support.v4.widget.NestedScrollView
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        app:layout_constraintBottom_toTopOf="@id/lbl_duration"
-        app:layout_constraintTop_toBottomOf="@id/txt_title">
+	<android.support.v4.widget.NestedScrollView
+		android:layout_width="match_parent"
+		android:layout_height="0dp"
+		app:layout_constraintBottom_toTopOf="@id/lbl_duration"
+		app:layout_constraintTop_toBottomOf="@id/txt_title">
 
-        <TextView
-            android:id="@+id/txt_description"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            tools:text="This is the Description"
-            android:textSize="@dimen/text_size_default"/>
+		<TextView
+			android:id="@+id/txt_description"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:textSize="@dimen/text_size_default"
+			tools:text="This is the Description" />
 
-    </android.support.v4.widget.NestedScrollView>
+	</android.support.v4.widget.NestedScrollView>
 
-    <Button
-        android:id="@+id/btn_timer"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/set_timer"
-        app:layout_constraintBottom_toBottomOf="parent"/>
+	<Button
+		android:id="@+id/btn_timer"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:text="@string/set_timer"
+		app:layout_constraintBottom_toBottomOf="parent" />
 
-    <TextView
-        android:id="@+id/txt_duration"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="@dimen/margin_default"
-        android:textSize="@dimen/text_size_default"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintBottom_toTopOf="@id/btn_timer"
-        tools:text="5 min"/>
+	<TextView
+		android:id="@+id/txt_duration"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_margin="@dimen/margin_default"
+		android:textSize="@dimen/text_size_default"
+		app:layout_constraintBottom_toTopOf="@id/btn_timer"
+		app:layout_constraintLeft_toLeftOf="parent"
+		tools:text="5 min" />
 
 
 </android.support.constraint.ConstraintLayout>

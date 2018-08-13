@@ -6,6 +6,7 @@ import android.arch.lifecycle.Observer;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TabLayout;
@@ -19,6 +20,7 @@ import com.example.glm9637.myapplication.R;
 import com.example.glm9637.myapplication.database.RecipeDatabase;
 import com.example.glm9637.myapplication.database.entry.CutEntry;
 import com.example.glm9637.myapplication.ui.adapter.fragment.CutFragmentAdapter;
+import com.example.glm9637.myapplication.ui.fragment.cut.DiscoverFragment;
 import com.example.glm9637.myapplication.ui.fragment.cut.RecipeFragment;
 import com.example.glm9637.myapplication.utils.Constants;
 import com.example.glm9637.myapplication.view_model.CutViewModel;
@@ -28,6 +30,7 @@ public class CutActivity extends AppCompatActivity {
 	private static Bundle mState;
 	private ImageView titleImage;
 	private CollapsingToolbarLayout collapsingToolbarLayout;
+	private AppBarLayout appBarLayout;
 	private FloatingActionButton fab;
 	private TabLayout tabLayout;
 	private ViewPager pager;
@@ -39,6 +42,7 @@ public class CutActivity extends AppCompatActivity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_cut);
+		appBarLayout = findViewById(R.id.app_bar_layout);
 		collapsingToolbarLayout = findViewById(R.id.collapsing_toolbar);
 		cutId = getIntent().getLongExtra(Constants.Arguments.CUT_ID, 0);
 		categoryId = getIntent().getLongExtra(Constants.Arguments.CATEGORY_ID, 0);
@@ -50,7 +54,6 @@ public class CutActivity extends AppCompatActivity {
 
 		tabLayout = findViewById(R.id.tab_layout);
 		pager = findViewById(R.id.view_pager);
-
 		tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
 			@Override
 			public void onTabSelected(TabLayout.Tab tab) {
@@ -68,7 +71,7 @@ public class CutActivity extends AppCompatActivity {
 							});
 				} else {
 					fab.animate()
-							.translationY(fab.getHeight()*2)
+							.translationY(fab.getHeight() * 2)
 							.setDuration(300)
 							.setListener(new AnimatorListenerAdapter() {
 								@Override
@@ -108,6 +111,7 @@ public class CutActivity extends AppCompatActivity {
 		mState = new Bundle();
 		mState.putLong(Constants.Arguments.CATEGORY_ID, cutId);
 		mState.putParcelable(Constants.Arguments.SAVE_INSTANCE_ADAPTER, adapter.saveState());
+		mState.putBoolean(Constants.Arguments.APPBAR_EXPANDED, (appBarLayout.getHeight() - appBarLayout.getBottom()) == 0);
 	}
 
 	@Override
@@ -115,8 +119,6 @@ public class CutActivity extends AppCompatActivity {
 		super.onResume();
 		if (mState != null && cutId == 0) {
 			cutId = mState.getLong(Constants.Arguments.CATEGORY_ID);
-		} else {
-			RecipeFragment.reset();
 		}
 
 		CutViewModel viewModel = new CutViewModel(RecipeDatabase.getInstance(this), cutId);
@@ -137,6 +139,10 @@ public class CutActivity extends AppCompatActivity {
 			pager.setAdapter(adapter);
 			tabLayout.setupWithViewPager(pager);
 		}
+		if (mState != null) {
+			appBarLayout.setExpanded(mState.getBoolean(Constants.Arguments.APPBAR_EXPANDED), false);
+			adapter.restoreState(mState.getParcelable(Constants.Arguments.SAVE_INSTANCE_ADAPTER), getClassLoader());
+		}
 	}
 
 	@Override
@@ -148,5 +154,11 @@ public class CutActivity extends AppCompatActivity {
 			default:
 				return super.onOptionsItemSelected(item);
 		}
+	}
+
+	public static void reset() {
+		mState = null;
+		RecipeFragment.reset();
+		DiscoverFragment.reset();
 	}
 }

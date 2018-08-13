@@ -10,9 +10,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.example.glm9637.myapplication.ui.activity.CutActivity;
 import com.example.glm9637.myapplication.R;
 import com.example.glm9637.myapplication.database.model.CutEntryForList;
+import com.example.glm9637.myapplication.ui.activity.CutActivity;
 import com.example.glm9637.myapplication.utils.Constants;
 
 import java.util.List;
@@ -74,6 +74,7 @@ public class CutAdapter extends RecyclerView.Adapter<CutAdapter.CutViewHolder> {
 			itemView.setOnClickListener(new View.OnClickListener() {
 				@Override
 				public void onClick(View view) {
+					CutActivity.reset();
 					CutEntryForList item = data.get(getAdapterPosition());
 					Intent intent = new Intent(context, CutActivity.class);
 					intent.putExtra(Constants.Arguments.CUT_ID, item.getId());

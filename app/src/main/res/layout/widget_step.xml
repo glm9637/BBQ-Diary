@@ -1,48 +1,63 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:background="#ffffff"
-    android:layout_margin="@dimen/margin_default">
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:tools="http://schemas.android.com/tools"
+	android:id="@+id/root_view"
+	android:layout_width="match_parent"
+	android:layout_height="wrap_content"
+	android:layout_margin="@dimen/margin_default"
+	android:padding="@dimen/margin_default"
+	android:background="#ffffff"
+	android:orientation="horizontal">
 
-    <TextView
-        android:id="@+id/txt_step_number"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:textSize="@dimen/text_size_caption"
-        android:layout_alignParentStart="true"
-        tools:text="1."/>
+	<TextView
+		android:id="@+id/txt_step_number"
+		android:layout_width="wrap_content"
+		android:layout_height="match_parent"
+		android:gravity="center"
+		android:textSize="@dimen/text_size_caption"
+		android:paddingEnd="@dimen/margin_small"
+		tools:text="1." />
 
-    <TextView
-        android:id="@+id/txt_name"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_toEndOf="@id/txt_step_number"
-        android:layout_toStartOf="@id/txt_duration"
-        tools:text="Ingredients"/>
+	<LinearLayout
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:orientation="vertical">
 
-    <TextView
-        android:id="@+id/txt_duration"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:drawableStart="@drawable/ic_access_time_black_24dp"
-        android:layout_alignParentEnd="true"
-        android:gravity="center"
-        tools:text="5min"/>
+		<LinearLayout
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:orientation="horizontal">
+
+			<TextView
+				android:id="@+id/txt_name"
+				android:layout_width="0dp"
+				android:layout_weight="1"
+				android:layout_height="wrap_content"
+				android:textStyle="bold"
+				android:textSize="@dimen/text_size_title"
+				tools:text="Ingredients" />
+
+			<TextView
+				android:id="@+id/txt_duration"
+				android:layout_width="wrap_content"
+				android:layout_height="match_parent"
+				android:gravity="center"
+				android:textSize="@dimen/text_size_default"
+				android:drawableStart="@drawable/ic_access_time_black_24dp"
+				tools:text="5min" />
+
+		</LinearLayout>
 
 
-    <TextView
-        android:id="@+id/txt_description"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/txt_duration"
-        android:layout_toEndOf="@id/txt_step_number"
-        android:layout_alignParentEnd="true"
-        tools:text="This is a ignored test description, why is the text aligned right? But only until a linebreak? Keep an eye one this"/>
+		<TextView
+			android:id="@+id/txt_description"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:textSize="@dimen/text_size_default"
+			tools:text="This is a ignored test description, why is the text aligned right? But only until a linebreak? Keep an eye one this" />
 
-</RelativeLayout>
+
+	</LinearLayout>
+</LinearLayout>

@@ -29,18 +29,14 @@ public class EditableStepAdapter extends RecyclerView.Adapter<EditableStepAdapte
 	public EditableStepAdapter(Context context) {
 		this.context = context;
 		inflater = LayoutInflater.from(context);
-	}
-
-	public void setData(List<StepEntry> data) {
-		this.data = data;
-		notifyDataSetChanged();
+		deletedData = new ArrayList<>();
+		data = new ArrayList<>();
 	}
 
 	@NonNull
 	@Override
 	public StepListViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
 		View rootView = inflater.inflate(R.layout.item_step_list, parent, false);
-		deletedData = new ArrayList<>();
 		return new StepListViewHolder(rootView);
 	}
 
@@ -50,7 +46,7 @@ public class EditableStepAdapter extends RecyclerView.Adapter<EditableStepAdapte
 		holder.Name.setText(step.getName());
 		holder.Description.setText(step.getDescription());
 		holder.Time.setText(String.valueOf(step.getDuration()));
-		holder.Number.setText(context.getString(R.string.order,step.getOrder()));
+		holder.Number.setText(context.getString(R.string.order, step.getOrder()));
 	}
 
 	@Override
@@ -73,37 +69,26 @@ public class EditableStepAdapter extends RecyclerView.Adapter<EditableStepAdapte
 
 	public ArrayList<StepEntry> getData() {
 		ArrayList<StepEntry> completeData = new ArrayList<>();
-		if(data!=null) {
+		if (data != null) {
 			completeData.addAll(data);
 		}
-		if(deletedData!=null) {
+		if (deletedData != null) {
 			completeData.addAll(deletedData);
 		}
 		return completeData;
 	}
 
-	class StepListViewHolder extends RecyclerView.ViewHolder {
-
-		final TextView Name;
-		final TextView Description;
-		final TextView Time;
-		final TextView Number;
-
-		StepListViewHolder(View itemView) {
-			super(itemView);
-			Name = itemView.findViewById(R.id.txt_name);
-			Description = itemView.findViewById(R.id.txt_description);
-			Time = itemView.findViewById(R.id.txt_duration);
-			Number = itemView.findViewById(R.id.txt_step_number);
-			itemView.setOnClickListener(new View.OnClickListener() {
-				@Override
-				public void onClick(View view) {
-					StepEntry entry = data.get(getAdapterPosition());
-					showEditStepDialog(entry);
-
-				}
-			});
+	public void setData(List<StepEntry> data) {
+		this.deletedData.clear();
+		this.data.clear();
+		for(StepEntry step:data){
+			if(step.isDeleted()){
+				deletedData.add(step);
+			}else {
+				this.data.add(step);
+			}
 		}
+		notifyDataSetChanged();
 	}
 
 	private void showEditStepDialog(final StepEntry stepEntry) {
@@ -162,5 +147,29 @@ public class EditableStepAdapter extends RecyclerView.Adapter<EditableStepAdapte
 		});
 
 		editDialog.show();
+	}
+
+	class StepListViewHolder extends RecyclerView.ViewHolder {
+
+		final TextView Name;
+		final TextView Description;
+		final TextView Time;
+		final TextView Number;
+
+		StepListViewHolder(View itemView) {
+			super(itemView);
+			Name = itemView.findViewById(R.id.txt_name);
+			Description = itemView.findViewById(R.id.txt_description);
+			Time = itemView.findViewById(R.id.txt_duration);
+			Number = itemView.findViewById(R.id.txt_step_number);
+			itemView.setOnClickListener(new View.OnClickListener() {
+				@Override
+				public void onClick(View view) {
+					StepEntry entry = data.get(getAdapterPosition());
+					showEditStepDialog(entry);
+
+				}
+			});
+		}
 	}
 }

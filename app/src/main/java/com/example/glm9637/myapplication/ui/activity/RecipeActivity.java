@@ -197,7 +197,6 @@ public class RecipeActivity extends AppCompatActivity {
 		};
 
 
-
 		firebaseAuth.addAuthStateListener(authStateListener);
 
 		adapter = new IngredientAdapter(this);

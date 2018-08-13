@@ -1,6 +1,7 @@
 package com.example.glm9637.myapplication.ui.fragment.cut;
 
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -26,7 +27,7 @@ import com.google.firebase.database.FirebaseDatabase;
  * Erzeugt von M. Fengels am 31.07.2018.
  */
 public class DiscoverFragment extends Fragment {
-	private static Bundle mBundleRecyclerViewState;
+	private static Bundle instanceState;
 	private AdView adView;
 	private long categoryId;
 	private long cutId;
@@ -96,6 +97,10 @@ public class DiscoverFragment extends Fragment {
 					recipeEntry.setCategoryId(categoryId);
 					recipeEntry.setCutId(cutId);
 					adapter.addData(recipeEntry);
+					if (instanceState != null) {
+						Parcelable listState = instanceState.getParcelable(Constants.Arguments.SAVE_INSTANCE_RECYCLERVIEW);
+						recyclerView.getLayoutManager().onRestoreInstanceState(listState);
+					}
 				}
 
 				public void onChildChanged(@NonNull DataSnapshot dataSnapshot, String s) {
@@ -126,11 +131,22 @@ public class DiscoverFragment extends Fragment {
 	public void onResume() {
 		super.onResume();
 		attachDatabaseReadListener();
+		instanceState = new Bundle();
+		Parcelable mLayoutManagerState = recyclerView.getLayoutManager().onSaveInstanceState();
+		instanceState.putParcelable(Constants.Arguments.SAVE_INSTANCE_RECYCLERVIEW, mLayoutManagerState);
 	}
 
 	@Override
 	public void onPause() {
 		super.onPause();
 		detachDatabaseReadListener();
+		if (instanceState != null) {
+			Parcelable listState = instanceState.getParcelable(Constants.Arguments.SAVE_INSTANCE_RECYCLERVIEW);
+			recyclerView.getLayoutManager().onRestoreInstanceState(listState);
+		}
+	}
+
+	public static void reset() {
+		instanceState = null;
 	}
 }

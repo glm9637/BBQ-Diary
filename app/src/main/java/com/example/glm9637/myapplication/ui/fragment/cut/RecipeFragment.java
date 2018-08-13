@@ -8,6 +8,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -26,7 +27,7 @@ import java.util.List;
 public class RecipeFragment extends Fragment {
 
 
-	private static Bundle mBundleRecyclerViewState;
+	private static Bundle instanceState;
 	private RecipeFragmentViewModel viewModel;
 	private RecyclerView recyclerView;
 	private RecipeAdapter adapter;
@@ -42,7 +43,7 @@ public class RecipeFragment extends Fragment {
 	}
 
 	public static void reset() {
-		mBundleRecyclerViewState = null;
+		instanceState = null;
 	}
 
 	@Nullable
@@ -60,27 +61,29 @@ public class RecipeFragment extends Fragment {
 			@Override
 			public void onChanged(@Nullable List<RecipeEntry> recipeEntries) {
 				adapter.setData(recipeEntries);
+				if (instanceState != null) {
+					Parcelable listState = instanceState.getParcelable(Constants.Arguments.SAVE_INSTANCE_RECYCLERVIEW);
+					recyclerView.getLayoutManager().onRestoreInstanceState(listState);
+				}
 			}
 		};
-
 		return rootView;
 	}
 
 	@Override
 	public void onPause() {
 		super.onPause();
-		super.onPause();
-		mBundleRecyclerViewState = new Bundle();
+		instanceState = new Bundle();
 		Parcelable mLayoutManagerState = recyclerView.getLayoutManager().onSaveInstanceState();
-		mBundleRecyclerViewState.putParcelable(Constants.Arguments.SAVE_INSTANCE_RECYCLERVIEW, mLayoutManagerState);
+		instanceState.putParcelable(Constants.Arguments.SAVE_INSTANCE_RECYCLERVIEW, mLayoutManagerState);
 		viewModel.getRecipeList().removeObserver(observer);
 	}
 
 	@Override
 	public void onResume() {
 		super.onResume();
-		if (mBundleRecyclerViewState != null) {
-			Parcelable listState = mBundleRecyclerViewState.getParcelable(Constants.Arguments.SAVE_INSTANCE_RECYCLERVIEW);
+		if (instanceState != null) {
+			Parcelable listState = instanceState.getParcelable(Constants.Arguments.SAVE_INSTANCE_RECYCLERVIEW);
 			recyclerView.getLayoutManager().onRestoreInstanceState(listState);
 		}
 		viewModel.getRecipeList().observe(this, observer);

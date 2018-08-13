@@ -14,24 +14,24 @@ import java.util.List;
 @Dao
 public interface StepDao {
 
-    @Query("SELECT * FROM step WHERE recipe_id = :recipeId ORDER BY step_order")
+	@Query("SELECT * FROM step WHERE recipe_id = :recipeId ORDER BY step_order")
 	LiveData<List<StepEntry>> loadStepList(long recipeId);
 
-    @Query("SELECT id FROM step WHERE recipe_id= :recipeId")
+	@Query("SELECT id FROM step WHERE recipe_id= :recipeId")
 	LiveData<List<Integer>> loadStepIdList(long recipeId);
-	
+
 	@Query("SELECT * FROM step WHERE id = :stepId")
 	LiveData<StepEntry> loadStep(long stepId);
-    
-    @Insert()
-    void insertStep(StepEntry step);
 
-    @Update
-    void updateStep(StepEntry step);
+	@Insert()
+	void insertStep(StepEntry step);
 
-    @Delete
-    void deleteStep(StepEntry stepEntry);
-	
+	@Update
+	void updateStep(StepEntry step);
+
+	@Delete
+	void deleteStep(StepEntry stepEntry);
+
 	@Insert
 	void insertAll(StepEntry[] cutEntries);
 }

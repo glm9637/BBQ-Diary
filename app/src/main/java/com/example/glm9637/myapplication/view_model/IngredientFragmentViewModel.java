@@ -12,18 +12,18 @@ import java.util.List;
  * Erzeugt von M. Fengels am 03.08.2018.
  */
 public class IngredientFragmentViewModel {
-	
-	private LiveData<List<IngredientEntry>> data;
+
 	private final RecipeDatabase database;
-	
-	public IngredientFragmentViewModel(Context context){
+	private LiveData<List<IngredientEntry>> data;
+
+	public IngredientFragmentViewModel(Context context) {
 		database = RecipeDatabase.getInstance(context);
 	}
-	
-	public void setRecipeId(long recipeId){
+
+	public void setRecipeId(long recipeId) {
 		data = database.getIngredientDao().loadIngredients(recipeId);
 	}
-	
+
 	public LiveData<List<IngredientEntry>> getData() {
 		return data;
 	}

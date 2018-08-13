@@ -12,14 +12,14 @@ import com.example.glm9637.myapplication.ui.fragment.category.RubFragment;
  * Erzeugt von M. Fengels am 23.07.2018.
  */
 public class CategoryFragmentAdapter extends FragmentPagerAdapter {
-	
+
 	private final long categoryId;
-	
+
 	public CategoryFragmentAdapter(FragmentManager fm, long cutId) {
 		super(fm);
 		this.categoryId = cutId;
 	}
-	
+
 	@Override
 	public Fragment getItem(int position) {
 		switch (position) {
@@ -28,14 +28,14 @@ public class CategoryFragmentAdapter extends FragmentPagerAdapter {
 			default:
 				return RubFragment.createFragment(categoryId);
 		}
-		
+
 	}
-	
+
 	@Override
 	public int getCount() {
 		return 2;
 	}
-	
+
 	@Nullable
 	@Override
 	public CharSequence getPageTitle(int position) {

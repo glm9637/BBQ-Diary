@@ -117,13 +117,13 @@ public class RecipeStepActivity extends AppCompatActivity implements StepListAda
 	@Override
 	protected void onSaveInstanceState(Bundle outState) {
 		super.onSaveInstanceState(outState);
-		outState.putInt("test", pager.getCurrentItem());
+		outState.putInt("fragment position", pager.getCurrentItem());
 	}
 
 	@Override
 	protected void onRestoreInstanceState(Bundle savedInstanceState) {
 		super.onRestoreInstanceState(savedInstanceState);
-		fragmentPosition = savedInstanceState.getInt("test");
+		fragmentPosition = savedInstanceState.getInt("fragment position");
 		pager.setCurrentItem(fragmentPosition, false);
 	}
 

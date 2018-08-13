@@ -12,11 +12,11 @@ public class RubFragmentViewModel extends ViewModel {
 
 	private final LiveData<List<RecipeEntry>> recipeList;
 
-    public RubFragmentViewModel(RecipeDatabase database, long categoryId){
+	public RubFragmentViewModel(RecipeDatabase database, long categoryId) {
 		recipeList = database.getRecipeDao().loadRubForCategory(categoryId);
-    }
+	}
 
-    public LiveData<List<RecipeEntry>> getCutList() {
-        return recipeList;
-    }
+	public LiveData<List<RecipeEntry>> getRubList() {
+		return recipeList;
+	}
 }

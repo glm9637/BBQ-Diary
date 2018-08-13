@@ -13,14 +13,14 @@ import java.util.List;
  */
 public class RecipeStepsViewModel {
 
-	
+
 	private final LiveData<List<StepEntry>> steps;
-	
-	public RecipeStepsViewModel(Context context, long recipeId){
+
+	public RecipeStepsViewModel(Context context, long recipeId) {
 		RecipeDatabase database = RecipeDatabase.getInstance(context);
 		steps = database.getStepDao().loadStepList(recipeId);
 	}
-	
+
 	public LiveData<List<StepEntry>> getSteps() {
 		return steps;
 	}

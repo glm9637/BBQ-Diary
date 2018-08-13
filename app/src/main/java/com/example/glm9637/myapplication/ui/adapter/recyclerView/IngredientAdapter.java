@@ -25,11 +25,6 @@ public class IngredientAdapter extends RecyclerView.Adapter<IngredientAdapter.In
 		inflater = LayoutInflater.from(context);
 	}
 
-	public void setData(List<IngredientEntry> data) {
-		this.data = data;
-		notifyDataSetChanged();
-	}
-
 	@NonNull
 	@Override
 	public IngredientViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -67,6 +62,11 @@ public class IngredientAdapter extends RecyclerView.Adapter<IngredientAdapter.In
 
 	public List<IngredientEntry> getData() {
 		return data;
+	}
+
+	public void setData(List<IngredientEntry> data) {
+		this.data = data;
+		notifyDataSetChanged();
 	}
 
 	class IngredientViewHolder extends RecyclerView.ViewHolder {

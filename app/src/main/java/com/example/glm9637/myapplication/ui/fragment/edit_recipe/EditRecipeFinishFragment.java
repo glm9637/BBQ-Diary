@@ -18,11 +18,7 @@ public class EditRecipeFinishFragment extends Fragment {
 	public static EditRecipeFinishFragment createFragment() {
 		return new EditRecipeFinishFragment();
 	}
-	
-	public interface RecipeFinishedListener{
-		void onRecipeFinished();
-	}
-	
+
 	@Nullable
 	@Override
 	public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -30,11 +26,15 @@ public class EditRecipeFinishFragment extends Fragment {
 		rootView.findViewById(R.id.btn_save).setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View view) {
-				((RecipeFinishedListener)getActivity()).onRecipeFinished();
+				((RecipeFinishedListener) getActivity()).onRecipeFinished();
 			}
 		});
-		
+
 		return rootView;
 	}
-	
+
+	public interface RecipeFinishedListener {
+		void onRecipeFinished();
+	}
+
 }

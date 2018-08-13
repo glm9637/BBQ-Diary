@@ -4,10 +4,11 @@ import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.Observer;
 import android.content.Intent;
 import android.graphics.Typeface;
+import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.AppBarLayout;
 import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
@@ -29,11 +30,14 @@ public class LandingActivity extends AppCompatActivity {
 	private ImageView ivVegetable;
 	private ImageView ivOther;
 
+	private AppBarLayout appBarLayout;
+
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_landing);
+		appBarLayout = findViewById(R.id.app_bar_layout);
 
 		MobileAds.initialize(this, getString(R.string.admob_app_id));
 
@@ -103,10 +107,23 @@ public class LandingActivity extends AppCompatActivity {
 	}
 
 	private void startCategoryActivity(long id, View categoryImage) {
+		CategoryActivity.reset();
 		Intent intent = new Intent(LandingActivity.this, CategoryActivity.class);
 		intent.putExtra(Constants.Arguments.CATEGORY_ID, id);
 		ActivityOptionsCompat options = ActivityOptionsCompat.
 				makeSceneTransitionAnimation(this, categoryImage, "category image");
 		startActivity(intent, options.toBundle());
+	}
+
+	@Override
+	protected void onSaveInstanceState(Bundle outState) {
+		outState.putBoolean(Constants.Arguments.APPBAR_EXPANDED, (appBarLayout.getHeight() - appBarLayout.getBottom()) == 0);
+		super.onSaveInstanceState(outState);
+	}
+
+	@Override
+	protected void onRestoreInstanceState(Bundle savedInstanceState) {
+		super.onRestoreInstanceState(savedInstanceState);
+		appBarLayout.setExpanded(savedInstanceState.getBoolean(Constants.Arguments.APPBAR_EXPANDED), false);
 	}
 }

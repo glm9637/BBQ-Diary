@@ -34,8 +34,8 @@ public class FirebaseRecipeAdapter extends RecyclerView.Adapter<FirebaseRecipeAd
 		notifyDataSetChanged();
 	}
 
-	public void addData(RecipeEntry data){
-		if(this.data==null){
+	public void addData(RecipeEntry data) {
+		if (this.data == null) {
 			this.data = new ArrayList<>();
 		}
 		this.data.add(data);
@@ -83,7 +83,7 @@ public class FirebaseRecipeAdapter extends RecyclerView.Adapter<FirebaseRecipeAd
 					intent.putExtra(Constants.Arguments.RECIPE_ID, Long.valueOf(item.getId()));
 					intent.putExtra(Constants.Arguments.CATEGORY_ID, Long.valueOf(item.getCategoryId()));
 					intent.putExtra(Constants.Arguments.CUT_ID, Long.valueOf(item.getCutId()));
-					intent.putExtra(Constants.Arguments.FIREBASE_REFERENCE,item.getDatabaseReference());
+					intent.putExtra(Constants.Arguments.FIREBASE_REFERENCE, item.getDatabaseReference());
 					ActivityOptionsCompat options = ActivityOptionsCompat.
 							makeSceneTransitionAnimation(context, Name, "recipe name");
 					context.startActivity(intent, options.toBundle());

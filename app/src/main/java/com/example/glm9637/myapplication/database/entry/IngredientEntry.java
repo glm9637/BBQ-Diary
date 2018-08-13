@@ -16,24 +16,32 @@ import com.google.firebase.database.Exclude;
  */
 
 @Entity(tableName = "ingredient", foreignKeys = {
-		@ForeignKey(entity = RecipeEntry.class,parentColumns = "id",childColumns = "recipe_id")
+		@ForeignKey(entity = RecipeEntry.class, parentColumns = "id", childColumns = "recipe_id")
 }, indices = {
-		@Index(name = "IX_INGREDIENT_RECIPE_ID",value = "recipe_id")
+		@Index(name = "IX_INGREDIENT_RECIPE_ID", value = "recipe_id")
 })
 public class IngredientEntry implements Parcelable {
 
+	public static final Creator<IngredientEntry> CREATOR = new Creator<IngredientEntry>() {
+		@Override
+		public IngredientEntry createFromParcel(Parcel source) {
+			return new IngredientEntry(source);
+		}
+
+		@Override
+		public IngredientEntry[] newArray(int size) {
+			return new IngredientEntry[size];
+		}
+	};
 	@Exclude
 	@PrimaryKey(autoGenerate = true)
 	private long id;
-
 	@Exclude
 	@ColumnInfo(name = "recipe_id")
 	private long recipeId;
-	
 	private String name;
 	private long amount;
 	private String unit;
-
 	@Ignore
 	private boolean deleted;
 
@@ -53,27 +61,25 @@ public class IngredientEntry implements Parcelable {
 	}
 
 	@Ignore
-	public IngredientEntry(){
+	public IngredientEntry() {
 
 	}
 
 	protected IngredientEntry(Parcel in) {
-		id = in.readLong();
-		recipeId = in.readLong();
-		name = in.readString();
-		amount = in.readLong();
-		unit = in.readString();
-		deleted = in.readByte() != 0;
+		this.id = in.readLong();
+		this.recipeId = in.readLong();
+		this.name = in.readString();
+		this.amount = in.readLong();
+		this.unit = in.readString();
+		this.deleted = in.readByte() != 0;
 	}
 
-	@Override
-	public void writeToParcel(Parcel dest, int flags) {
-		dest.writeLong(id);
-		dest.writeLong(recipeId);
-		dest.writeString(name);
-		dest.writeLong(amount);
-		dest.writeString(unit);
-		dest.writeByte((byte) (deleted ? 1 : 0));
+	public static IngredientEntry[] populateData() {
+		return new IngredientEntry[]{
+				new IngredientEntry(1, 1, "Flat Iron Steak", 500, "g"),
+				new IngredientEntry(2, 1, "Salt", 20, "g"),
+				new IngredientEntry(3, 1, "Pepper", 20, "g")
+		};
 	}
 
 	@Override
@@ -81,22 +87,11 @@ public class IngredientEntry implements Parcelable {
 		return 0;
 	}
 
-	public static final Creator<IngredientEntry> CREATOR = new Creator<IngredientEntry>() {
-		@Override
-		public IngredientEntry createFromParcel(Parcel in) {
-			return new IngredientEntry(in);
-		}
-
-		@Override
-		public IngredientEntry[] newArray(int size) {
-			return new IngredientEntry[size];
-		}
-	};
-
 	@Exclude
-    public long getId() {
+	public long getId() {
 		return id;
 	}
+
 	@Exclude
 	public long getRecipeId() {
 		return recipeId;
@@ -129,14 +124,6 @@ public class IngredientEntry implements Parcelable {
 	public void setUnit(String unit) {
 		this.unit = unit;
 	}
-	
-	public static IngredientEntry[] populateData(){
-		return new IngredientEntry[]{
-				new IngredientEntry(1,1,"Flat Iron Steak",500,"g"),
-				new IngredientEntry(2,1,"Salt",20,"g"),
-				new IngredientEntry(3,1,"Pepper",20,"g")
-		};
-	}
 
 	public boolean isDeleted() {
 		return deleted;
@@ -147,4 +134,13 @@ public class IngredientEntry implements Parcelable {
 	}
 
 
+	@Override
+	public void writeToParcel(Parcel dest, int flags) {
+		dest.writeLong(this.id);
+		dest.writeLong(this.recipeId);
+		dest.writeString(this.name);
+		dest.writeLong(this.amount);
+		dest.writeString(this.unit);
+		dest.writeByte(this.deleted ? (byte) 1 : (byte) 0);
+	}
 }

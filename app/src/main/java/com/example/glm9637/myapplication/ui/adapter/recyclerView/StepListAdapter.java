@@ -68,7 +68,7 @@ public class StepListAdapter extends RecyclerView.Adapter<StepListAdapter.StepLi
 		} else {
 			holder.Time.setVisibility(View.VISIBLE);
 		}
-		holder.Number.setText(context.getString(R.string.order, position+1));
+		holder.Number.setText(context.getString(R.string.order, position + 1));
 	}
 
 	@Override
