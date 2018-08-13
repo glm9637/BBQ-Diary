@@ -2,6 +2,7 @@ package com.example.glm9637.myapplication;
 
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
@@ -14,13 +15,14 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.NotificationCompat;
 import android.util.Log;
 
+import com.example.glm9637.myapplication.ui.activity.RecipeStepActivity;
 import com.example.glm9637.myapplication.utils.Constants;
 
 /**
  * Erzeugt von M. Fengels am 03.08.2018.
  */
 public class TimerService extends Service {
-	
+
 	private NotificationCompat.Builder notification;
 	private NotificationManager manager;
 	private CountDownTimer timer;
@@ -30,11 +32,11 @@ public class TimerService extends Service {
 	public IBinder onBind(Intent intent) {
 		return null;
 	}
-	
+
 	@Override
 	public void onCreate() {
 		super.onCreate();
-		
+
 		notification = new NotificationCompat.Builder(this, Constants.NOTIFICATION_CHANNEL_ID);
 		notification.setAutoCancel(true);
 		notification.setSmallIcon(R.drawable.ic_access_time_black_24dp);
@@ -43,22 +45,35 @@ public class TimerService extends Service {
 		notification.setOngoing(true);
 		manager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
 	}
-	
+
 	@Override
 	public int onStartCommand(Intent intent, int flags, int startId) {
+		if(intent== null){
+			return START_NOT_STICKY;
+		}
 		long duration = intent.getLongExtra(Constants.Arguments.TIMER_DURATION, 0);
+		final String title = intent.getStringExtra(Constants.Arguments.TIMER_TEXT);
+		notification.setContentTitle(title);
+		Intent notifyIntent = new Intent(this, RecipeStepActivity.class);
+		notifyIntent.putExtras(intent.getExtras());
+		PendingIntent contentIntent = PendingIntent.getActivity(this, 0, notifyIntent, 0);
+		notification.setContentIntent(contentIntent);
 		timer = new CountDownTimer(duration * 60000, 1000) {
 			@Override
 			public void onTick(long millisUntilFinished) {
 				int numMessages = 0;
-				notification.setContentText(String.valueOf(Math.floor(millisUntilFinished / 1000)))
+				int seconds = (int) Math.floor(Math.floor(millisUntilFinished / 1000));
+				int minutes = seconds / 60;
+				int hours = minutes / 60;
+				seconds = seconds % 60;
+				minutes = minutes % 60;
+				notification.setContentText(getString(R.string.timer_content, hours, minutes, seconds))
 						.setNumber(++numMessages);
-				Log.d("Service", "Notification updated");
 				manager.notify(
 						Constants.Ids.TIMER_NOTIFICATION_ID,
 						notification.build());
 			}
-			
+
 			@Override
 			public void onFinish() {
 				notification.setContentText("Step finished");
@@ -95,6 +110,7 @@ public class TimerService extends Service {
 	@Override
 	public void onDestroy() {
 		super.onDestroy();
-		timer.cancel();
+		if (timer != null)
+			timer.cancel();
 	}
 }

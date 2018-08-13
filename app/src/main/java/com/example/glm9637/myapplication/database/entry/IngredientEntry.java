@@ -6,6 +6,8 @@ import android.arch.persistence.room.ForeignKey;
 import android.arch.persistence.room.Ignore;
 import android.arch.persistence.room.Index;
 import android.arch.persistence.room.PrimaryKey;
+import android.os.Parcel;
+import android.os.Parcelable;
 
 import com.google.firebase.database.Exclude;
 
@@ -18,7 +20,7 @@ import com.google.firebase.database.Exclude;
 }, indices = {
 		@Index(name = "IX_INGREDIENT_RECIPE_ID",value = "recipe_id")
 })
-public class IngredientEntry {
+public class IngredientEntry implements Parcelable {
 
 	@Exclude
 	@PrimaryKey(autoGenerate = true)
@@ -54,6 +56,42 @@ public class IngredientEntry {
 	public IngredientEntry(){
 
 	}
+
+	protected IngredientEntry(Parcel in) {
+		id = in.readLong();
+		recipeId = in.readLong();
+		name = in.readString();
+		amount = in.readLong();
+		unit = in.readString();
+		deleted = in.readByte() != 0;
+	}
+
+	@Override
+	public void writeToParcel(Parcel dest, int flags) {
+		dest.writeLong(id);
+		dest.writeLong(recipeId);
+		dest.writeString(name);
+		dest.writeLong(amount);
+		dest.writeString(unit);
+		dest.writeByte((byte) (deleted ? 1 : 0));
+	}
+
+	@Override
+	public int describeContents() {
+		return 0;
+	}
+
+	public static final Creator<IngredientEntry> CREATOR = new Creator<IngredientEntry>() {
+		@Override
+		public IngredientEntry createFromParcel(Parcel in) {
+			return new IngredientEntry(in);
+		}
+
+		@Override
+		public IngredientEntry[] newArray(int size) {
+			return new IngredientEntry[size];
+		}
+	};
 
 	@Exclude
     public long getId() {
@@ -107,4 +145,6 @@ public class IngredientEntry {
 	public void setDeleted(boolean deleted) {
 		this.deleted = deleted;
 	}
+
+
 }

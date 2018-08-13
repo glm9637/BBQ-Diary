@@ -69,7 +69,7 @@ public class EditableIngredientAdapter extends RecyclerView.Adapter<EditableIngr
         });
     }
 
-    public List<IngredientEntry> getData() {
+    public ArrayList<IngredientEntry> getData() {
         ArrayList<IngredientEntry> completeData = new ArrayList<>();
         completeData.addAll(data);
         completeData.addAll(deletedData);

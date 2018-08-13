@@ -42,6 +42,9 @@ public class Constants {
 		public static final String DURATION = "duration";
 		public static final String FIREBASE_REFERENCE = "firebase reference";
 		public static final String SAVE_INSTANCE_ADAPTER = "save adapter state";
+		public static final String TIMER_TEXT = "timer text";
+		public static final String STEP_ORDER = "step order";
+		public static final String INGREDIENT_DATA = "ingredient Data";
 	}
 
 	public static class Ids {
@@ -80,4 +83,12 @@ public class Constants {
 		}
 	}
 
+	public static class Tags {
+
+		public static final String NAME_FRAGMENT = "name fragment";
+		public static final String DESCRIPTION_FRAGMENT = "description fragment";
+		public static final String INGREDIENT_FRAGMENT = "ingredient fragment";
+		public static final String STEP_FRAGMENT = "step fragment";
+		public static final String FINISH_FRAGMENT = "finish fragment";
+	}
 }

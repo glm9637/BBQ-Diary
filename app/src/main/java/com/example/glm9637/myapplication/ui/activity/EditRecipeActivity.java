@@ -18,7 +18,9 @@ import com.example.glm9637.myapplication.database.entry.RecipeEntry;
 import com.example.glm9637.myapplication.database.entry.StepEntry;
 import com.example.glm9637.myapplication.ui.adapter.fragment.EditRecipeFragmentAdapter;
 import com.example.glm9637.myapplication.ui.fragment.edit_recipe.EditRecipeFinishFragment;
+import com.example.glm9637.myapplication.ui.fragment.edit_recipe.EditRecipeIngredientFragment;
 import com.example.glm9637.myapplication.ui.fragment.edit_recipe.EditRecipeNameFragment;
+import com.example.glm9637.myapplication.ui.fragment.edit_recipe.EditRecipeStepsFragment;
 import com.example.glm9637.myapplication.ui.view.EditRecipeViewPager;
 import com.example.glm9637.myapplication.utils.AppExecutors;
 import com.example.glm9637.myapplication.utils.Constants;
@@ -57,12 +59,12 @@ public class EditRecipeActivity extends AppCompatActivity implements EditRecipeF
 			viewModel.getRecipe().observe(this, new Observer<RecipeEntry>() {
 				@Override
 				public void onChanged(@Nullable RecipeEntry recipeEntry) {
-					adapter = new EditRecipeFragmentAdapter(getSupportFragmentManager(), recipeEntry, EditRecipeActivity.this, EditRecipeActivity.this);
+					adapter = new EditRecipeFragmentAdapter(getSupportFragmentManager(), recipeEntry);
 					pager.setAdapter(adapter);
 				}
 			});
 		} else {
-			adapter = new EditRecipeFragmentAdapter(getSupportFragmentManager(), isRub, this, this);
+			adapter = new EditRecipeFragmentAdapter(getSupportFragmentManager(), isRub);
 			pager.setAdapter(adapter);
 		}
 		tabLayout.setupWithViewPager(pager);
@@ -185,6 +187,11 @@ public class EditRecipeActivity extends AppCompatActivity implements EditRecipeF
 			}
 
 		});
+	}
+
+	public static void reset(){
+		EditRecipeIngredientFragment.resetData();
+		EditRecipeStepsFragment.resetData();
 	}
 
 }

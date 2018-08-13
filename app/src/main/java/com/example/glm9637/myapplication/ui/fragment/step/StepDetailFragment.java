@@ -32,16 +32,21 @@ public class StepDetailFragment extends Fragment implements View.OnClickListener
 	private TextView duration;
 	private StepEntry step;
 	private long stepId;
+	private long cutId;
+	private long categoryId;
 	private String firebaseRef;
 
 	private FirebaseDatabase firebaseDatabase;
 	private DatabaseReference recipeDatabaseReference;
 	private ValueEventListener valueEventListener;
 
-	public static Fragment createFragment(long stepId) {
+	public static Fragment createFragment(long stepId, long cutId, long categoryId) {
 		StepDetailFragment fragment = new StepDetailFragment();
 		Bundle bundle = new Bundle();
 		bundle.putLong(Constants.Arguments.STEP_ID, stepId);
+		bundle.putLong(Constants.Arguments.CUT_ID,cutId);
+		bundle.putLong(Constants.Arguments.CATEGORY_ID,categoryId);
+
 		fragment.setArguments(bundle);
 		return fragment;
 	}
@@ -58,6 +63,8 @@ public class StepDetailFragment extends Fragment implements View.OnClickListener
 	@Override
 	public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 		stepId = getArguments().getLong(Constants.Arguments.STEP_ID);
+		cutId = getArguments().getLong(Constants.Arguments.CUT_ID);
+		categoryId = getArguments().getLong(Constants.Arguments.CATEGORY_ID);
 		firebaseRef = getArguments().getString(Constants.Arguments.FIREBASE_REFERENCE);
 		View rootView = inflater.inflate(R.layout.fragment_step, container, false);
 		title = rootView.findViewById(R.id.txt_title);
@@ -111,7 +118,7 @@ public class StepDetailFragment extends Fragment implements View.OnClickListener
 
 	@Override
 	public void onClick(View v) {
-		StepUtils.setStepTimer(getContext(), step);
+		StepUtils.setStepTimer(getContext(),step,categoryId,cutId);
 	}
 
 	private void displayData(StepEntry stepEntry) {

@@ -18,30 +18,31 @@ import java.util.List;
  */
 public class RecipeStepsFragmentAdapter extends FragmentPagerAdapter {
 
-	private final StepListAdapter.ListEntryClickedListener onStepListener;
 	private long recipeId;
+	private long categoryId;
+	private long cutId;
 	private String recipeRef;
 	private List<Integer> stepList;
 	private ArrayList<String> firebaseStepList;
 	private StepListFragment stepListFragment;
 
-	public RecipeStepsFragmentAdapter(FragmentManager fm, long recipeId, StepListAdapter.ListEntryClickedListener onStepListener) {
+	public RecipeStepsFragmentAdapter(FragmentManager fm, long recipeId, long categoryId, long cutId) {
 		super(fm);
 		this.recipeId = recipeId;
-		this.onStepListener = onStepListener;
-		Log.w("Step","new Adapter");
+		this.categoryId = categoryId;
+		this.cutId = cutId;
 	}
 
-	public RecipeStepsFragmentAdapter(FragmentManager fm, String recipeRef, StepListAdapter.ListEntryClickedListener onStepListener) {
+	public RecipeStepsFragmentAdapter(FragmentManager fm, String recipeRef, long categoryId, long cutId) {
 		super(fm);
 		this.recipeRef = recipeRef;
-		this.onStepListener = onStepListener;
-		Log.w("Step","new Adapter");
+		this.categoryId = categoryId;
+		this.cutId = cutId;
 	}
 
 	@Override
 	public Fragment getItem(int position) {
-		Log.w("Step","getItem: "+position);
+		Log.w("Step", "getItem: " + position);
 		switch (position) {
 			case 0:
 
@@ -52,10 +53,7 @@ public class RecipeStepsFragmentAdapter extends FragmentPagerAdapter {
 						stepListFragment = StepListFragment.createFragment(recipeRef);
 					}
 				}
-				if (onStepListener != null) {
-					stepListFragment.setOnStepClickListener(onStepListener);
-				}
-				Log.w("Step","Recipe fragment returned");
+				Log.w("Step", "Recipe fragment returned");
 				return stepListFragment;
 			case 1:
 				StepIngredientFragment stepIngredientFragment;
@@ -69,7 +67,7 @@ public class RecipeStepsFragmentAdapter extends FragmentPagerAdapter {
 				if (stepList == null) {
 					return StepDetailFragment.createFragment(firebaseStepList.get(position - 2));
 				} else {
-					return StepDetailFragment.createFragment(stepList.get(position - 2));
+					return StepDetailFragment.createFragment(stepList.get(position - 2),cutId,categoryId);
 				}
 		}
 

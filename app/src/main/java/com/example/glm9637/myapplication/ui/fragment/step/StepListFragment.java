@@ -37,8 +37,6 @@ public class StepListFragment extends Fragment {
 	private StepListAdapter adapter;
 	private RecyclerView recyclerView;
 
-	private StepListAdapter.ListEntryClickedListener entryClickedListener;
-
 	private FirebaseDatabase firebaseDatabase;
 	private DatabaseReference recipeDatabaseReference;
 	private ValueEventListener valueEventListener;
@@ -71,9 +69,7 @@ public class StepListFragment extends Fragment {
 		Log.w("StepListFragment","onResume");
 		recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 		adapter = new StepListAdapter(getContext());
-		if(entryClickedListener!=null){
-			adapter.setOnClickListener(entryClickedListener);
-		}
+			adapter.setOnClickListener((StepListAdapter.ListEntryClickedListener) getActivity());
 		recyclerView.setAdapter(adapter);
 		if(firebaseReference==null){
 			initDataFromRoom();
@@ -81,14 +77,6 @@ public class StepListFragment extends Fragment {
 			initDataFromFirebase();
 		}
 	}
-
-	public void setOnStepClickListener(StepListAdapter.ListEntryClickedListener listener){
-		entryClickedListener=listener;
-		if(adapter!=null){
-			adapter.setOnClickListener(entryClickedListener);
-		}
-	}
-
 
 	private void initDataFromRoom(){
 		RecipeStepsViewModel viewModel = new RecipeStepsViewModel(getContext(), recipeId);

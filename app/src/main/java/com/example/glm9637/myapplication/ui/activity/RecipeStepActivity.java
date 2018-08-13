@@ -26,9 +26,11 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 import java.util.List;
 
-public class RecipeStepActivity extends AppCompatActivity {
+public class RecipeStepActivity extends AppCompatActivity implements StepListAdapter.ListEntryClickedListener {
 
 	long recipeId;
+	private long categoryId;
+	private long cutId;
 	String firebaseRef;
 	private RecipeStepsFragmentAdapter adapter;
 	private ViewPager pager;
@@ -36,6 +38,8 @@ public class RecipeStepActivity extends AppCompatActivity {
 	private FirebaseDatabase firebaseDatabase;
 	private DatabaseReference recipeDatabaseReference;
 	private ValueEventListener valueEventListener;
+	private int fragmentPosition;
+	private long stepID;
 
 
 	@Override
@@ -44,10 +48,13 @@ public class RecipeStepActivity extends AppCompatActivity {
 		setContentView(R.layout.activity_recipe_step);
 
 		recipeId = getIntent().getLongExtra(Constants.Arguments.RECIPE_ID, 0);
+		categoryId = getIntent().getLongExtra(Constants.Arguments.CATEGORY_ID, 0);
+		cutId = getIntent().getLongExtra(Constants.Arguments.CUT_ID, 0);
 		firebaseRef = getIntent().getStringExtra(Constants.Arguments.FIREBASE_REFERENCE);
 		Toolbar toolbar = findViewById(R.id.toolbar);
 		setSupportActionBar(toolbar);
 		getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+		stepID = getIntent().getLongExtra(Constants.Arguments.STEP_ID, 0);
 
 		tabLayout = findViewById(R.id.tab_layout);
 		pager = findViewById(R.id.view_pager);
@@ -62,6 +69,19 @@ public class RecipeStepActivity extends AppCompatActivity {
 				pager.setAdapter(adapter);
 				tabLayout.setupWithViewPager(pager);
 				adapter.notifyDataSetChanged();
+				if (pager.getCurrentItem() != fragmentPosition) {
+					pager.setCurrentItem(fragmentPosition, false);
+				}
+				Log.w("StepId",stepID+"");
+				if(stepID>0){
+					for(int i = 0;i<idList.size();i++){
+						if(stepID == idList.get(i)){
+							pager.setCurrentItem(i+2);
+							stepID = 0;
+							return;
+						}
+					}
+				}
 			}
 		});
 	}
@@ -80,6 +100,9 @@ public class RecipeStepActivity extends AppCompatActivity {
 				pager.setAdapter(adapter);
 				tabLayout.setupWithViewPager(pager);
 				adapter.notifyDataSetChanged();
+				if (pager.getCurrentItem() != fragmentPosition) {
+					pager.setCurrentItem(fragmentPosition, false);
+				}
 			}
 
 			@Override
@@ -100,33 +123,19 @@ public class RecipeStepActivity extends AppCompatActivity {
 	@Override
 	protected void onRestoreInstanceState(Bundle savedInstanceState) {
 		super.onRestoreInstanceState(savedInstanceState);
-		int item = savedInstanceState.getInt("test");
-		pager.setCurrentItem(item, false);
+		fragmentPosition = savedInstanceState.getInt("test");
+		pager.setCurrentItem(fragmentPosition, false);
 	}
 
 	@Override
 	protected void onResume() {
 		super.onResume();
-		StepListAdapter.ListEntryClickedListener listEntryClickedListener = new StepListAdapter.ListEntryClickedListener() {
-			@Override
-			public void onListEntryClicked(int position) {
-				pager.setCurrentItem(position, true);
-			}
-		};
 		Log.w("RecipeStepActivity", "onResume");
 		if (firebaseRef == null) {
-			if (adapter == null) {
-				adapter = new RecipeStepsFragmentAdapter(getSupportFragmentManager(), recipeId, listEntryClickedListener);
-			} else {
-				Log.w("Step", "Adapter not null");
-			}
+			adapter = new RecipeStepsFragmentAdapter(getSupportFragmentManager(), recipeId, cutId, categoryId);
 			initDataRoom();
 		} else {
-			if (adapter == null) {
-				adapter = new RecipeStepsFragmentAdapter(getSupportFragmentManager(), firebaseRef, listEntryClickedListener);
-			} else {
-				Log.w("Step", "Adapter not null");
-			}
+			adapter = new RecipeStepsFragmentAdapter(getSupportFragmentManager(), firebaseRef, cutId, categoryId);
 			initDataFirebase();
 		}
 	}
@@ -139,7 +148,8 @@ public class RecipeStepActivity extends AppCompatActivity {
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
-		return super.onCreateOptionsMenu(menu);
+		getMenuInflater().inflate(R.menu.menu_activity_step, menu);
+		return true;
 	}
 
 	@Override
@@ -158,5 +168,10 @@ public class RecipeStepActivity extends AppCompatActivity {
 			recipeDatabaseReference.removeEventListener(valueEventListener);
 			valueEventListener = null;
 		}
+	}
+
+	@Override
+	public void onListEntryClicked(int position) {
+		pager.setCurrentItem(position);
 	}
 }

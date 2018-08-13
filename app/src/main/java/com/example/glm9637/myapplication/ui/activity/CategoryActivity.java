@@ -1,13 +1,18 @@
 package com.example.glm9637.myapplication.ui.activity;
 
+import android.animation.Animator;
+import android.animation.AnimatorListenerAdapter;
 import android.arch.lifecycle.Observer;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -28,6 +33,7 @@ public class CategoryActivity extends AppCompatActivity {
 	private long categoryId;
 	private ViewPager pager;
 	private TabLayout tabLayout;
+	private FloatingActionButton btnAddRub;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -47,6 +53,56 @@ public class CategoryActivity extends AppCompatActivity {
 
 		tabLayout = findViewById(R.id.tab_layout);
 		pager = findViewById(R.id.view_pager);
+		btnAddRub = findViewById(R.id.btn_add);
+		btnAddRub.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View view) {
+				EditRecipeActivity.reset();
+				Intent intent = new Intent(CategoryActivity.this, EditRecipeActivity.class);
+				intent.putExtra(Constants.Arguments.CATEGORY_ID,categoryId);
+				intent.putExtra(Constants.Arguments.IS_RUB,true);
+				startActivity(intent);
+			}
+		});
+
+		tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+			@Override
+			public void onTabSelected(TabLayout.Tab tab) {
+				if (tab.getPosition() == 1) {
+					btnAddRub.setVisibility(View.VISIBLE);
+					btnAddRub.animate()
+							.translationY(0)
+							.setDuration(300)
+							.setListener(new AnimatorListenerAdapter() {
+								@Override
+								public void onAnimationEnd(Animator animation) {
+									super.onAnimationEnd(animation);
+									btnAddRub.setVisibility(View.VISIBLE);
+								}
+							});
+				} else {
+					btnAddRub.animate()
+							.translationY(btnAddRub.getHeight() * 2)
+							.setDuration(300)
+							.setListener(new AnimatorListenerAdapter() {
+								@Override
+								public void onAnimationEnd(Animator animation) {
+									super.onAnimationEnd(animation);
+									btnAddRub.setVisibility(View.GONE);
+								}
+							});
+				}
+			}
+
+			@Override
+			public void onTabUnselected(TabLayout.Tab tab) {
+
+			}
+
+			@Override
+			public void onTabReselected(TabLayout.Tab tab) {
+			}
+		});
 	}
 
 	@Override
@@ -84,6 +140,8 @@ public class CategoryActivity extends AppCompatActivity {
 			pager.setAdapter(adapter);
 			tabLayout.setupWithViewPager(pager);
 		}
+
+
 
 	}
 

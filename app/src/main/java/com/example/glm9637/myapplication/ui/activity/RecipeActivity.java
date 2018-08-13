@@ -131,11 +131,13 @@ public class RecipeActivity extends AppCompatActivity {
 				startActivity(intent);
 				return true;
 			case R.id.mnu_edit:
+				EditRecipeActivity.reset();
 				intent = new Intent(this, EditRecipeActivity.class);
 				intent.putExtra(Constants.Arguments.RECIPE_ID, recipeId);
 				intent.putExtra(Constants.Arguments.CUT_ID, recipeEntry.getCutId());
 				intent.putExtra(Constants.Arguments.CATEGORY_ID, recipeEntry.getCategoryId());
 				startActivity(intent);
+				return true;
 			case R.id.mnu_share:
 				shareRecipe();
 				return true;
@@ -211,6 +213,8 @@ public class RecipeActivity extends AppCompatActivity {
 				} else {
 					intent.putExtra(Constants.Arguments.FIREBASE_REFERENCE, firebaseReference);
 				}
+				intent.putExtra(Constants.Arguments.CUT_ID,cutId);
+				intent.putExtra(Constants.Arguments.CATEGORY_ID,categoryId);
 				startActivity(intent);
 			}
 		});

@@ -51,16 +51,7 @@ public class RubFragment extends Fragment {
 
             }
         });
-        
-        rootView.findViewById(R.id.btn_add).setOnClickListener(new View.OnClickListener() {
-	        @Override
-	        public void onClick(View v) {
-				Intent intent = new Intent(getContext(), EditRecipeActivity.class);
-				intent.putExtra(Constants.Arguments.CATEGORY_ID,categoryId);
-				intent.putExtra(Constants.Arguments.IS_RUB,true);
-				startActivity(intent);
-	        }
-        });
+
         
         return rootView;
     }

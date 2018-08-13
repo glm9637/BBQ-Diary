@@ -16,6 +16,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.glm9637.myapplication.R;
+import com.example.glm9637.myapplication.database.entry.IngredientEntry;
 import com.example.glm9637.myapplication.database.entry.StepEntry;
 import com.example.glm9637.myapplication.ui.adapter.recyclerView.EditableStepAdapter;
 import com.example.glm9637.myapplication.utils.Constants;
@@ -30,8 +31,8 @@ import java.util.List;
 public class EditRecipeStepsFragment extends Fragment {
 
 	private EditableStepAdapter adapter;
-
 	private RecipeStepsViewModel viewModel;
+	private static Bundle saveInstance;
 
 	public static EditRecipeStepsFragment createFragment() {
 		return new EditRecipeStepsFragment();
@@ -65,7 +66,7 @@ public class EditRecipeStepsFragment extends Fragment {
 					adapter.setData(stepEntries);
 				}
 			});
-		}else {
+		} else {
 			adapter.setData(new ArrayList<StepEntry>());
 		}
 		rootView.findViewById(R.id.btn_add).setOnClickListener(new View.OnClickListener() {
@@ -105,7 +106,7 @@ public class EditRecipeStepsFragment extends Fragment {
 					return;
 				}
 
-				StepEntry stepEntry = new StepEntry(Integer.parseInt(order.getText().toString()), name.getText().toString(), description.getText().toString(),duration.getText().toString().isEmpty()?0:Long.parseLong(duration.getText().toString()));
+				StepEntry stepEntry = new StepEntry(Integer.parseInt(order.getText().toString()), name.getText().toString(), description.getText().toString(), duration.getText().toString().isEmpty() ? 0 : Long.parseLong(duration.getText().toString()));
 				adapter.addData(stepEntry);
 				adapter.notifyDataSetChanged();
 				addDialog.dismiss();
@@ -113,6 +114,26 @@ public class EditRecipeStepsFragment extends Fragment {
 		});
 
 		addDialog.show();
+	}
+
+	@Override
+	public void onPause() {
+		super.onPause();
+		saveInstance = new Bundle();
+		saveInstance.putParcelableArrayList(Constants.Arguments.INGREDIENT_DATA, adapter.getData());
+	}
+
+	@Override
+	public void onResume() {
+		super.onResume();
+		if (saveInstance != null) {
+			adapter.setData(saveInstance.<StepEntry>getParcelableArrayList(Constants.Arguments.INGREDIENT_DATA));
+		}
+	}
+
+
+	public static void resetData() {
+		saveInstance = null;
 	}
 
 	public List<StepEntry> getSteps() {

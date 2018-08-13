@@ -1,5 +1,7 @@
 package com.example.glm9637.myapplication.ui.activity;
 
+import android.animation.Animator;
+import android.animation.AnimatorListenerAdapter;
 import android.arch.lifecycle.Observer;
 import android.content.Intent;
 import android.os.Bundle;
@@ -54,8 +56,27 @@ public class CutActivity extends AppCompatActivity {
 			public void onTabSelected(TabLayout.Tab tab) {
 				if (tab.getPosition() == 0) {
 					fab.setVisibility(View.VISIBLE);
+					fab.animate()
+							.translationY(0)
+							.setDuration(300)
+							.setListener(new AnimatorListenerAdapter() {
+								@Override
+								public void onAnimationEnd(Animator animation) {
+									super.onAnimationEnd(animation);
+									fab.setVisibility(View.VISIBLE);
+								}
+							});
 				} else {
-					fab.setVisibility(View.GONE);
+					fab.animate()
+							.translationY(fab.getHeight()*2)
+							.setDuration(300)
+							.setListener(new AnimatorListenerAdapter() {
+								@Override
+								public void onAnimationEnd(Animator animation) {
+									super.onAnimationEnd(animation);
+									fab.setVisibility(View.GONE);
+								}
+							});
 				}
 			}
 
@@ -66,17 +87,13 @@ public class CutActivity extends AppCompatActivity {
 
 			@Override
 			public void onTabReselected(TabLayout.Tab tab) {
-				if (tab.getPosition() == 0) {
-					fab.setVisibility(View.VISIBLE);
-				} else {
-					fab.setVisibility(View.GONE);
-				}
 			}
 		});
 
 		fab.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View view) {
+				EditRecipeActivity.reset();
 				Intent intent = new Intent(CutActivity.this, EditRecipeActivity.class);
 				intent.putExtra(Constants.Arguments.CUT_ID, cutId);
 				intent.putExtra(Constants.Arguments.CATEGORY_ID, categoryId);
@@ -109,8 +126,6 @@ public class CutActivity extends AppCompatActivity {
 				if (cutEntry == null) {
 					return;
 				}
-
-				//ToDo: Load Images from Firebase
 				collapsingToolbarLayout.setTitle(cutEntry.getName());
 				titleImage.setImageResource(Constants.getIconForCategory(cutEntry.getCategoryId()));
 

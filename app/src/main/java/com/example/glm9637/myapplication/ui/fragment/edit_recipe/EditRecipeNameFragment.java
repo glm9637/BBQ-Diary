@@ -28,7 +28,6 @@ public class EditRecipeNameFragment extends Fragment {
 	private CheckBox rubCheck;
 	private Button btnNext;
 
-	private EnableSwipeListener swipeListener;
 	private boolean swipeEnabled = false;
 
 	public interface EnableSwipeListener {
@@ -77,12 +76,12 @@ public class EditRecipeNameFragment extends Fragment {
 				if (charSequence.length() > 3) {
 					if (!swipeEnabled) {
 						swipeEnabled = true;
-						swipeListener.onEnableSwipe();
+						((EnableSwipeListener)getActivity()).onEnableSwipe();
 						btnNext.setEnabled(true);
 					}
 				} else {
 					if (swipeEnabled) {
-						swipeListener.onDisableSwipe();
+						((EnableSwipeListener)getActivity()).onDisableSwipe();
 						btnNext.setEnabled(false);
 						swipeEnabled = false;
 					}
@@ -124,15 +123,12 @@ public class EditRecipeNameFragment extends Fragment {
 		btnNext.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View view) {
-				swipeListener.onSwipeToNextPage();
+				((EnableSwipeListener)getActivity()).onSwipeToNextPage();
 			}
 		});
-		return rootView;
-	}
 
-	public void setEnableSwipeListener(EnableSwipeListener swipeListener) {
-		this.swipeListener = swipeListener;
-		swipeListener.onDisableSwipe();
+		((EnableSwipeListener)getActivity()).onDisableSwipe();
+		return rootView;
 	}
 
 
